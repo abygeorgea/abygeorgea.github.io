@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Data Driven Framework - XML - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/">
+  <meta property="og:title" content="Data Driven Framework - XML - My Octopress Blog">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" title="toggle navbar" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">My Octopress Blog</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                    <input type="hidden" name="sitesearch" value="www.abygeorgea.com">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="My Octopress Blog" />
+    
+    <meta itemprop="url" content="http://www.abygeorgea.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-07-30T08:10:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">30 Jul, 2016</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Data Driven Framework - XML
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>I am not going to explain what is data driven framework or what is its benefits.  All of them are pretty well-known . If not, just google it.</p>
+
+<p>Here I am going to explain a sample code which can be used to read from xml data files. This will be helpful to implement a data driven frame work for BDD testing , using Specflow or Cucumber</p>
+
+<h2>Pre - requiste</h2>
+
+<p>Code is written in Csharp . We need to add below reference to visual studio solution</p>
+
+<ol>
+<li><p>Add reference to System.xml</p></li>
+<li><p>Add reference to System.Xml.Linq</p></li>
+</ol>
+
+
+<h2><strong>XML Format</strong></h2>
+
+<p>[code language=&ldquo;xml&rdquo; ]</p>
+
+<p>[/code]</p>
+
+<p>Node names in above example are Scenario1, Scenario2 and Scenario3</p>
+
+<p>Element or Attribute name are username, password, Email .</p>
+
+<p>You can add any number of nodes and attributes depending on the test scenario</p>
+
+<h2><strong>Read specific Value from XML</strong></h2>
+
+<p>Below code provides a solution to read values of existing Key/Attribute from a specific node.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public static string ReadDataFromXML(string FileName, string NodeName, string KeyName)
+</span><span class='line'>{
+</span><span class='line'> string _basePath = AppDomain.CurrentDomain.BaseDirectory.ToString();
+</span><span class='line'>string _datafilePath = _basePath + @"..\..\Data\" + FileName;
+</span><span class='line'>XDocument xmlDoc = XDocument.Load(_datafilePath);
+</span><span class='line'>data = xmlDoc.Root.Element(NodeName).Attribute(KeyName).Value;
+</span><span class='line'>return data;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p> </p>
+
+<h2>Read All values for a Scenario from XML</h2>
+
+<p>This code gives a solution for reading details of all attributes/key from a node. This comes very handy for reading all data required for a scenario and adding them to scenario context , so that data can be shared across specflow/cucumber step definitions</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public static void ReadAllDataFromXml(string xFileName, string xNodeName)
+</span><span class='line'>{
+</span><span class='line'> string data = string.Empty;
+</span><span class='line'>// Load path of xml file . Data Folder in below is folder name
+</span><span class='line'>string _basePath = AppDomain.CurrentDomain.BaseDirectory.ToString();
+</span><span class='line'>string _datafilePath = _basePath + @"..\..\Data\" + xFileName;
+</span><span class='line'>XDocument xmlDoc = XDocument.Load(_datafilePath);
+</span><span class='line'>
+</span><span class='line'>var cols = xmlDoc.Descendants(xNodeName).First();
+</span><span class='line'>
+</span><span class='line'>foreach (XAttribute xAtt in cols.Attributes())
+</span><span class='line'>{
+</span><span class='line'>Console.WriteLine("{0},{1}", xAtt.Name, xAtt.Value); // --printing values --
+</span><span class='line'>string temp = xAtt.Name.ToString();
+</span><span class='line'>ScenarioContext.Current.Add(temp, xAtt.Value);
+</span><span class='line'>// The values are added to scenario context as key value pair.can be modified
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Write Data into XML</h2>
+
+<p>  Below function gives a solution to update value on an existing key/attribute in data sheet . Sometime the data sheet will be copied over to bin folder when we build the solution. That makes it necessary to update both original data sheet and the one in bin folder  so that modified data can be used in same test without another rebuild.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public void WriteIntoXML(string xData, string xElement, string xAttribute, string xFileName)
+</span><span class='line'>{
+</span><span class='line'> // This solution updates value of an existing key.
+</span><span class='line'> // Xdoc refers to the xmlsheet in the Solution explorer
+</span><span class='line'> // xDoc_2 refers to the xmlsheet inside bin folder while running
+</span><span class='line'>
+</span><span class='line'> // This solution write them separately in below code.
+</span><span class='line'> // Below is the path to xml file after building solution
+</span><span class='line'> XDocument xDoc_2 = XDocument.Load(Path.Combine(Environment.CurrentDirectory, "Data Folder", xFileName));
+</span><span class='line'>
+</span><span class='line'> //Below should be the path of xml file
+</span><span class='line'> XDocument xDoc = XDocument.Load(Path.Combine(Path.GetFullPath(@"../../Data Folder"), xFileName));
+</span><span class='line'> xDoc_2.Root.Element(xElement).Attribute(xAttribute).Value = data.ToString();
+</span><span class='line'> xDoc.Root.Element(xElement).Attribute(xAttribute).Value = data.ToString();
+</span><span class='line'> xDoc_2.Save(Path.Combine(Environment.CurrentDirectory, "Data Folder", xFileName));
+</span><span class='line'> xDoc.Save(Path.Combine(Path.GetFullPath(@"../../Data Folder"), xFileName));
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Aby George A</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-07-30T08:10:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">30 Jul, 2016</time>
+          
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/" >Tweet</a>
+  
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            
+            <li class="next"><a href="/blog/2016/08/01/specflow-sharing-data-between-steps/" title="Next Post: Specflow - Sharing data between steps">Specflow - Sharing data between steps &raquo;</a></li>
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
+    
+    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a>
+    
+    <a class="list-group-item " href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">Mountebank - Your First Service Virtualisation</a>
+    
+    <a class="list-group-item " href="/blog/2017/02/13/service-virtualisation-using-mountebank/">Service Virtualisation Using Mountebank</a>
+    
+    <a class="list-group-item " href="/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/">How to Take Screenshots With Selenium in C#</a>
+    
+  </div>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2017 - Your Name<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr.js"></script>
+
+
+  </body>
+</html>

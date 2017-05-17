@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Element Identification | My Octopress Blog]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/element-identification/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-05-18T06:03:37+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis/"/>
+    <updated>2016-09-04T08:33:04+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis</id>
+    <content type="html"><![CDATA[<p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
+
+<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
+If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
+
+<p>Below are major one&rsquo;s which we will frequently use</p>
+
+<h3>1. ancestor</h3>
+
+<p>This selects all ancestors of current node. That will include parent, grand parents etc
+Eg :
+<code>
+ //td[text()='Product Desc']/ancestor::tr
+</code></p>
+
+<h3>2. descendant</h3>
+
+<p>This selects all children of current node. That will include child, grand child etc
+Eg:
+<code>
+/table/descendant::td/input
+</code></p>
+
+<h3>3. followingis</h3>
+
+<p>Th selects everything after the closing tag of current node Eg:
+<code>
+//td[text()='Product Desc']/following::tr
+</code></p>
+
+<h3>4. following-sibling</h3>
+
+<p>This selects all siblings after the closing tah of current node.
+Eg:
+<code>
+//td[text()='Product Desc']/followingsibling::td
+</code></p>
+
+<h3>5. preceding</h3>
+
+<p>This selects everything prior to current node
+Eg:
+<code>
+ //td[text()='Add to cart']/preceding::tr
+</code></p>
+
+<ol>
+<li>preceding-sibling</li>
+</ol>
+
+
+<p>This selects all siblings prior to current node
+Eg:
+<code>
+//td[text()='Add to cart']/precedingsibling::td
+</code></p>
+
+<h3>7. child</h3>
+
+<p>This selects all children of current node</p>
+
+<h3>8. parent</h3>
+
+<p>This select parent of current node</p>
+
+<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
+
+<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Element Location Using XPath]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/"/>
+    <updated>2016-08-30T20:58:16+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath</id>
+    <content type="html"><![CDATA[<p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
+
+<h4><strong>Absolute XPath</strong></h4>
+
+<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
+
+<p>Example of Xpath using absolute path is as below</p>
+
+<pre><code>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
+</code></pre>
+
+<h4><strong>Relative XPath</strong></h4>
+
+<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
+
+<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
+
+<pre><code>WebElement userId = driver.FindElement(By.XPath("//input"));
+// This retrieve first element with input tag.
+WebElement userId = driver.FindElement(By.XPath("//input[2]"));
+// This retrieve second element with input tag.
+</code></pre>
+
+<h4><strong>Relative XPath  - With Attributes</strong></h4>
+
+<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
+
+<pre><code>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
+// Above will identify first element with input tag which also has id as "password".
+
+WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
+//Note you can use "or" as well.
+WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
+// Above will identify first element with input tag which also has any attribute as "password".
+</code></pre>
+
+<h4><strong>Relative XPath - Partial Match</strong></h4>
+
+<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
+remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
+
+<ul>
+<li><p>starts-with()</p></li>
+<li><p>ends-with()</p></li>
+<li><p>contains()</p></li>
+</ul>
+
+
+<pre><code>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
+// Above will identify first element with input tag which also has id starting with "password".
+WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
+// Above will identify first element with input tag which also has id ending with "password".
+
+WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
+// Above will identify first element with input tag which also has id containing with "password".
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Identifying Elements Using Locators in Selenium]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium/"/>
+    <updated>2016-08-18T06:30:54+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium</id>
+    <content type="html"><![CDATA[<p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
+
+<p>Selenium Web Driver provides two different methods for identifying html elements .</p>
+
+<ul>
+<li><p><em><strong>FindElement  </strong></em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return the first matching element. If there are no matching element, it will throw NoSuchElementFoundException</p></li>
+<li><p><em><strong>FindElements</strong> </em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return a list of all matching element. If there are no matching elements, then it will return an empty list .</p></li>
+</ul>
+
+
+<p>Note: Both of them doesn&rsquo;t support regular expression for finding element. Simple way to do that will be to get list of all elements and then iterate to find a matching regular expression</p>
+
+<p>There are multiple criteria which we can use for looking for an element. FindElement and FindElements work exactly same way except for above difference. Different critieria are</p>
+
+<ul>
+<li><p>driver.FindElement(By.Id(<elementID>))</p></li>
+<li><p>driver.FindElement(By.Name(<element name>))</p></li>
+<li><p>driver.FindElement(By.ClassName(<element class>))</p></li>
+<li><p>driver.FindElement(By.TagName(<htmltagname>))</p></li>
+<li><p>driver.FindElement(By.LinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.PartialLinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.CssSelector(<css selector >))</p></li>
+<li><p>driver.FindElement(By.XPath(<xpath query expression>))</p></li>
+</ul>
+
+
+<p>Example:</p>
+
+<pre><code>
+WebElement _firstElement = driver.findElement(By.id("div1"));
+WebElement _secondElementInsideFirstOne =_firstElement .findElement(By.linkText("username"));
+
+IList&amp;lt;IWebElement&amp;gt; elements = driverOne.FindElements(By.ClassName(&amp;lt;span class="pl-s"&amp;gt;&amp;lt;span class="pl-pds"&amp;gt;“&amp;lt;/span&amp;gt;green&amp;lt;span class="pl-pds"&amp;gt;“&amp;lt;/span&amp;gt;&amp;lt;/span&amp;gt;));
+</code></pre>
+
+<p>Using any attributes other than XPath and CssSelector are straight forward. More about using XPath and CssSelector in next blog.</p>
+]]></content>
+  </entry>
+  
+</feed>
