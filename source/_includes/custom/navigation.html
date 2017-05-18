@@ -17,6 +17,12 @@
                 <li {% if page.navbar == 'Archives' %}class="active"{% endif %}>
                     <a href="{{ root_url }}/blog/archives">Archives</a>
                 </li>
+				<li {% if page.navbar == 'About' %}class="active"{% endif %}>
+                    <a href="{{ root_url }}/about">About Me</a>
+                </li>
+				<li {% if page.navbar == 'Quick Reference' %}class="active"{% endif %}>
+                    <a href="{{ root_url }}/quick-reference">Quick Reference</a>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>

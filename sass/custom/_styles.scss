@@ -37,3 +37,13 @@ footer[role=contentinfo] {
     top: 0;
   }
 }
+
+.navbar-default {
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#263347),to(#263347));
+}
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+.navbar-default .navbar-nav>li>a {
+    color: #fff;
+}
