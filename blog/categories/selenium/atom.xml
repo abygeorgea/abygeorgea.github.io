@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Selenium | My Octopress Blog]]></title>
+  <title><![CDATA[Category: Selenium | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/selenium/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-18T06:03:37+10:00</updated>
+  <updated>2017-05-18T17:47:24+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Aby George A]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
