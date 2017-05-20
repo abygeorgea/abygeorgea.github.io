@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/</loc>
+<lastmod>2017-05-20T05:57:24+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/</loc>
 <lastmod>2017-04-07T06:24:20+10:00</lastmod>
 </url>
@@ -66,5 +70,14 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/service-virtualisation/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/octopress/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/octostrap3/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/posts/2/</loc>
 </url>
 </urlset>

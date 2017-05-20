@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Migrating to Octopress - Aby George A</title>
+  <meta name="author" content="Aby George A">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Aby George A" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/">
+  <meta property="og:title" content="Migrating to Octopress - Aby George A">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-99127431-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" title="toggle navbar" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Aby George A</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+				<li >
+                    <a href="/about">About Me</a>
+                </li>
+				<li >
+                    <a href="/quick-reference">Quick Reference</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                    <input type="hidden" name="sitesearch" value="www.abygeorgea.com">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="Aby George A" />
+    
+    <meta itemprop="url" content="http://www.abygeorgea.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-20T05:57:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 May, 2017</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Migrating to Octopress
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Over the past weekend, I noticed that my blog is not available since azure has disabled hosting of my WordPress blog. It happened because I ran out of my free credits for the current month. I started looking for alternate options for hosting WordPress. That&rsquo;s when I came across (<a href="http://www.rahulpnath.com/blog/static-generator-is-all-a-blog-needs-moving-to-octopress/">Static Generator is All a Blog Needs - Moving to Octopress</a>). I decided to give it a try.</p>
+
+<p>Below are the main steps which I followed for migrating to Octopress</p>
+
+<h1>Documentation</h1>
+
+<ul>
+<li>Read documentation of Octopress <a href="http://octopress.org/docs/">here</a> and Jekyll <a href="https://jekyllrb.com/docs/home/">here</a></li>
+</ul>
+
+
+<h1>Setup</h1>
+
+<ul>
+<li>Install Chocolatey as mentioned in documentation <a href="https://chocolatey.org/install">here</a>
+Below command can be run on cmd.exe open as administrator</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>As mentioned in octopress documentation, ensure Git, ruby and devkit are installed. Cholocatey way of installation can be found in <a href="https://chocolatey.org/packages/git.install">git</a>, <a href="https://chocolatey.org/packages/ruby">ruby</a> , <a href="https://chocolatey.org/packages/ruby2.devkit">devkit</a>.
+Below commands can be run on cmd.exe</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>choco install git.install
+</span><span class='line'>choco install ruby
+</span><span class='line'>choco install ruby2.devkit</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>By default, devkit is installed in <code>C:\tools\</code>. Move in <code>devkit</code> folder and run below commands</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init
+</span><span class='line'>ruby dk.rb install
+</span><span class='line'>gem install bundler</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Install Octopress</h1>
+
+<ul>
+<li>Now install Octopress as per <a href="http://octopress.org/docs/setup/">documentation</a></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress
+</span><span class='line'>cd octopress
+</span><span class='line'>bundle install
+</span><span class='line'>rake install // Install default Octopress theme</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Install Octostrap3 theme &amp; Customize</h1>
+
+<ul>
+<li>Since I didn&rsquo;t like the default theme much, I installed Octostrap3 theme as mentioned <a href="http://kaworu.github.io/octostrap3/setup/install/">here</a></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/kAworu/octostrap3.git .themes/octostrap3
+</span><span class='line'>rake "install[octostrap3]"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Fix up all issues. The date displayed as &ldquo;Ordinal&rdquo; can be fixed by updating <code>_config.yml</code> file as mentioned in their blog. Below is the config which I used</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>date_format: "%e %b, %Y"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>I made few more changes for changing the navigation header color, color of code blocks and also to include a side bar with categories. The changes are as below</li>
+</ul>
+
+
+<p>Changing color of code blocks is done by commenting below line in <code>octopress\sass\custom\_colors.scss</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>\\$solarized: light;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Navigation header color is changed by adding below to <code>octopress\sass\custom\_styles.scss</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>.navbar-default {
+</span><span class='line'>    background-image: -webkit-gradient(linear,left top,left bottom,from(#263347),to(#263347));
+</span><span class='line'>}
+</span><span class='line'>.navbar-default .navbar-brand {
+</span><span class='line'>    color: #fff;
+</span><span class='line'>}
+</span><span class='line'>.navbar-default .navbar-nav&gt;li&gt;a {
+</span><span class='line'>    color: #fff;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Adding category side bar is done by following steps mentioned in <a href="https://kaworu.github.io/octostrap3/blog/2013/10/03/category-list-aside/">Category List Aside</a></p>
+
+<h1>Google Analytics Integration</h1>
+
+<p>Next step was google analytics integration. Detailed steps for this is available on various blogs. Below is what I followed</p>
+
+<ul>
+<li>Sign up for google analytics ID in <a href="https://analytics.google.com/analytics/web/provision?authuser=0#provision/SignUp/">here</a></li>
+<li>Update _config.yml with google analytics ID</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Google Analytics
+</span><span class='line'>google_analytics_tracking_id: UA-XXXXXXXX-1</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Update <code>google_analytics.html</code> file with below</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>   &lt;script&gt;
+</span><span class='line'>    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+</span><span class='line'>    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+</span><span class='line'>    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+</span><span class='line'>    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+</span><span class='line'>
+</span><span class='line'>    ga('create', 'UA-XXXXXXXX-1', 'auto');
+</span><span class='line'>    ga('send', 'pageview');
+</span><span class='line'>
+</span><span class='line'>  &lt;/script&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>UA-XXXXXXXX-1 can be replaced with <code>site.google_analytics_tracking_id</code> enclosed in double braces/curly brackets</li>
+</ul>
+
+
+<h1>Sample Post</h1>
+
+<ul>
+<li>Now create a Hello World post and check how it look</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["Hello World"]
+</span><span class='line'>rake generate
+</span><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure>
+
+
+<p>rake preview mounts a webserver at <a href="http://localhost:4000" title="http://localhost:4000">http://localhost:4000</a>. By opening a browser window and navigating to <a href="http://localhost:4000" title="http://localhost:4000">http://localhost:4000</a> will preview the Hello World Post</p>
+
+<h1>Deploying to GitHub Pages</h1>
+
+<p>Detailed instructions can be found in <a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>. Below are high-level steps copied from there
+- Create a GitHub repository with name <code>yourusername.github.io</code>
+- Run below command. It will prompt for GitHub URL, which needs to be filled in</p>
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages // This does all configurations
+</span><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Now we can commit the source</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
+</span><span class='line'>git commit -m 'your message'
+</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Custom Domain</h1>
+
+<ul>
+<li>Create a file named <code>CNAME</code> in blog source</li>
+<li>Update it with custom domain name. It has to be a sub domain (www.examplesubdomain.com)</li>
+<li>Update the CNAME dns setting in your domain provider to point to <code>https://username.github.io</code></li>
+<li>If top-level domains (exampletopdomain.com) are needed, then configure A record to point to IP address <code>192.30.252.153</code> or <code>192.30.252.154</code>.</li>
+</ul>
+
+
+<h1>Migrating Old blog Post from word press</h1>
+
+<p>After completing above steps,  a new octopress blog is ready to go . Below are the steps which I followed to migrate old blog posts from word press.</p>
+
+<ul>
+<li>Clone <a href="https://github.com/thomasf/exitwp">Exitwp</a></li>
+<li><p>Follow the steps mentioned in readme.md.</p>
+
+<ul>
+<li>Export old wordpress blog using WordPress exporter in tools/export in WordPress admin</li>
+<li>Copy xml file to wordpress-xml directory</li>
+<li>Run  python exitwp.py in the console from the same directory of unzipped archive</li>
+<li>All blogs will be created as separate directory under <code>build</code> directory</li>
+<li>Copy relevant folders to source folder of the blog</li>
+</ul>
+</li>
+<li><p>Find broken redirection links and fix</p></li>
+<li>Find broken image links and fix</li>
+</ul>
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Aby George A</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-20T05:57:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 May, 2017</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>, <a class='category' href='/blog/categories/octostrap3/'>octostrap3</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/" >Tweet</a>
+  
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/" title="Previous Post: Mountebank - Creating a response based on a file template and modifying it based on request - PART 2">&laquo; Mountebank - Creating a response based on a file template and modifying it based on request - PART 2</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item " href="/blog/categories/specflow/index.html">
+        <span class="badge">4</span>
+        specflow
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/element-identification/index.html">
+        <span class="badge">3</span>
+        element identification
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium/index.html">
+        <span class="badge">3</span>
+        selenium
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/mountebank/index.html">
+        <span class="badge">4</span>
+        mountebank
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
+        <span class="badge">4</span>
+        service virtualisation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octopress/index.html">
+        <span class="badge">1</span>
+        octopress
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octostrap3/index.html">
+        <span class="badge">1</span>
+        octostrap3
+      </a>
+    
+  </div>
+</section><section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2017/05/20/migrating-to-octopress/">Migrating to Octopress</a>
+    
+    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
+    
+    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a>
+    
+    <a class="list-group-item " href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">Mountebank - Your First Service Virtualisation</a>
+    
+    <a class="list-group-item " href="/blog/2017/02/13/service-virtualisation-using-mountebank/">Service Virtualisation Using Mountebank</a>
+    
+  </div>
+</section>
+
+<section class="panel panel-default clearfix">
+  <div class="panel-heading">
+      <h3 class="panel-title">GitHub Repos</h3>
+  </div>
+  <div class="list-group" id="gh_repos">
+    <p class="loading">Status updating...</p>
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'abygeorgea',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2017 - Aby George A<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr.js"></script>
+
+
+	
+  </body>
+</html>
