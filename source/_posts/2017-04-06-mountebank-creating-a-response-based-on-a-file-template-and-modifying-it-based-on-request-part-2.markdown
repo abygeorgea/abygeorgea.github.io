@@ -153,15 +153,15 @@ Finally , the template response
 
 Now let us fire up mountebank
 
-![mountebank]({{images_dir}}/2017/04/mountebank.png)
+![mountebank]({{site.images_dir}}/2017/04/mountebank.png)
 
 Make few request using postman, which have different request parameter
 
-![customerFound1]({{images_dir}}/2017/04/customerfound1.png)
+![customerFound1]({{site.images_dir}}/2017/04/customerfound1.png)
 
 Another request
 
-![CustomerFound2]({{images_dir}}/2017/04/customerfound2.png)
+![CustomerFound2]({{site.images_dir}}/2017/04/customerfound2.png)
 
 In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.
 
@@ -169,7 +169,7 @@ In above two examples,we  can see the CustomerID field is response is updated w
 
 Now let us try another example , where request is http://localhost:4547/Blog.Api/1234542323/CustomerView
 
-![CustomerNotFound2]({{images_dir}}/2017/04/customernotfound2.png)
+![CustomerNotFound2]({{site.images_dir}}/2017/04/customernotfound2.png)
 
 As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.
 

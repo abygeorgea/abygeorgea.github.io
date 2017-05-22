@@ -19,7 +19,7 @@ In below Step by Step example , I will have two mock responses for searching for
 
 Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.
 
-![folderstructure]({{images_dir}}/2017/04/folderstructure.png)
+![folderstructure]({{site.images_dir}}/2017/04/folderstructure.png)
 
 Let us first create the imposter.ejs file
 
@@ -144,7 +144,7 @@ Now let us run mountebank
 
 
 
-![mountebank]({{images_dir}}/2017/04/mountebank.png)
+![mountebank]({{site.images_dir}}/2017/04/mountebank.png)
 
 
 
@@ -157,7 +157,7 @@ Request through postman
 
 
 
-![notfound.png]({{images_dir}}/2017/04/notfound.png)
+![notfound.png]({{site.images_dir}}/2017/04/notfound.png)
 
 
 
