@@ -12,7 +12,7 @@ categories:
 - Service Virtualisation
 ---
 
-In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in [here (Install Mountebank)](/blog/2017/02/13/service-virtualisation-using-mountebank/), we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response
+In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in [here (Install Mountebank)]({{site.root}}blog/2017/02/13/service-virtualisation-using-mountebank/), we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response
 
 
 ## How to Create a Stub
@@ -143,7 +143,7 @@ mb --configfile StubResponse/test.json
 
 ```
 
-![cmd.jpg](https://seleniumtestingtips.files.wordpress.com/2017/03/cmd.jpg)
+![cmd.jpg]({{images_dir}}/2017/03/cmd.jpg)
 
 
 
@@ -151,7 +151,7 @@ Once mountebank is started, we can verify it by navigating to path http://local
 
 It will list out all active ports and a list of stubs available
 
-![imposter](https://seleniumtestingtips.files.wordpress.com/2017/03/imposter.jpg)
+![imposter]({{images_dir}}/2017/03/imposter.jpg)
 
 
 
@@ -169,7 +169,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgone](https://seleniumtestingtips.files.wordpress.com/2017/03/bgone.jpg)
+![bgone]({{images_dir}}/2017/03/bgone.jpg)
 
 
 
@@ -181,7 +181,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgtwo](http://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg)
+![bgtwo]({{images_dir}}/2017/03/bgtwo.jpg)
 
 
 

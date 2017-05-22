@@ -33,6 +33,7 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
+images_dir: https://automationtestingtips.files.wordpress.com
 markdown: rdiscount
 rdiscount:
   extensions:
