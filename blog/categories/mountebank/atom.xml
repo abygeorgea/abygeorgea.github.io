@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mountebank | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/mountebank/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-21T07:54:25+10:00</updated>
+  <updated>2017-05-23T06:59:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -139,7 +139,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x4a;&#x6f;&#104;&#110;&#46;&#x43;&#105;&#116;&#x69;&#x7a;&#x65;&#x6e;&#x40;&#97;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#x61;&#115;&#46;&#99;&#x6f;&#109;">&#x4a;&#111;&#104;&#x6e;&#x2e;&#67;&#105;&#116;&#105;&#122;&#x65;&#110;&#x40;&#x61;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#x61;&#x73;&#46;&#x63;&#111;&#x6d;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#74;&#111;&#x68;&#110;&#46;&#67;&#105;&#x74;&#105;&#x7a;&#101;&#x6e;&#64;&#97;&#98;&#99;&#x61;&#98;&#97;&#x63;&#x61;&#x73;&#x2e;&#99;&#111;&#109;">&#74;&#111;&#104;&#x6e;&#x2e;&#67;&#105;&#x74;&#x69;&#122;&#101;&#x6e;&#x40;&#x61;&#x62;&#99;&#x61;&#x62;&#x61;&#99;&#97;&#x73;&#x2e;&#99;&#111;&#109;</a>&rdquo;</p>
 
 <p>}</p>
 
@@ -149,21 +149,21 @@ Finally , the template response
 
 <p>Now let us fire up mountebank</p>
 
-<p><img src="/2017/04/mountebank.png" alt="mountebank" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
 
 <p>Make few request using postman, which have different request parameter</p>
 
-<p><img src="/2017/04/customerfound1.png" alt="customerFound1" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png" alt="customerFound1" /></p>
 
 <p>Another request</p>
 
-<p><img src="/2017/04/customerfound2.png" alt="CustomerFound2" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png" alt="CustomerFound2" /></p>
 
 <p>In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.</p>
 
 <p>Now let us try another example , where request is <a href="http://localhost:4547/Blog.Api/1234542323/CustomerView">http://localhost:4547/Blog.Api/1234542323/CustomerView</a></p>
 
-<p><img src="/2017/04/customernotfound2.png" alt="CustomerNotFound2" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png" alt="CustomerNotFound2" /></p>
 
 <p>As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.</p>
 
@@ -190,7 +190,7 @@ Finally , the template response
 
 <p>Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.</p>
 
-<p><img src="/2017/04/folderstructure.png" alt="folderstructure" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png" alt="folderstructure" /></p>
 
 <p>Let us first create the imposter.ejs file</p>
 
@@ -272,11 +272,11 @@ body: response
 
 <p>Now let us run mountebank</p>
 
-<p><img src="/2017/04/mountebank.png" alt="mountebank" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
 
 <p>Request through postman</p>
 
-<p><img src="/2017/04/notfound.png" alt="notfound.png" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/notfound.png" alt="notfound.png" /></p>
 
 <p>As you can see , the GET request matching with predicate is returning the stubbed response with status 404.</p>
 
@@ -400,13 +400,13 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 mb --configfile StubResponse/test.json
 </code></pre>
 
-<p><img src="/2017/03/cmd.jpg" alt="cmd.jpg" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/cmd.jpg" alt="cmd.jpg" /></p>
 
 <p>Once mountebank is started, we can verify it by navigating to path <a href="http://localhost:2525/imposters">http://localhost:2525/imposters</a></p>
 
 <p>It will list out all active ports and a list of stubs available</p>
 
-<p><img src="/2017/03/imposter.jpg" alt="imposter" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/imposter.jpg" alt="imposter" /></p>
 
 <h2>Test It</h2>
 
@@ -420,7 +420,7 @@ mb --configfile StubResponse/test.json
 
 <p>Now construct a postman request matching above and fire it</p>
 
-<p><img src="/2017/03/bgone.jpg" alt="bgone" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgone.jpg" alt="bgone" /></p>
 
 <p><strong>Request for second API</strong></p>
 
@@ -428,7 +428,7 @@ mb --configfile StubResponse/test.json
 
 <p>Now construct a postman request matching above and fire it</p>
 
-<p><img src="/2017/03/bgtwo.jpg" alt="bgtwo" /></p>
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg" alt="bgtwo" /></p>
 
 <p>As you can see, both request has succesfully received expected response message</p>
 

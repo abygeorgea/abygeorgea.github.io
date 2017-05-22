@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Service Virtualisation Using Mountebank - Aby George A</title>
+  <title>Powershell - Remove Entire Directory and It's Content - Aby George A</title>
   <meta name="author" content="Aby George A">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Aby George A" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">
-  <meta property="og:title" content="Service Virtualisation Using Mountebank - Aby George A">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">
+  <meta property="og:title" content="Powershell - Remove Entire Directory and It's Content - Aby George A">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
@@ -127,42 +127,28 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-13T22:13:58+11:00"  data-updated="true" itemprop="datePublished dateCreated">13 Feb, 2017</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-02T06:27:27+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 2 May, 2017</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Service Virtualisation Using Mountebank
+        Powershell - Remove Entire Directory and It's Content
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h1>What is Mountebank?</h1>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>The PowerShell command to remove an entire directory and its contents ( including sub folders and files) is below</p>
 
-<blockquote>As per mbtest.org "_mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire. Simply point your application under test to mountebank instead of the real dependency, and test like you would with traditional stubs and mocks_"</blockquote>
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rm -Rf pathToDirectoryToBeRemoved/</span></code></pre></td></tr></table></div></figure>
 
 
-<p>In short mountebank is a open source service virtualisation tool . Mountebank uses imposters to act as on demand test doubles. Hence our test cases communicate to Mountebank and mountebank responds back with relevant stubs as defined.</p>
+<p>R flag denotes to run “rm” command recursively . “f” flag denotes to run in forcefully. We can even replace “f” with “v” for verbose mode and “i” for interactive mode.</p>
 
-<h1>How to Setup Mountebank ?</h1>
-
-<p>Installation can be done via two methods</p>
-
-<h3>npm</h3>
-
-<p>Mountebank can be installed as a npm package. Node.js should be installed for this option to work</p>
-
-<pre><code>&lt;code&gt;npm install -g mountebank&lt;/code&gt;
-</code></pre>
-
-<h3>Self contained Installation file</h3>
-
-<p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
-
-<p>Note: Please read through the windows path limitation mentioned in above link</p>
+<p>Note: Above command can also be used to delete files which have long path ( more than 260 characters)</p>
 </div>
 
 
@@ -186,13 +172,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-13T22:13:58+11:00"  data-updated="true" itemprop="datePublished dateCreated">13 Feb, 2017</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-02T06:27:27+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 2 May, 2017</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mountebank/'>mountebank</a>, <a class='category' href='/blog/categories/service-virtualisation/'>service virtualisation</a>
+    <a class='category' href='/blog/categories/powershell/'>powershell</a>
   
 </span>
 
@@ -201,7 +187,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/" >Tweet</a>
   
   
   
@@ -211,10 +197,10 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2016/09/23/git-how-to-solve-filename-too-long-error/" title="Previous Post: Git - How to solve filename too long error">&laquo; Git - How to solve filename too long error</a></li>
+            <li class="previous"><a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/" title="Previous Post: Mountebank - Creating a response based on a file template and modifying it based on request - PART 2">&laquo; Mountebank - Creating a response based on a file template and modifying it based on request - PART 2</a></li>
             
             
-            <li class="next"><a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/" title="Next Post: Mountebank - Your first service Virtualisation">Mountebank - Your first service Virtualisation &raquo;</a></li>
+            <li class="next"><a href="/blog/2017/05/20/migrating-to-octopress/" title="Next Post: Migrating To Octopress">Migrating To Octopress &raquo;</a></li>
             
           </ul>
         
@@ -296,7 +282,7 @@
     
     <a class="list-group-item " href="/blog/2017/05/20/migrating-to-octopress/">Migrating to Octopress</a>
     
-    <a class="list-group-item " href="/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">Powershell - Remove Entire Directory and It's Content</a>
+    <a class="list-group-item active" href="/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">Powershell - Remove Entire Directory and It's Content</a>
     
     <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
     

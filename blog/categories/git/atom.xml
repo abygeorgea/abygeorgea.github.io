@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Git | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-05-23T06:59:08+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Git - How to Solve Filename Too Long Error]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/09/23/git-how-to-solve-filename-too-long-error/"/>
+    <updated>2016-09-23T06:31:03+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/23/git-how-to-solve-filename-too-long-error</id>
+    <content type="html"><![CDATA[<p>Git for windows is normally shipped with long path support disabled due to mysys not supporting file path/name greater than 260 character. While cloning repository with large nested directory structute may cause error &ldquo;file name too long&rdquo;. This can be fixed by below command. It can be executed using powershell or cmd directly in project ( or anywhere if git variable is available)</p>
+
+<pre><code class="plain cmd.exe">git config --system core.longpaths true
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

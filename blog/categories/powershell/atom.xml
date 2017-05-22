@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Powershell | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/powershell/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-05-23T06:59:08+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Powershell - Remove Entire Directory and It's Content]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/"/>
+    <updated>2017-05-02T06:27:27+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/05/02/powershell-remove-entire-directory-and-its-content</id>
+    <content type="html"><![CDATA[<p>The PowerShell command to remove an entire directory and its contents ( including sub folders and files) is below</p>
+
+<pre><code class="plain cmd.exe">rm -Rf pathToDirectoryToBeRemoved/
+</code></pre>
+
+<p>R flag denotes to run “rm” command recursively . “f” flag denotes to run in forcefully. We can even replace “f” with “v” for verbose mode and “i” for interactive mode.</p>
+
+<p>Note: Above command can also be used to delete files which have long path ( more than 260 characters)</p>
+]]></content>
+  </entry>
+  
+</feed>
