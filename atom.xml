@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-23T06:59:08+10:00</updated>
+  <updated>2017-05-25T10:41:35+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -187,6 +187,8 @@ Below commands can be run on cmd.exe</li>
 
 <ul>
 <li>UA-XXXXXXXX-1 can be replaced with <code>site.google_analytics_tracking_id</code> enclosed in double braces/curly brackets</li>
+<li>Log in to Google Analytics site and navigate to Admin >> View >> Filters</li>
+<li>Add a new filter to exclude all traffice to hostname &ldquo;localhost&rdquo;. This will help to exclude all site visit done for development/ preview purpose.</li>
 </ul>
 
 
@@ -281,6 +283,231 @@ Below commands can be run on cmd.exe</li>
 <p>R flag denotes to run “rm” command recursively . “f” flag denotes to run in forcefully. We can even replace “f” with “v” for verbose mode and “i” for interactive mode.</p>
 
 <p>Note: Above command can also be used to delete files which have long path ( more than 260 characters)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stubbing XML Responses Using Mountebank]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/04/27/stubbing-xml-responses-using-mountebank/"/>
+    <updated>2017-04-27T05:55:51+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/27/stubbing-xml-responses-using-mountebank</id>
+    <content type="html"><![CDATA[<p>Previous two blog post talked about how we can use mountebank for stubbing where responses are in json format . They can be accessed (<a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>) and (<a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>). We can use same approach for stubbing SOAP services using XML as well. In this post, I will explain how we can provide XML response using Mountebank .</p>
+
+<p>Let us have a quick look into the files created. Before we begin, folder structure of various file as below</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg" alt="folderstructure" /></p>
+
+<h4>Imposter.ejs</h4>
+
+<p>The main Imposter file is</p>
+
+<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"imposters": [
+</span><span class='line'>&lt;% include Port4547.json %&gt;
+</span><span class='line'>]
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Port4547.json</h4>
+
+<p>This file specifies which port number to use and what all stubs needs to be created is as below</p>
+
+<figure class='code'><figcaption><span>Port4547.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"port": 4547,
+</span><span class='line'>"protocol": "http",
+</span><span class='line'>"stubs": [
+</span><span class='line'>{
+</span><span class='line'>&lt;% include XMLStubGET.json %&gt;
+</span><span class='line'>},
+</span><span class='line'>{
+</span><span class='line'>&lt;% include XMLStubPOST.json %&gt;
+</span><span class='line'>}
+</span><span class='line'>]
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>XMLStubGET.json</h4>
+
+<p>This is the first stub for this example and it looks for any request coming with the method &ldquo;GET&rdquo; and path &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo; , where [0-9]+ is regular expression of any numeric</p>
+
+<figure class='code'><figcaption><span>XMLStubGET.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
+</span><span class='line'>{
+</span><span class='line'>"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetXMLStub.js') %&gt;"
+</span><span class='line'>}
+</span><span class='line'>],
+</span><span class='line'>"predicates": [
+</span><span class='line'>{
+</span><span class='line'>"matches": {
+</span><span class='line'>"method" : "GET",
+</span><span class='line'>"path" : "/Blog.Api/[0-9]+/CustomerView"
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>XMLStubPOST.json</h4>
+
+<p>This is the second stub for this example and it looks for any request coming with method &ldquo;POST&rdquo; and path &ldquo;/Blog.Api/XMLexamplePOST/[0-9]+&rdquo; , where [0-9]+ is regular expression of any numeric .It also needs a body as <Action>Insert</Action><Record>Customer1</Record></p>
+
+<p>Note: If you have body in multi-line, then make sure to enter &ldquo;\n&rdquo; for new line</p>
+
+<figure class='code'><figcaption><span>XMLStubPOST.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
+</span><span class='line'>{
+</span><span class='line'>"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetXMLStub-POST.js') %&gt;"
+</span><span class='line'>}
+</span><span class='line'>],
+</span><span class='line'>"predicates": [
+</span><span class='line'>{
+</span><span class='line'>"matches": {
+</span><span class='line'>"body" : "&lt;Action&gt;Insert&lt;/Action&gt;&lt;Record&gt;Customer1&lt;/Record&gt;",
+</span><span class='line'>"method" : "POST",
+</span><span class='line'>"path" : "/Blog.Api/XMLexamplePOST/[0-9]+"
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>GetXMLStub.js</h4>
+
+<p>Below js file create a response based on template mentioned and return the response with proper status. Please note that, we are not using &ldquo;Json.Parse&rdquo; here as we did for previous examples involving json.</p>
+
+<figure class='code'><figcaption><span>GetXMLStub.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
+</span><span class='line'>response = "&lt;%- stringify(filename, 'StubTemplate\\CustomerDetails.xml') %&gt;"
+</span><span class='line'>return {
+</span><span class='line'>statusCode : 200,
+</span><span class='line'>headers: {
+</span><span class='line'>'Content-Type': 'application/xml; charset=utf-8'
+</span><span class='line'>},
+</span><span class='line'>body: response
+</span><span class='line'>};
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>GetXMLStub-POST.js</h4>
+
+<figure class='code'><figcaption><span>GetXMLStub-POST.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
+</span><span class='line'>response = "&lt;%- stringify(filename, 'StubTemplate\\RecordAdded.xml') %&gt;"
+</span><span class='line'>return {
+</span><span class='line'>statusCode : 200,
+</span><span class='line'>headers: {
+</span><span class='line'>'Content-Type': 'application/xml; charset=utf-8'
+</span><span class='line'>},
+</span><span class='line'>body: response
+</span><span class='line'>};
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>CustomerDetails.XML</h4>
+
+<p>This is the template for the first stub - GET example</p>
+
+<figure class='code'><figcaption><span>XML</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;customer&gt;
+</span><span class='line'>  &lt;FirstName&gt;John&lt;/FirstName&gt;
+</span><span class='line'>  &lt;LastName&gt;Citizen&lt;/LastName&gt;
+</span><span class='line'>  &lt;Address&gt;Some St, Some State, Some Country&lt;/Address&gt;
+</span><span class='line'>  &lt;Email&gt;Test@test.com&lt;/Email&gt;
+</span><span class='line'>&lt;/customer&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>RecordAdded.xml</h4>
+
+<p>This is the template for the second stub - POST example</p>
+
+<figure class='code'><figcaption><span>XML</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;Status&gt;Added&lt;/Status&gt;
+</span><span class='line'>&lt;Record&gt;Customer1&lt;/Record&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After creating above files and keeping them as per directory structure is shown above, it is time to start mountebank</p>
+
+<blockquote><p>mb &ndash;configfile SOAP-XMLStubExample/Imposter.ejs &ndash;allowInjection</p></blockquote>
+
+<p>Note: Give the right path to Imposter.ejs . If you need to debug Mountebank, you can use below command at the end &ldquo; &ndash;loglevel debug&rdquo;</p>
+
+<p>Now trigger a get request to <a href="http://localhost:4547/Blog.Api/3123/CustomerView.">http://localhost:4547/Blog.Api/3123/CustomerView.</a></p>
+
+<p>This should match with our first predicate and should return the response mentioned</p>
+
+<p>Mountebank_XML_Response_</p>
+
+<p>Now trigger a POST request with a body . If predicates are matched, then it will respond with expected response as below</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/04/27/Mountebank_XML_Response_PostmanRequest1.png" alt="PostManRequest" /></p>
+
+<p>In Nut shell, creating a XML response is similar to creating json response. There are only minor differences in the js file which creates the response. The main difference is the omission of Json.Parse and also changing the response headers.</p>
+
+<p>Above examples can be cloned from my GitHub repository <a href="https://github.com/abygeorgea/MountebankExamples">here</a>. After cloning the repository to local, just run RunMounteBankStubsWithSOAPXMLStubExampleData.bat file. Postman scripts can also be found inside PostmanCollections Folder to testing this</p>
 ]]></content>
   </entry>
   

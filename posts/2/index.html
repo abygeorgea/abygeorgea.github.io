@@ -131,6 +131,119 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-30T20:58:16+10:00"  data-updated="true" itemprop="datePublished dateCreated">30 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/30/element-location-using-xpath/" itemprop="url">Element Location Using XPath</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
+
+<h4><strong>Absolute XPath</strong></h4>
+
+<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
+
+<p>Example of Xpath using absolute path is as below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath</strong></h4>
+
+<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
+
+<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input"));
+</span><span class='line'>// This retrieve first element with input tag.
+</span><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input[2]"));
+</span><span class='line'>// This retrieve second element with input tag.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath  - With Attributes</strong></h4>
+
+<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
+</span><span class='line'>// Above will identify first element with input tag which also has id as "password".
+</span><span class='line'>
+</span><span class='line'>WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
+</span><span class='line'>//Note you can use "or" as well.
+</span><span class='line'>WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
+</span><span class='line'>// Above will identify first element with input tag which also has any attribute as "password".</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath - Partial Match</strong></h4>
+
+<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
+remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
+
+<ul>
+<li><p>starts-with()</p></li>
+<li><p>ends-with()</p></li>
+<li><p>contains()</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id starting with "password".
+</span><span class='line'>WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id ending with "password".
+</span><span class='line'>
+</span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-18T06:30:54+10:00"  data-updated="true" itemprop="datePublished dateCreated">18 Aug, 2016</time>
         
       </p>
@@ -548,13 +661,13 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     
     
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
-        <span class="badge">4</span>
+        <span class="badge">5</span>
         mountebank
       </a>
     
     
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
-        <span class="badge">4</span>
+        <span class="badge">5</span>
         service virtualisation
       </a>
     
@@ -588,11 +701,11 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     
     <a class="list-group-item " href="/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">Powershell - Remove Entire Directory and It's Content</a>
     
+    <a class="list-group-item " href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">Stubbing XML Responses Using Mountebank</a>
+    
     <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
     
     <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a>
-    
-    <a class="list-group-item " href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">Mountebank - Your First Service Virtualisation</a>
     
   </div>
 </section>

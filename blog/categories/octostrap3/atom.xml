@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octostrap3 | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/octostrap3/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-23T06:59:08+10:00</updated>
+  <updated>2017-05-25T10:41:35+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -135,6 +135,8 @@ rake "install[octostrap3]"
 
 <ul>
 <li>UA-XXXXXXXX-1 can be replaced with <code>site.google_analytics_tracking_id</code> enclosed in double braces/curly brackets</li>
+<li>Log in to Google Analytics site and navigate to Admin >> View >> Filters</li>
+<li>Add a new filter to exclude all traffice to hostname &ldquo;localhost&rdquo;. This will help to exclude all site visit done for development/ preview purpose.</li>
 </ul>
 
 
