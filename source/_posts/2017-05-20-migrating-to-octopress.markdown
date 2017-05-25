@@ -105,6 +105,8 @@ google_analytics_tracking_id: UA-XXXXXXXX-1
   </script>
 ```
 - UA-XXXXXXXX-1 can be replaced with `site.google_analytics_tracking_id` enclosed in double braces/curly brackets
+- Log in to Google Analytics site and navigate to Admin >> View >> Filters
+- Add a new filter to exclude all traffice to hostname "localhost". This will help to exclude all site visit done for development/ preview purpose.
 
 
 

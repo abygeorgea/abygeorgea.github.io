@@ -143,7 +143,7 @@ mb --configfile StubResponse/test.json
 
 ```
 
-![cmd.jpg]({{site.images_dir}}/2017/03/cmd.jpg)
+![cmd.jpg]({{site.images_dir_oldwordpress}}/2017/03/cmd.jpg)
 
 
 
@@ -151,7 +151,7 @@ Once mountebank is started, we can verify it by navigating to path http://local
 
 It will list out all active ports and a list of stubs available
 
-![imposter]({{site.images_dir}}/2017/03/imposter.jpg)
+![imposter]({{site.images_dir_oldwordpress}}/2017/03/imposter.jpg)
 
 
 
@@ -169,7 +169,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgone]({{site.images_dir}}/2017/03/bgone.jpg)
+![bgone]({{site.images_dir_oldwordpress}}/2017/03/bgone.jpg)
 
 
 
@@ -181,7 +181,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgtwo]({{site.images_dir}}/2017/03/bgtwo.jpg)
+![bgtwo]({{site.images_dir_oldwordpress}}/2017/03/bgtwo.jpg)
 
 
 
