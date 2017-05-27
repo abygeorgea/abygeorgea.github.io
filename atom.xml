@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-25T10:41:35+10:00</updated>
+  <updated>2017-05-28T07:24:05+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -262,8 +262,22 @@ Below commands can be run on cmd.exe</li>
 <li>Copy relevant folders to source folder of the blog</li>
 </ul>
 </li>
-<li><p>Find broken redirection links and fix</p></li>
-<li>Find broken image links and fix</li>
+<li><p>Find broken redirection links and fix</p>
+
+<ul>
+<li>The redirection links are now changed to something like <code>{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/</code></li>
+</ul>
+</li>
+<li>Find broken image links and fix
+
+<ul>
+<li>Inorder to make it easier for migrating to another platform later, I created a new config value in <code>_config.yml</code> as below .
+<code>
+  images_dir: /images
+</code></li>
+<li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>
@@ -1164,6 +1178,73 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 <p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
 
 <p>Note: Please read through the windows path limitation mentioned in above link</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Powershell - Copying Folders and Files]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files/"/>
+    <updated>2016-10-10T07:47:54+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files</id>
+    <content type="html"><![CDATA[<p>Two options for copying files are below.</p>
+
+<ul>
+<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
+<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
+</ul>
+
+
+<h3>Copying Folder structure Only</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
+</span><span class='line'>
+</span><span class='line'>#OR
+</span><span class='line'>robocopy $source $dest /e /xf *.*
+</span><span class='line'>
+</span><span class='line'># /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
+</span><span class='line'># /e can be replaced with /s for ignoring empty folders</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'># Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
+</span><span class='line'>#New-Item $dest -type directory 
+</span><span class='line'>
+</span><span class='line'>Get-ChildItem $source -Recurse | `
+</span><span class='line'>    Where-Object { $_.PSIsContainer -eq $False } | `
+</span><span class='line'>    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Copy same folder structure</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>robocopy $source $dest /e</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   

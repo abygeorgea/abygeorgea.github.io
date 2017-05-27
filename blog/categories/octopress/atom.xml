@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-25T10:41:35+10:00</updated>
+  <updated>2017-05-28T07:24:05+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -197,8 +197,22 @@ git push origin source
 <li>Copy relevant folders to source folder of the blog</li>
 </ul>
 </li>
-<li><p>Find broken redirection links and fix</p></li>
-<li>Find broken image links and fix</li>
+<li><p>Find broken redirection links and fix</p>
+
+<ul>
+<li>The redirection links are now changed to something like <code>{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/</code></li>
+</ul>
+</li>
+<li>Find broken image links and fix
+
+<ul>
+<li>Inorder to make it easier for migrating to another platform later, I created a new config value in <code>_config.yml</code> as below .
+<code>
+  images_dir: /images
+</code></li>
+<li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
+</ul>
+</li>
 </ul>
 
 ]]></content>

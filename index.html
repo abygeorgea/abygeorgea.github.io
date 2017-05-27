@@ -385,8 +385,22 @@ Below commands can be run on cmd.exe</li>
 <li>Copy relevant folders to source folder of the blog</li>
 </ul>
 </li>
-<li><p>Find broken redirection links and fix</p></li>
-<li>Find broken image links and fix</li>
+<li><p>Find broken redirection links and fix</p>
+
+<ul>
+<li>The redirection links are now changed to something like <code>{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/</code></li>
+</ul>
+</li>
+<li>Find broken image links and fix
+
+<ul>
+<li>Inorder to make it easier for migrating to another platform later, I created a new config value in <code>_config.yml</code> as below .
+<code>
+  images_dir: /images
+</code></li>
+<li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -1481,6 +1495,101 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-10-10T07:47:54+11:00"  data-updated="true" itemprop="datePublished dateCreated">10 Oct, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/10/10/powershell-copying-folders-and-files/" itemprop="url">Powershell - Copying Folders and Files</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Two options for copying files are below.</p>
+
+<ul>
+<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
+<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
+</ul>
+
+
+<h3>Copying Folder structure Only</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
+</span><span class='line'>
+</span><span class='line'>#OR
+</span><span class='line'>robocopy $source $dest /e /xf *.*
+</span><span class='line'>
+</span><span class='line'># /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
+</span><span class='line'># /e can be replaced with /s for ignoring empty folders</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'># Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
+</span><span class='line'>#New-Item $dest -type directory 
+</span><span class='line'>
+</span><span class='line'>Get-ChildItem $source -Recurse | `
+</span><span class='line'>    Where-Object { $_.PSIsContainer -eq $False } | `
+</span><span class='line'>    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Copy same folder structure</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>robocopy $source $dest /e</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-23T06:31:03+10:00"  data-updated="true" itemprop="datePublished dateCreated">23 Sep, 2016</time>
         
       </p>
@@ -1564,116 +1673,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-04T08:33:04+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 4 Sep, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/04/element-location-using-xpath-axis/" itemprop="url">Element Location Using XPath Axis</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
-
-<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
-If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
-
-<p>Below are major one&rsquo;s which we will frequently use</p>
-
-<h3>1. ancestor</h3>
-
-<p>This selects all ancestors of current node. That will include parent, grand parents etc
-Eg :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Product Desc']/ancestor::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2. descendant</h3>
-
-<p>This selects all children of current node. That will include child, grand child etc
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/table/descendant::td/input</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3. followingis</h3>
-
-<p>Th selects everything after the closing tag of current node Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/following::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4. following-sibling</h3>
-
-<p>This selects all siblings after the closing tah of current node.
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/followingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>5. preceding</h3>
-
-<p>This selects everything prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Add to cart']/preceding::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>preceding-sibling</li>
-</ol>
-
-
-<p>This selects all siblings prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Add to cart']/precedingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>7. child</h3>
-
-<p>This selects all children of current node</p>
-
-<h3>8. parent</h3>
-
-<p>This select parent of current node</p>
-
-<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
-
-<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1721,6 +1720,12 @@ Eg:</p>
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/powershell/index.html">
+        <span class="badge">2</span>
+        powershell
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
         <span class="badge">5</span>
         mountebank
@@ -1730,12 +1735,6 @@ Eg:</p>
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
         <span class="badge">5</span>
         service virtualisation
-      </a>
-    
-    
-    <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">1</span>
-        powershell
       </a>
     
     

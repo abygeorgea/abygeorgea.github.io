@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Powershell | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/powershell/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-05-25T10:41:35+10:00</updated>
+  <updated>2017-05-28T07:24:05+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -26,6 +26,53 @@
 <p>R flag denotes to run “rm” command recursively . “f” flag denotes to run in forcefully. We can even replace “f” with “v” for verbose mode and “i” for interactive mode.</p>
 
 <p>Note: Above command can also be used to delete files which have long path ( more than 260 characters)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Powershell - Copying Folders and Files]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files/"/>
+    <updated>2016-10-10T07:47:54+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files</id>
+    <content type="html"><![CDATA[<p>Two options for copying files are below.</p>
+
+<ul>
+<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
+<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
+</ul>
+
+
+<h3>Copying Folder structure Only</h3>
+
+<pre><code class="plain">$source = "C:\tools\DevKit2\octopress-blog\source"
+$dest = "D:\delete"
+Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
+
+#OR
+robocopy $source $dest /e /xf *.*
+
+# /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
+# /e can be replaced with /s for ignoring empty folders
+</code></pre>
+
+<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
+
+<pre><code class="plain">$source = "C:\tools\DevKit2\octopress-blog\source"
+$dest = "D:\delete"
+# Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
+#New-Item $dest -type directory 
+
+Get-ChildItem $source -Recurse | `
+    Where-Object { $_.PSIsContainer -eq $False } | `
+    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} 
+</code></pre>
+
+<h3>Copy same folder structure</h3>
+
+<pre><code class="plain">$source = "C:\tools\DevKit2\octopress-blog\source"
+$dest = "D:\delete"
+robocopy $source $dest /e
+</code></pre>
 ]]></content>
   </entry>
   

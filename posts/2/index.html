@@ -131,6 +131,116 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-04T08:33:04+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 4 Sep, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/04/element-location-using-xpath-axis/" itemprop="url">Element Location Using XPath Axis</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
+
+<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
+If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
+
+<p>Below are major one&rsquo;s which we will frequently use</p>
+
+<h3>1. ancestor</h3>
+
+<p>This selects all ancestors of current node. That will include parent, grand parents etc
+Eg :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Product Desc']/ancestor::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. descendant</h3>
+
+<p>This selects all children of current node. That will include child, grand child etc
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/table/descendant::td/input</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. followingis</h3>
+
+<p>Th selects everything after the closing tag of current node Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/following::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4. following-sibling</h3>
+
+<p>This selects all siblings after the closing tah of current node.
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/followingsibling::td</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5. preceding</h3>
+
+<p>This selects everything prior to current node
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Add to cart']/preceding::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>preceding-sibling</li>
+</ol>
+
+
+<p>This selects all siblings prior to current node
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Add to cart']/precedingsibling::td</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>7. child</h3>
+
+<p>This selects all children of current node</p>
+
+<h3>8. parent</h3>
+
+<p>This select parent of current node</p>
+
+<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
+
+<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-30T20:58:16+10:00"  data-updated="true" itemprop="datePublished dateCreated">30 Aug, 2016</time>
         
       </p>
@@ -660,6 +770,12 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/powershell/index.html">
+        <span class="badge">2</span>
+        powershell
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
         <span class="badge">5</span>
         mountebank
@@ -669,12 +785,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
         <span class="badge">5</span>
         service virtualisation
-      </a>
-    
-    
-    <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">1</span>
-        powershell
       </a>
     
     

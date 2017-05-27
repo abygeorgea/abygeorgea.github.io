@@ -384,8 +384,22 @@ Below commands can be run on cmd.exe</li>
 <li>Copy relevant folders to source folder of the blog</li>
 </ul>
 </li>
-<li><p>Find broken redirection links and fix</p></li>
-<li>Find broken image links and fix</li>
+<li><p>Find broken redirection links and fix</p>
+
+<ul>
+<li>The redirection links are now changed to something like <code>{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/</code></li>
+</ul>
+</li>
+<li>Find broken image links and fix
+
+<ul>
+<li>Inorder to make it easier for migrating to another platform later, I created a new config value in <code>_config.yml</code> as below .
+<code>
+  images_dir: /images
+</code></li>
+<li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -480,6 +494,12 @@ Below commands can be run on cmd.exe</li>
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/powershell/index.html">
+        <span class="badge">2</span>
+        powershell
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
         <span class="badge">5</span>
         mountebank
@@ -489,12 +509,6 @@ Below commands can be run on cmd.exe</li>
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
         <span class="badge">5</span>
         service virtualisation
-      </a>
-    
-    
-    <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">1</span>
-        powershell
       </a>
     
     
