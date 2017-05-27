@@ -161,4 +161,10 @@ After completing above steps,  a new octopress blog is ready to go . Below are t
     - Copy relevant folders to source folder of the blog
 
 - Find broken redirection links and fix
+	- The redirection links are now changed to something like `{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/`
 - Find broken image links and fix
+	- Inorder to make it easier for migrating to another platform later, I created a new config value in `_config.yml` as below .
+	``` 
+		images_dir: /images
+	```
+	- The image links are not pointing to `{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg`
