@@ -74,9 +74,6 @@
 <loc>http://www.abygeorgea.com/about/</loc>
 </url>
 <url>
-<loc>http://www.abygeorgea.com/quick-reference/</loc>
-</url>
-<url>
 <loc>http://www.abygeorgea.com/blog/categories/specflow/</loc>
 </url>
 <url>
@@ -102,5 +99,8 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/octostrap3/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/posts/2/</loc>
 </url>
 </urlset>
