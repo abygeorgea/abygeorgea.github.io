@@ -400,6 +400,39 @@ Below commands can be run on cmd.exe</li>
 </li>
 </ul>
 
+
+<h1>SEO Optimisation in Octopress</h1>
+
+<ul>
+<li>In rake file, add below two lines   <code>post.puts "keywords: "</code> and <code>post.puts "description: "</code></li>
+<li>Final content will look like below</li>
+</ul>
+
+
+<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>post.puts "---"
+</span><span class='line'>post.puts "layout: post"
+</span><span class='line'>post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+</span><span class='line'>post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
+</span><span class='line'>post.puts "comments: true"
+</span><span class='line'>post.puts "categories: "
+</span><span class='line'>post.puts "keywords: "
+</span><span class='line'>post.puts "description: "
+</span><span class='line'>post.puts "---"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Add relevant Keyword and description to all pages</li>
+</ul>
+
 </div>
   
   

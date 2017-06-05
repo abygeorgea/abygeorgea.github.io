@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-06T05:27:54+10:00</updated>
+  <updated>2017-06-06T05:36:05+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -213,6 +213,26 @@ git push origin source
 <li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
 </ul>
 </li>
+</ul>
+
+
+<h1>SEO Optimisation in Octopress</h1>
+
+<ul>
+<li>In rake file, add below two lines   <code>post.puts "keywords: "</code> and <code>post.puts "description: "</code></li>
+<li>Final content will look like below
+<code>
+ post.puts "---"
+ post.puts "layout: post"
+ post.puts "title: \"#{title.gsub(/&amp;/,'&amp;amp;')}\""
+ post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
+ post.puts "comments: true"
+ post.puts "categories: "
+ post.puts "keywords: "
+ post.puts "description: "
+ post.puts "---"
+</code></li>
+<li>Add relevant Keyword and description to all pages</li>
 </ul>
 
 ]]></content>
