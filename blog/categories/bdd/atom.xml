@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Bdd | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/bdd/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-06-06T05:27:54+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Specflow - Sharing Data Between Steps]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps/"/>
+    <updated>2016-08-01T12:12:23+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps</id>
+    <content type="html"><![CDATA[<p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
+
+<p>There are multiple ways to do it</p>
+
+<ol>
+<li><p>Context Injection</p></li>
+<li><p>Feature Context</p></li>
+<li><p>Scenario Context</p></li>
+</ol>
+
+
+<p>Let us look into more details about how to store and retrieve data using Scenario Context .</p>
+
+<p><strong>ScenarioContext.Current</strong></p>
+
+<p>How do we add a key value pair to Scenario Context ? It is as simple as below</p>
+
+<pre><code>[Given(@"I have entered (.*) and (.*) into the Login Page")]
+public void GivenIHaveEnteredAndIntoTheLoginPage(string p0, string p1)
+ {
+ ScenarioContext.Current.Add("username", p0);
+ ScenarioContext.Current.Add("password", p1);
+ }
+</code></pre>
+
+<p>How do we retrieve the value from ScenarioContext ?</p>
+
+<pre><code>When(@"I press retrieve data")]
+public void WhenIRetrieveData()
+{
+string username = (string)ScenarioContext.Current["username"];
+string password = (string)ScenarioContext.Current["password"];
+
+}
+</code></pre>
+
+<p>Note: While retrieving , scenarioContext.Current always return an object . Hence we need use explicit casting while retrieving data from scenario context.</p>
+
+<p>In Nut Shell,</p>
+
+<blockquote>**Set a value for a key ( Store data ) **
+ScenarioContext.Current.Add(string key, object value);
+
+**Get a value of the key ( Retrieve data) **
+var value =(Type) ScenarioContext.Current.[string Key];
+
+var value = ScenarioContext.Current.Get(string Key);</blockquote>
+
+
+<p>We can use this for storing and passing objects as well</p>
+
+<blockquote>Example of storing webdriver object is as below.(where "browser" is current webdriver object )
+
+ScenarioContext.Current.Add("driver1", browser);
+
+IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote>
+
+]]></content>
+  </entry>
+  
+</feed>
