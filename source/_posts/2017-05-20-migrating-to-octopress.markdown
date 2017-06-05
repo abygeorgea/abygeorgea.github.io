@@ -169,3 +169,20 @@ After completing above steps,  a new octopress blog is ready to go . Below are t
 		images_dir: /images
 	```
 	- The image links are not pointing to `{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg`
+
+
+# SEO Optimisation in Octopress #
+-  In rake file, add below two lines   ` post.puts "keywords: "` and `post.puts "description: "`
+-  Final content will look like below
+```
+    post.puts "---"
+    post.puts "layout: post"
+    post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
+    post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
+    post.puts "comments: true"
+    post.puts "categories: "
+	post.puts "keywords: "
+    post.puts "description: "
+    post.puts "---"
+```
+- Add relevant Keyword and description to all pages
