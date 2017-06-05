@@ -15,6 +15,9 @@ tags:
 - Selenium Locator Strategy
 - Selenium WebDriver
 - XPath
+
+keywords: Selenium , Specflow , Element Locator Strategy , C# , XPath
+description: How to take Identify web elements in selenium using relative XPath
 ---
 
 XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.

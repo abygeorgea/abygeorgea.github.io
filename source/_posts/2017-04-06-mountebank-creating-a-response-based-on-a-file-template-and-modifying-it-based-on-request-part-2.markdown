@@ -8,6 +8,8 @@ slug: mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-b
 title: Mountebank - Creating a response based on a file template and modifying it
   based on request - PART 2
 wordpress_id: 547
+keywords: Mountebank , Stub , Service Virtualisation , Soap Response, XML response
+description: How to stub a  response based on a sample template using Mountebank
 categories:
 - Mountebank
 - Service Virtualisation

@@ -12,6 +12,8 @@ categories:
 tags:
 - Selenium Locator Strategy
 - Selenium WebDriver
+keywords: Selenium , Specflow , Element Locator Strategy , C#
+description: How to take Identify web elements in selenium using C#
 ---
 
 Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.

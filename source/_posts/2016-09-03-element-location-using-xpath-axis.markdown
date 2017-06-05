@@ -15,6 +15,9 @@ tags:
 - Element Locator Strategy
 - Selenium WebDriver
 - XPath
+
+keywords: Selenium , Specflow , Element Locator Strategy , C# , XPath
+description: How to take Identify web elements in selenium using relative XPath
 ---
 
 During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn't have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties

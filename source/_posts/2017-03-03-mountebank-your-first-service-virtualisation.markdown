@@ -7,6 +7,8 @@ link: /blog/2017/03/03/mountebank-your-first-service-virtualisation/
 slug: mountebank-your-first-service-virtualisation
 title: Mountebank - Your first service Virtualisation
 wordpress_id: 351
+keywords: Mountebank , Stub , Service Virtualisation 
+description: How to use Mountebank for stubbing responses
 categories:
 - Mountebank
 - Service Virtualisation

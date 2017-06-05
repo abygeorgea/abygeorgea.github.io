@@ -4,6 +4,8 @@ title: "Powershell - Copying Folders and Files"
 date: 2016-10-10 06:47:54 +1000
 comments: true
 categories: Powershell
+keywords: Powershell
+description: How to copy files using powershell
 ---
 
 

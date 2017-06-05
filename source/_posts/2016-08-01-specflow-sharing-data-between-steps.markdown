@@ -9,10 +9,15 @@ title: Specflow - Sharing data between steps
 wordpress_id: 133
 categories:
 - Specflow
+- BDD
+- Data Driven Testing Framework
+- Selenium WebDriver
 tags:
 - BDD
 - Data Driven Testing Framework
 - Selenium WebDriver
+keywords: Selenium , Specflow , Sharing data between steps , C# 
+description: How to share data between steps in Specflow
 ---
 
 In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??

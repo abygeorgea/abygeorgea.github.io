@@ -3,9 +3,10 @@ layout: post
 title: "Migrating To Octopress"
 date: 2017-05-20 05:57:24 +1000
 comments: true
-categories: 
-- Octopress
-- Octostrap3
+keywords: Octopress , Octostrap 3 , Jekyll , Static Site, Google Analytics, Migrate , Wordpress , Github Pages
+description: How to migrate from wordpress to Octopress
+categories: Octopress  Octostrap3
+
 ---
 
 Over the past weekend, I noticed that my blog is not available since azure has disabled hosting of my WordPress blog. It happened because I ran out of my free credits for the current month. I started looking for alternate options for hosting WordPress. That's when I came across ([Static Generator is All a Blog Needs - Moving to Octopress](http://www.rahulpnath.com/blog/static-generator-is-all-a-blog-needs-moving-to-octopress/)). I decided to give it a try. 
