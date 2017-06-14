@@ -128,6 +128,67 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-15T05:46:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jun, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/15/how-to-squash-commits-in-git/" itemprop="url">How to Squash Commits in Git</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very often we will be committing smaller pieces of work in our local machine as we go. However before we push them to a centralized repository, we may have to combine these small commits to single large commit, which makes sense for rest of the team. I will explain how this can be achieved by using interactive rebasing.</p>
+
+<p>To start with, let us assume the initial commits history look like below. It have 4 minor commits done to the same file.
+<img src="/images/2017/06/15/HowToSquashCommits_image1.png" alt="Initial Commit Structure" /></p>
+
+<p>Now we need to squash last for commits into a single commit. The command required for that is as below. This tells git to rebase head with previous 4 commits in an interactive mode.</p>
+
+<pre><code>    $ git rebase -i HEAD~4
+</code></pre>
+
+<p>This will pop up another editor with details of last 4 commits and some description about possible actions on this. Initially, all of them will have a default value of PICK. Since we are trying to squash commits together, we can select one of the commits as PICK and rest all needs to be changed as SQUASH. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image2.png" alt="Interactive Rebasing" /></p>
+
+<p>After this, another popup will appear with comments given for each of the commits. We can comment out unnecessary comments by using <code>#</code> and also modify required comments as we need. In below screen, I have modified comments for the first commit and commented out rest all. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image3.png" alt="Selecting comments" /></p>
+
+<p>Now Git will continue rebasing and it will squash all commits as selected in the previous step.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image4.png" alt="Git rebase" /></p>
+
+<p>If we look at commit history, we can see that commits are now squashed to single commit.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image5.png" alt="Squashed Result" /></p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-20T05:57:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 May, 2017</time>
         
       </p>
@@ -1642,67 +1703,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-06T22:00:23+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Sep, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/" itemprop="url">How to Take Screenshots With Selenium in C#</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very frequently testers will meet a situation where they need to take screenshot of webpage they are testing , either for base line or as a proof of test result. This is same with automated testing . Even though automated test cases have their own of way of publishing test results, it is always desirable to keep a proof of result.. Screenshot come to help in this regards. In this blog post , I will explain , how to take a screenshot with Selenium Web Driver with C#. In future I will add another couple of post to explain , how to consolidate the screenshots into a PDF document.</p>
-
-<p>In .NET binding, we have an interface called ITakesScreenshot , which helps to capture screenshot of active window. Below code will help to take screenshot and save it in the path specified while calling the function</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>// PathToFolder is the location where we need to save the screenshot
-</span><span class='line'>// FileName is another string where PathToFolder is appended with timestamp
-</span><span class='line'>public void TakeScreenShot(string PathToFolder)
-</span><span class='line'>{
-</span><span class='line'>  string fileName = PathToFolder + DateTime.Now.ToString("HHmmss") +".jpeg";
-</span><span class='line'>  Screenshot cp = ((ITakesScreenshot)driver).GetScreenshot();
-</span><span class='line'>  cp.SaveAsFile(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1769,7 +1769,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     
     <a class="list-group-item " href="/blog/categories/git/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         git
       </a>
     
@@ -1811,6 +1811,8 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
+    
     <a class="list-group-item " href="/blog/2017/05/20/migrating-to-octopress/">Migrating to Octopress</a>
     
     <a class="list-group-item " href="/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">Powershell - Remove Entire Directory and It's Content</a>
@@ -1818,8 +1820,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     <a class="list-group-item " href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">Stubbing XML Responses Using Mountebank</a>
     
     <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
-    
-    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a>
     
   </div>
 </section>
