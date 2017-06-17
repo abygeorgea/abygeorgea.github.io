@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Codesnippets | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/codesnippets/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-06-17T23:38:17+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Data Driven Framework - Excel]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-excel/"/>
+    <updated>2016-07-30T05:49:22+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-excel</id>
+    <content type="html"><![CDATA[<p>In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found <a href="/blog/2016/07/29/data-driven-framework-xml/">here</a>. I have also written about how to use jxl library for <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">reading from excel</a> and <a href="/blog/2014/06/01/java-writing-into-specific-cell-in-excel/">writing into Excel</a>.</p>
+
+<p>Below is another code snippet to read all values of a row and save it into a hash map for accessing later during automation test.</p>
+
+<pre><code class="Java">public  HashMap GetAllDataForARow  (String sheet, int Row){
+        HashMap DataMap = new HashMap();
+        try {
+            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
+
+            //Obtain the reference to the first sheet in the workbook
+            Sheet sheet1 = wrk1.getSheet(sheet);
+            int x =0;
+
+
+            Cell colArow1 , colArow2;
+            do {
+                colArow1 = sheet1.getCell(x,0);
+                colArow2 = sheet1.getCell(x,Row);
+                DataMap.put(colArow1.getContents(), colArow2.getContents());
+                x=x+1;
+            }while (colArow1.getContents() != "");
+
+        }
+
+        catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (IndexOutOfBoundsException e){
+        }
+        return DataMap;
+
+    }
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java - Writing Into Specific Cell in Excel]]></title>
+    <link href="http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel/"/>
+    <updated>2014-06-10T22:24:30+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel</id>
+    <content type="html"><![CDATA[<p>In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">here</a></p>
+
+<p>In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.</p>
+
+<p>Below is the import section</p>
+
+<pre><code>import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.read.biff.BiffException;
+import jxl.write.*;
+</code></pre>
+
+<p>Below is the function for writing into excel</p>
+
+<pre><code class="Java">    public  void WriteDataIntoExcelCell (String sheet, String field_name, int Row, String input){
+        try {
+
+            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
+
+            //Obtain the reference to the first sheet in the workbook
+            Sheet sheet1 = wrk1.getSheet(sheet);
+            int x =0;
+            int y =0;
+            int Col=0;
+            // Find Column number from excel by iteration first row and comparing the names
+            Cell colArow1 = sheet1.getCell(x,y);
+            do {
+
+                colArow1 = sheet1.getCell(x,y);
+                if (colArow1.getContents().equalsIgnoreCase(field_name) ){
+                    Col = colArow1.getColumn();
+                    break;
+                }
+                x=x+1;
+
+            }while (colArow1.getContents() != "");
+            // write to file
+            File exlFile = new File(dataPath);
+            WritableWorkbook writableWorkbook = Workbook.createWorkbook(exlFile,wrk1);
+            WritableSheet writableSheet = writableWorkbook.getSheet(sheet);
+            //WritableCellFormat writableCell = writableWorkbook.getSheet(sheet).
+            // Update cell content and format
+            String Varcolour ;
+            Label label;
+            if (input.equalsIgnoreCase("PASS")){
+                label = new Label(Col,Row,input,getCellFormat(Colour.GREEN));
+            }
+            else if (input.equalsIgnoreCase("FAIL"))
+            {
+                label = new Label(Col,Row,input,getCellFormat(Colour.RED));
+            }
+            else {
+                label = new Label(Col,Row,input);
+            }
+            //Label label = new Label(Col,Row,input);
+
+            writableSheet.addCell(label);
+
+            writableWorkbook.write();
+            writableWorkbook.close();
+
+
+        }
+
+        catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (WriteException e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
+    private static WritableCellFormat getCellFormat(Colour colour) throws WriteException {
+        WritableFont cellFont = new WritableFont(WritableFont.TAHOMA, 10);
+        WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+        cellFormat.setBackground(colour);
+        return cellFormat;
+    }
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Java - Reading a Specific Cell in Excel]]></title>
+    <link href="http://www.abygeorgea.com/blog/2014/06/01/java-reading-a-specific-cell-in-excel/"/>
+    <updated>2014-06-01T21:04:52+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2014/06/01/java-reading-a-specific-cell-in-excel</id>
+    <content type="html"><![CDATA[<p>Below is a code snippet for reading a specific cell from Excel using Java.</p>
+
+<p>It is done by using importing jxl jar files which can be found <a href="https://sourceforge.net/projects/jxl/">here</a>.</p>
+
+<p>Import below in class file
+<code>
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
+import jxl.format.Colour;
+import jxl.read.biff.BiffException;
+import jxl.write.*;
+</code></p>
+
+<p>Below is function for reading value from specific cell in Excel</p>
+
+<pre><code class="Java Read From Excel based on Row and coulmn Number"> public  String readexcel(String sheet, int intRow, int intCol){
+        try {
+
+            //Create a workbook object from the file at specified location.
+            //Change the path of the file as per the location on your computer.
+
+            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
+
+            //Obtain the reference to the first sheet in the workbook
+            Sheet sheet1 = wrk1.getSheet(sheet);
+            //Obtain reference to the Cell using getCell(int col, int row) method of sheet
+            // Add " - 1" to both intRow , intCol depending how whether we consider excel start with row &amp; column number as 0 or 1
+            Cell colArow1 = sheet1.getCell(intRow , intCol );
+
+
+            //Read the contents of the Cell using getContents() method, which will return
+            //it as a String
+            String strReturn = colArow1.getContents();
+
+            return strReturn;
+
+         /*  //Display the cell contents
+           System.out.println("Contents of cell Col A Row 1: \""+str_colArow1 + "\"");
+           System.out.println("Contents of cell Col B Row 1: \""+str_colBrow1 + "\"");
+           System.out.println("Contents of cell Col A Row 2: \""+str_colArow2 + "\"");*/
+
+
+        } catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return sheet;
+    }
+</code></pre>
+
+<p>Below is an example of how to read from a cell based on row number and Column NAME</p>
+
+<pre><code class="Java Read From Excel Based On Column Name"> public  String GetDataBasedOnRowNumAndColName  (String sheet, String field_name, int Row){
+        try {
+            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
+
+            //Obtain the reference to the first sheet in the workbook
+            Sheet sheet1 = wrk1.getSheet(sheet);
+            int x =0;
+            int y =0;
+            int Col=0;
+            boolean FOUND = false;
+           // Find corresponding Column number based on Name
+            Cell colArow1 = sheet1.getCell(x,y);
+            do {
+
+                colArow1 = sheet1.getCell(x,y);
+                if (colArow1.getContents().equalsIgnoreCase(field_name) ){
+                    Col = colArow1.getColumn();
+                    // System.out.println(Col);
+                    FOUND = true;
+                    break;
+                }
+                x=x+1;
+
+            }while (colArow1.getContents() != "");
+            if (FOUND)
+            {
+                colArow1 = sheet1.getCell(Col,Row-1);
+                // System.out.println(colArow1.getContents());
+                return colArow1.getContents();
+            }
+            else
+            {
+                return " ";
+            }
+        }
+
+        catch (BiffException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (IndexOutOfBoundsException e){
+            return "";
+        }
+
+        return sheet;
+    }
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

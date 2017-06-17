@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Volunteering | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/volunteering/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-06-17T23:38:17+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Volunteering Experience]]></title>
+    <link href="http://www.abygeorgea.com/blog/2015/10/16/volunteering-experience/"/>
+    <updated>2015-10-16T21:40:35+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2015/10/16/volunteering-experience</id>
+    <content type="html"><![CDATA[<p>A couple of months back , I helped out to organize clinical examination for RACP. I created a tool ( Excel Macro)  for finalizing exam schedules for all attendees. The roster should consider employee preference, examiner availability, timeslot, venue and other parameters. Below is what I got in return ( even though they misspelled my name).</p>
+
+<p><img src="/images/2015/10/16/volunteer%20certificate.png" alt="" /></p>
+]]></content>
+  </entry>
+  
+</feed>
