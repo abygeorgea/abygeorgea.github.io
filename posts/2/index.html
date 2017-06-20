@@ -131,6 +131,65 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-12T08:41:43+11:00"  data-updated="true" itemprop="datePublished dateCreated">12 Feb, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/02/12/ui-testing-in-isolation/" itemprop="url">UI Testing- Decoupling Back End Dependency</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>The traditional approach for automating UI test cases is to create selenium web driver based ( or any UI testing tools) scripts for exercising complete end to end flow. However, it comes with its own challenges. It will have multiple steps as pre-requiste for reaching required UI page and hence it behaves as an E2E integration test rather than UI test.</p>
+
+<p>A typical web application architecture will have one or more front-end application, which will talk to multiple back-end services, API&rsquo;s etc. They will, in turn, talk to other back-end services or to different databases. On High level , architecture looks like below
+<img src="/images/2017/02/02/UIinIsolation_1.png" alt="" /></p>
+
+<p> On an enterprise world, all these will be developed and maintained by different teams. All of them will be working in parallel and will push in their code changes ( including occasional broken code) frequently. This will result in breakages since test automation scripts heavily depending on UI and its integration. Even if there is no broken code, a test can still fail due to multiple environmental issues for any of the backend services and other components.  Hence it will become increasingly difficult for achieving a green build.</p>
+
+<p>Hence UI based test cases are less robust due different reasons like</p>
+
+<ol>
+<li><p>Test depends on external factors which are outside of our control and not part of scope of testing</p></li>
+<li><p>Failing test may not pin point exact location of failure since it is trying to test too many things.</p></li>
+<li><p>There are chances that all components will not be ready when we want to test UI. Hence testing it pushed to the end , which will increase cost of fixing defects.</p></li>
+<li><p>Re - running of test cases may pass (if failure is caused by environmental issues)</p></li>
+<li><p>UI test are brittle by nature since they will even fail  due to timing issues because it is depending on data from back end services.</p></li>
+</ol>
+
+
+<p>The solution for above is to adopt more unit test like structure for UI testing. We should be testing UI in isolation to other back-end services and their dependency. This allows testing as much as possible early in lifecycle without any dependency on other streams. We should replace all backend service calls with stubs</p>
+
+<p><img src="/images/2017/02/02/UIinIsolation_2.png" alt="" /></p>
+
+<p>Mountebank is a tool which we can use for mocking the service calls. As per <a href="http://www.mbtest.org/">mbtest.org</a>, mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire.  We can use mountebank for stubbing the back-end service calls and there by use it for decoupling UI from unpredictable back end.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-10-10T07:47:54+11:00"  data-updated="true" itemprop="datePublished dateCreated">10 Oct, 2016</time>
         
       </p>
@@ -985,45 +1044,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-10-16T21:40:35+11:00"  data-updated="true" itemprop="datePublished dateCreated">16 Oct, 2015</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/10/16/volunteering-experience/" itemprop="url">Volunteering Experience</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>A couple of months back , I helped out to organize clinical examination for RACP. I created a tool ( Excel Macro)  for finalizing exam schedules for all attendees. The roster should consider employee preference, examiner availability, timeslot, venue and other parameters. Below is what I got in return ( even though they misspelled my name).</p>
-
-<p><img src="/images/2015/10/16/volunteer%20certificate.png" alt="" /></p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1148,6 +1168,12 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
         octostrap3
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/galen/index.html">
+        <span class="badge">1</span>
+        galen
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1156,6 +1182,8 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
+    
     <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
     
     <a class="list-group-item " href="/blog/2017/05/20/migrating-to-octopress/">Migrating to Octopress</a>
@@ -1163,8 +1191,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     <a class="list-group-item " href="/blog/2017/05/02/powershell-remove-entire-directory-and-its-content/">Powershell - Remove Entire Directory and It's Content</a>
     
     <a class="list-group-item " href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">Stubbing XML Responses Using Mountebank</a>
-    
-    <a class="list-group-item " href="/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/">Zip and Extract Zip Files Using Csharp</a>
     
   </div>
 </section>
