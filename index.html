@@ -821,6 +821,102 @@ Below commands can be run on cmd.exe</li>
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-20T21:59:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 Apr, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/" itemprop="url">Zip and Extract Zip Files Using Csharp</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
+
+<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>.Net 4.5 is needed</li>
+<li>Add reference to below dll to solution
+
+<ul>
+<li>System.IO.Compression.dll</li>
+<li>System.IO.Compression.FileSystem.dll</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='c#'><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">ZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">CreateFromDirectory</span><span class="p">(</span><span class="n">startPath</span><span class="p">,</span> <span class="n">zipPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">UnZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">ExtractToDirectory</span><span class="p">(</span><span class="n">zipPath</span><span class="p">,</span> <span class="n">extractPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-07T06:24:20+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 7 Apr, 2017</time>
         
       </p>
@@ -1629,101 +1725,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-10-10T07:47:54+11:00"  data-updated="true" itemprop="datePublished dateCreated">10 Oct, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/10/10/powershell-copying-folders-and-files/" itemprop="url">Powershell - Copying Folders and Files</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Two options for copying files are below.</p>
-
-<ul>
-<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
-<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
-</ul>
-
-
-<h3>Copying Folder structure Only</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'>Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
-</span><span class='line'>
-</span><span class='line'>#OR
-</span><span class='line'>robocopy $source $dest /e /xf *.*
-</span><span class='line'>
-</span><span class='line'># /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
-</span><span class='line'># /e can be replaced with /s for ignoring empty folders</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'># Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
-</span><span class='line'>#New-Item $dest -type directory 
-</span><span class='line'>
-</span><span class='line'>Get-ChildItem $source -Recurse | `
-</span><span class='line'>    Where-Object { $_.PSIsContainer -eq $False } | `
-</span><span class='line'>    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} </span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Copy same folder structure</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'>robocopy $source $dest /e</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1748,7 +1749,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     
     <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
-        <span class="badge">3</span>
+        <span class="badge">4</span>
         codesnippets
       </a>
     
@@ -1864,7 +1865,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     <a class="list-group-item " href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">Stubbing XML Responses Using Mountebank</a>
     
-    <a class="list-group-item " href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a>
+    <a class="list-group-item " href="/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/">Zip and Extract Zip Files Using Csharp</a>
     
   </div>
 </section>

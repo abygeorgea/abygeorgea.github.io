@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codesnippets | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/codesnippets/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-19T20:15:55+10:00</updated>
+  <updated>2017-06-20T22:06:34+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Zip and Extract Zip Files Using Csharp]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/"/>
+    <updated>2017-04-20T21:59:02+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp</id>
+    <content type="html"><![CDATA[<p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
+
+<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>.Net 4.5 is needed</li>
+<li>Add reference to below dll to solution
+
+<ul>
+<li>System.IO.Compression.dll</li>
+<li>System.IO.Compression.FileSystem.dll</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
+
+<pre><code class="c#      ">        Public void ZipFile()
+        {
+            string startPath = @"c:\example\start";
+            string zipPath = @"c:\example\result.zip";
+            string extractPath = @"c:\example\extract";
+
+            ZipFile.CreateFromDirectory(startPath, zipPath);
+        }
+
+        Public void UnZipFile()
+        {
+            string startPath = @"c:\example\start";
+            string zipPath = @"c:\example\result.zip";
+            string extractPath = @"c:\example\extract";
+
+            ZipFile.ExtractToDirectory(zipPath, extractPath);
+        }
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Data Driven Framework - Excel]]></title>

@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-19T20:15:55+10:00</updated>
+  <updated>2017-06-20T22:06:34+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -588,6 +588,74 @@ Below commands can be run on cmd.exe</li>
 <p>In Nut shell, creating a XML response is similar to creating json response. There are only minor differences in the js file which creates the response. The main difference is the omission of Json.Parse and also changing the response headers.</p>
 
 <p>Above examples can be cloned from my GitHub repository <a href="https://github.com/abygeorgea/MountebankExamples">here</a>. After cloning the repository to local, just run RunMounteBankStubsWithSOAPXMLStubExampleData.bat file. Postman scripts can also be found inside PostmanCollections Folder to testing this</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Zip and Extract Zip Files Using Csharp]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/"/>
+    <updated>2017-04-20T21:59:02+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp</id>
+    <content type="html"><![CDATA[<p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
+
+<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>.Net 4.5 is needed</li>
+<li>Add reference to below dll to solution
+
+<ul>
+<li>System.IO.Compression.dll</li>
+<li>System.IO.Compression.FileSystem.dll</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='c#'><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">ZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">CreateFromDirectory</span><span class="p">(</span><span class="n">startPath</span><span class="p">,</span> <span class="n">zipPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">UnZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">ExtractToDirectory</span><span class="p">(</span><span class="n">zipPath</span><span class="p">,</span> <span class="n">extractPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 ]]></content>
   </entry>
   
@@ -1907,178 +1975,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     <content type="html"><![CDATA[<p>A couple of months back , I helped out to organize clinical examination for RACP. I created a tool ( Excel Macro)  for finalizing exam schedules for all attendees. The roster should consider employee preference, examiner availability, timeslot, venue and other parameters. Below is what I got in return ( even though they misspelled my name).</p>
 
 <p><img src="http://www.abygeorgea.com/images/2015/10/16/volunteer%20certificate.png" alt="" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java - Writing Into Specific Cell in Excel]]></title>
-    <link href="http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel/"/>
-    <updated>2014-06-10T22:24:30+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel</id>
-    <content type="html"><![CDATA[<p>In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found <a href="http://www.abygeorgea.com/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">here</a></p>
-
-<p>In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.</p>
-
-<p>Below is the import section</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import jxl.Cell;
-</span><span class='line'>import jxl.Sheet;
-</span><span class='line'>import jxl.Workbook;
-</span><span class='line'>import jxl.format.Colour;
-</span><span class='line'>import jxl.read.biff.BiffException;
-</span><span class='line'>import jxl.write.*;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Below is the function for writing into excel</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span>  <span class="kt">void</span> <span class="nf">WriteDataIntoExcelCell</span> <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="n">String</span> <span class="n">field_name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">,</span> <span class="n">String</span> <span class="n">input</span><span class="o">){</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
-</span><span class='line'>        <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">Col</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>      <span class="c1">// Find Column number from excel by iteration first row and comparing the names</span>
-</span><span class='line'>        <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field_name</span><span class="o">)</span> <span class="o">){</span>
-</span><span class='line'>                <span class="n">Col</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getColumn</span><span class="o">();</span>
-</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="c1">// write to file</span>
-</span><span class='line'>        <span class="n">File</span> <span class="n">exlFile</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">WritableWorkbook</span> <span class="n">writableWorkbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="o">.</span><span class="na">createWorkbook</span><span class="o">(</span><span class="n">exlFile</span><span class="o">,</span><span class="n">wrk1</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">WritableSheet</span> <span class="n">writableSheet</span> <span class="o">=</span> <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">//WritableCellFormat writableCell = writableWorkbook.getSheet(sheet).</span>
-</span><span class='line'>      <span class="c1">// Update cell content and format</span>
-</span><span class='line'>        <span class="n">String</span> <span class="n">Varcolour</span> <span class="o">;</span>
-</span><span class='line'>        <span class="n">Label</span> <span class="n">label</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;PASS&quot;</span><span class="o">)){</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">GREEN</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;FAIL&quot;</span><span class="o">))</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">RED</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="c1">//Label label = new Label(Col,Row,input);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">writableSheet</span><span class="o">.</span><span class="na">addCell</span><span class="o">(</span><span class="n">label</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">write</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">WriteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">WritableCellFormat</span> <span class="nf">getCellFormat</span><span class="o">(</span><span class="n">Colour</span> <span class="n">colour</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">WriteException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">WritableFont</span> <span class="n">cellFont</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableFont</span><span class="o">(</span><span class="n">WritableFont</span><span class="o">.</span><span class="na">TAHOMA</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">WritableCellFormat</span> <span class="n">cellFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableCellFormat</span><span class="o">(</span><span class="n">cellFont</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">cellFormat</span><span class="o">.</span><span class="na">setBackground</span><span class="o">(</span><span class="n">colour</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cellFormat</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   
