@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Galen | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/galen/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-21T06:46:26+10:00</updated>
+  <updated>2017-06-27T21:47:58+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Galen Framework - Getting Started]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/06/25/galen-framework-getting-started/"/>
+    <updated>2017-06-25T05:39:02+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/06/25/galen-framework-getting-started</id>
+    <content type="html"><![CDATA[<p>In previous <a href="{site.root}}blog/2017/06/21/automated-testing-of-responsive-web-design">post</a>, I mentioned that we can use Galen for automated lay out testing. Galen offers a simple solution to test location of objects relative to each other on the page. Galen is implemented using Selenium Web driver. Hence we can use it for normal functional automation testing as well.</p>
+
+<h3>Documentation of Galen</h3>
+
+<ul>
+<li>Galen has its own domain specific language to define Specs. Detailed documentation can be found <a href="http://galenframework.com/docs/reference-galen-spec-language-guide/">here</a>.</li>
+<li>Galen has its own javascript API which provides a list of functions which make writing test cases easier. Detailed documentation can be found <a href="http://galenframework.com/docs/reference-galen-javascript-api/">here</a>.</li>
+<li>Galen pages javascript API is light weight javascript test framework. Details are available <a href="http://galenframework.com/docs/reference-galenpages-javascript-api/">here</a>.</li>
+<li>Details of galen test suite syntax are <a href="http://galenframework.com/docs/reference-galen-test-suite-syntax/">here</a>.</li>
+<li>Galen framework has a detailed documentation of its usage and functions <a href="http://galenframework.com/docs/all/">here</a>.</li>
+</ul>
+
+
+<h3>Installation</h3>
+
+<p>Below are high-level steps to help you get started.</p>
+
+<ol>
+<li>Ensure Java is installed. Galen needs Java version above 1.8</li>
+<li>Download binary from <a href="http://galenframework.com/download/">http://galenframework.com/download/</a></li>
+<li>Extract the zip file</li>
+<li>Add the location of extracted files to PATH  environment variables. A detailed guide for older versions of Windows is available <a href="http://mindengine.net/post/2014-01-08-configuring-galen-framework-for-windows">here</a>.</li>
+<li>Alternatively, on Windows , you can create a bat file to run Galen by changing Path on the fly. Details are in below steps.</li>
+</ol>
+
+
+<h3>Setting up Galen Framework</h3>
+
+<p>There are different framework available for testing responsive design based on Galen. <a href="https://github.com/galenframework/galen-bootstrap">Galen bootstrap</a> is one of such framework which can be reused.</p>
+
+<ul>
+<li>Download and extract the project from Github. Keep relevant files only. You can remove</li>
+<li>Create an <code>init.js</code> file to load
+<code>galen-bootstrap/galen-bootstrap.js</code>script and configure all devices and a website URL for testing. URL mentioned below is an example of responsive web design template.</li>
+</ul>
+
+
+<pre><code class="javascript">load("galen-bootstrap/galen-bootstrap.js");
+//$galen.settings.website = "https://alistapart.com/d/responsive-web-design/ex/ex-site-FINAL.html";
+//$galen.registerDevice("mobile", inLocalBrowser("mobile emulation", "450x800", ["mobile"]));
+//$galen.registerDevice("tablet", inLocalBrowser("tablet emulation", "600x800", ["tablet"]));
+//$galen.registerDevice("desktop", inLocalBrowser("desktop emulation", "1024x768", ["desktop"]));
+</code></pre>
+
+<p>Note: Uncomment the lines above. Octopress blog engine was throwing error when it tries generate post.</p>
+
+<ul>
+<li>Run <code>galen config</code> from the command line with the project directory. This will create Galen config file in the location where the command is run.</li>
+</ul>
+
+
+<p><img src="/images/2017/06/25/GalenframeworkGettingStarted01.png" alt="Create Galen Config" /></p>
+
+<ul>
+<li>Modify galen.config file to make chrome as default browser and add path to chrome driver. There are other useful configs like range approximation, screenshot, selenium grid etc in the config.</li>
+</ul>
+
+
+<pre><code>galen.default.browser=chrome
+$.webdriver.chrome.driver=.\\..\\WebProject\\Driver\\chromedriver.exe
+</code></pre>
+
+<ul>
+<li>Create a folder named <code>Test</code> for keeping test cases and create test files <code>example.test.js</code>. Copy below content to <code>example.test.js</code>. Make sure to update the relative location of the init.js file created in previous steps. Below content loads init.js file which lists out website URL, device sizes that need to be tested.It then calls a function to test on all devices. Check layout is one of the available javascript API function.</li>
+</ul>
+
+
+<pre><code>load (".\\..\\init.js")
+testOnAllDevices("Welcome page test", "/", function (driver, device) {
+    checkLayout(driver, "specs/homepage.gspec", device.tags, device.excludedTags);
+});
+</code></pre>
+
+<ul>
+<li>Create a folder named <code>specs</code> and create a spec file named <code>homepage.gspec</code>. We need to update the specs with layout checks . Below is the sample spec for checking image and section intro for the sample URL from init.js. First section defines the objects and its identifier. Second section says that on desktop, image will on left side of section intro and on mobile and tablet, it will be above section intro</li>
+</ul>
+
+
+<pre><code>@objects
+    image        id         logo
+    menu         css        #page &gt; div &gt; div.mast &gt; ul
+    sectionintro    css     #page &gt; div &gt; div.section.intro
+
+= Main  Section =
+    image:
+        @on desktop
+            left-of sectionintro
+        @on mobile, tablet
+            above sectionintro
+</code></pre>
+
+<ul>
+<li>Now create a bat file in the main folder to run the galen test cases. Make sure to give relative paths to test file, configs, reports correctly. Modify Path variable to include path location to galen bin. This is not needed if we manually set pah while installing. However, I prefer to have galen bin files as well in source control and point the path to that location so that we don&rsquo;t have any specific dependency outside the project.</li>
+</ul>
+
+
+<pre><code>SET PATH=%PATH%;.\galen-bin
+galen test .\\test\\example.test.js  --htmlreport .\reports   --jsonreport .\jsonreports --config .\galen.config
+</code></pre>
+
+<p>once all files are created, folder structure will look like below
+<img src="/images/2017/06/25/GalenframeworkGettingStarted00.png" alt="" /></p>
+
+<ul>
+<li>run the bat file created above. This will ideally run example.test.js file which invokes chrome driver, navigate to the URl, resizes the browser and then check for the specs.It will list out the results in command prompt. Once it completes are all test execution, it creates both HTML report and JSON report in corresponding folder location mentioned in bat file. Below is a sample HTML report, which is self-explanatory.</li>
+</ul>
+
+
+<p>Main report
+<img src="/images/2017/06/25/GalenframeworkGettingStarted02.png" alt="" /></p>
+
+<p>If we expand the result for desktop emulation, it will look like below.It will list down each assertion made and indicate whether it is passed or failed.
+<img src="/images/2017/06/25/GalenframeworkGettingStarted03.png" alt="" /></p>
+
+<p>If we click on the assertion point, it will show the screenshot taken for that assertion by highlighting the objects which will help for easier verification. Below screenshot shows that image is on left side of section intro as defined in spec file.
+<img src="/images/2017/06/25/GalenframeworkGettingStarted04.png" alt="" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automated Testing of CSS for Responsive Web Design]]></title>
