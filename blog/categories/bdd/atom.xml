@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bdd | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/bdd/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Specflow - Sharing Data Between Steps]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps/"/>
-    <updated>2016-08-01T12:12:23+10:00</updated>
+    <updated>2016-08-01T02:12:23+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps</id>
     <content type="html"><![CDATA[<p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
 

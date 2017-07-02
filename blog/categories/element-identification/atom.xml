@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Element Identification | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/element-identification/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis/"/>
-    <updated>2016-09-04T08:33:04+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis</id>
+    <link href="http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis/"/>
+    <updated>2016-09-03T22:33:04+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis</id>
     <content type="html"><![CDATA[<p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
 
 <p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
@@ -92,7 +92,7 @@ Eg:
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/"/>
-    <updated>2016-08-30T20:58:16+10:00</updated>
+    <updated>2016-08-30T10:58:16+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath</id>
     <content type="html"><![CDATA[<p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
 
@@ -155,9 +155,9 @@ WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'p
   
   <entry>
     <title type="html"><![CDATA[Identifying Elements Using Locators in Selenium]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium/"/>
-    <updated>2016-08-18T06:30:54+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium</id>
+    <link href="http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium/"/>
+    <updated>2016-08-17T20:30:54+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium</id>
     <content type="html"><![CDATA[<p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
 
 <p>Selenium Web Driver provides two different methods for identifying html elements .</p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Specflow | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/specflow/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[How to Take Screenshots With Selenium in C#]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/"/>
-    <updated>2016-09-06T22:00:23+10:00</updated>
+    <updated>2016-09-06T12:00:23+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c</id>
     <content type="html"><![CDATA[<p>Very frequently testers will meet a situation where they need to take screenshot of webpage they are testing , either for base line or as a proof of test result. This is same with automated testing . Even though automated test cases have their own of way of publishing test results, it is always desirable to keep a proof of result.. Screenshot come to help in this regards. In this blog post , I will explain , how to take a screenshot with Selenium Web Driver with C#. In future I will add another couple of post to explain , how to consolidate the screenshots into a PDF document.</p>
 
@@ -38,9 +38,9 @@ public void TakeScreenShot(string PathToFolder)
   
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis/"/>
-    <updated>2016-09-04T08:33:04+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis</id>
+    <link href="http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis/"/>
+    <updated>2016-09-03T22:33:04+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis</id>
     <content type="html"><![CDATA[<p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
 
 <p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
@@ -115,7 +115,7 @@ Eg:
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/"/>
-    <updated>2016-08-30T20:58:16+10:00</updated>
+    <updated>2016-08-30T10:58:16+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath</id>
     <content type="html"><![CDATA[<p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
 
@@ -179,7 +179,7 @@ WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'p
   <entry>
     <title type="html"><![CDATA[Specflow - Sharing Data Between Steps]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps/"/>
-    <updated>2016-08-01T12:12:23+10:00</updated>
+    <updated>2016-08-01T02:12:23+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps</id>
     <content type="html"><![CDATA[<p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
 

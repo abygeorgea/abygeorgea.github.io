@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Xml | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/xml/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Data Driven Framework - XML]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/"/>
-    <updated>2016-07-30T08:10:02+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml</id>
+    <link href="http://www.abygeorgea.com/blog/2016/07/29/data-driven-framework-xml/"/>
+    <updated>2016-07-29T22:10:02+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/07/29/data-driven-framework-xml</id>
     <content type="html"><![CDATA[<p>I am not going to explain what is data driven framework or what is its benefits.  All of them are pretty well-known . If not, just google it.</p>
 
 <p>Here I am going to explain a sample code which can be used to read from xml data files. This will be helpful to implement a data driven frame work for BDD testing , using Specflow or Cucumber</p>

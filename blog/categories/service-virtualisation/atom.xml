@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Service Virtualisation | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/service-virtualisation/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -168,9 +168,9 @@ body: response
   
   <entry>
     <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/"/>
-    <updated>2017-04-07T06:24:20+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2</id>
+    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/"/>
+    <updated>2017-04-06T20:24:20+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2</id>
     <content type="html"><![CDATA[<p>This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>.  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Part1 </a>of the excercise. If you need to know more about mountebank and how to use mountebank , please read through <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">how to install mountebank </a> and <a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">service virtualisation using mountebank</a>.</p>
 
 <p>As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below
@@ -292,7 +292,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#x4a;&#111;&#x68;&#110;&#46;&#x43;&#105;&#x74;&#x69;&#122;&#101;&#110;&#x40;&#97;&#x62;&#99;&#x61;&#x62;&#97;&#x63;&#x61;&#x73;&#x2e;&#99;&#x6f;&#x6d;">&#74;&#x6f;&#x68;&#110;&#46;&#67;&#x69;&#116;&#105;&#122;&#101;&#110;&#64;&#x61;&#x62;&#99;&#97;&#98;&#97;&#x63;&#97;&#115;&#x2e;&#x63;&#111;&#x6d;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#x3a;&#74;&#x6f;&#104;&#x6e;&#46;&#67;&#x69;&#x74;&#105;&#x7a;&#x65;&#110;&#x40;&#97;&#x62;&#x63;&#97;&#98;&#97;&#x63;&#97;&#x73;&#x2e;&#99;&#111;&#x6d;">&#74;&#111;&#x68;&#x6e;&#x2e;&#x43;&#105;&#x74;&#105;&#122;&#101;&#x6e;&#64;&#97;&#x62;&#x63;&#97;&#98;&#97;&#x63;&#x61;&#115;&#46;&#x63;&#111;&#109;</a>&rdquo;</p>
 
 <p>}</p>
 
@@ -334,9 +334,9 @@ Finally , the template response
   
   <entry>
     <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
-    <updated>2017-04-07T05:43:44+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
+    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
+    <updated>2017-04-06T19:43:44+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
     <content type="html"><![CDATA[<p>In the previous two blog post, I have explained about how to setup mountebank (<a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
 
 <p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
@@ -442,7 +442,7 @@ body: response
   <entry>
     <title type="html"><![CDATA[Mountebank - Your First Service Virtualisation]]></title>
     <link href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/"/>
-    <updated>2017-03-03T22:46:48+11:00</updated>
+    <updated>2017-03-03T11:46:48+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation</id>
     <content type="html"><![CDATA[<p>In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here (Install Mountebank)</a>, we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response</p>
 
@@ -592,7 +592,7 @@ mb --configfile StubResponse/test.json
   <entry>
     <title type="html"><![CDATA[Service Virtualisation Using Mountebank]]></title>
     <link href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/"/>
-    <updated>2017-02-13T22:13:58+11:00</updated>
+    <updated>2017-02-13T11:13:58+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank</id>
     <content type="html"><![CDATA[<h1>What is Mountebank?</h1>
 

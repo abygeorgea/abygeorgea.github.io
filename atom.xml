@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-06-27T21:47:58+10:00</updated>
+  <updated>2017-07-02T16:44:08+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -868,9 +868,9 @@ Below commands can be run on cmd.exe</li>
   
   <entry>
     <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/"/>
-    <updated>2017-04-07T06:24:20+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2</id>
+    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/"/>
+    <updated>2017-04-06T20:24:20+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2</id>
     <content type="html"><![CDATA[<p>This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it <a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>.  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with <a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Part1 </a>of the excercise. If you need to know more about mountebank and how to use mountebank , please read through <a href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">how to install mountebank </a> and <a href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/">service virtualisation using mountebank</a>.</p>
 
 <p>As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below</p>
@@ -1113,9 +1113,9 @@ Below commands can be run on cmd.exe</li>
   
   <entry>
     <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
-    <updated>2017-04-07T05:43:44+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
+    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
+    <updated>2017-04-06T19:43:44+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
     <content type="html"><![CDATA[<p>In the previous two blog post, I have explained about how to setup mountebank (<a href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
 
 <p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
@@ -1278,7 +1278,7 @@ Below commands can be run on cmd.exe</li>
   <entry>
     <title type="html"><![CDATA[Mountebank - Your First Service Virtualisation]]></title>
     <link href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/"/>
-    <updated>2017-03-03T22:46:48+11:00</updated>
+    <updated>2017-03-03T11:46:48+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation</id>
     <content type="html"><![CDATA[<p>In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in <a href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">here (Install Mountebank)</a>, we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response</p>
 
@@ -1494,7 +1494,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   <entry>
     <title type="html"><![CDATA[Service Virtualisation Using Mountebank]]></title>
     <link href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/"/>
-    <updated>2017-02-13T22:13:58+11:00</updated>
+    <updated>2017-02-13T11:13:58+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank</id>
     <content type="html"><![CDATA[<h1>What is Mountebank?</h1>
 
@@ -1525,7 +1525,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   <entry>
     <title type="html"><![CDATA[UI Testing- Decoupling Back End Dependency]]></title>
     <link href="http://www.abygeorgea.com/blog/2017/02/12/ui-testing-in-isolation/"/>
-    <updated>2017-02-12T08:41:43+11:00</updated>
+    <updated>2017-02-12T07:41:43+10:00</updated>
     <id>http://www.abygeorgea.com/blog/2017/02/12/ui-testing-in-isolation</id>
     <content type="html"><![CDATA[<p>The traditional approach for automating UI test cases is to create selenium web driver based ( or any UI testing tools) scripts for exercising complete end to end flow. However, it comes with its own challenges. It will have multiple steps as pre-requiste for reaching required UI page and hence it behaves as an E2E integration test rather than UI test.</p>
 
@@ -1556,7 +1556,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   <entry>
     <title type="html"><![CDATA[Powershell - Copying Folders and Files]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files/"/>
-    <updated>2016-10-10T07:47:54+11:00</updated>
+    <updated>2016-10-10T06:47:54+10:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/10/10/powershell-copying-folders-and-files</id>
     <content type="html"><![CDATA[<p>Two options for copying files are below.</p>
 
@@ -1636,7 +1636,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   <entry>
     <title type="html"><![CDATA[How to Take Screenshots With Selenium in C#]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/"/>
-    <updated>2016-09-06T22:00:23+10:00</updated>
+    <updated>2016-09-06T12:00:23+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c</id>
     <content type="html"><![CDATA[<p>Very frequently testers will meet a situation where they need to take screenshot of webpage they are testing , either for base line or as a proof of test result. This is same with automated testing . Even though automated test cases have their own of way of publishing test results, it is always desirable to keep a proof of result.. Screenshot come to help in this regards. In this blog post , I will explain , how to take a screenshot with Selenium Web Driver with C#. In future I will add another couple of post to explain , how to consolidate the screenshots into a PDF document.</p>
 
@@ -1668,9 +1668,9 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis/"/>
-    <updated>2016-09-04T08:33:04+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/09/04/element-location-using-xpath-axis</id>
+    <link href="http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis/"/>
+    <updated>2016-09-03T22:33:04+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis</id>
     <content type="html"><![CDATA[<p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
 
 <p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
@@ -1751,7 +1751,7 @@ Eg:</p>
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/"/>
-    <updated>2016-08-30T20:58:16+10:00</updated>
+    <updated>2016-08-30T10:58:16+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath</id>
     <content type="html"><![CDATA[<p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
 
@@ -1835,9 +1835,9 @@ remaining will be generated dynamically , which will keep on changing. This will
   
   <entry>
     <title type="html"><![CDATA[Identifying Elements Using Locators in Selenium]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium/"/>
-    <updated>2016-08-18T06:30:54+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/08/18/identifying-elements-using-locators-in-selenium</id>
+    <link href="http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium/"/>
+    <updated>2016-08-17T20:30:54+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium</id>
     <content type="html"><![CDATA[<p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
 
 <p>Selenium Web Driver provides two different methods for identifying html elements .</p>
@@ -1886,7 +1886,7 @@ remaining will be generated dynamically , which will keep on changing. This will
   <entry>
     <title type="html"><![CDATA[Specflow - Sharing Data Between Steps]]></title>
     <link href="http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps/"/>
-    <updated>2016-08-01T12:12:23+10:00</updated>
+    <updated>2016-08-01T02:12:23+00:00</updated>
     <id>http://www.abygeorgea.com/blog/2016/08/01/specflow-sharing-data-between-steps</id>
     <content type="html"><![CDATA[<p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
 
@@ -1963,9 +1963,9 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
   
   <entry>
     <title type="html"><![CDATA[Data Driven Framework - XML]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml/"/>
-    <updated>2016-07-30T08:10:02+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-xml</id>
+    <link href="http://www.abygeorgea.com/blog/2016/07/29/data-driven-framework-xml/"/>
+    <updated>2016-07-29T22:10:02+00:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/07/29/data-driven-framework-xml</id>
     <content type="html"><![CDATA[<p>I am not going to explain what is data driven framework or what is its benefits.  All of them are pretty well-known . If not, just google it.</p>
 
 <p>Here I am going to explain a sample code which can be used to read from xml data files. This will be helpful to implement a data driven frame work for BDD testing , using Specflow or Cucumber</p>
