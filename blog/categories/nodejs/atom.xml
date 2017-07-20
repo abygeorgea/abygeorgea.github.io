@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nodejs | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/nodejs/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-07-21T06:01:42+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Nodejs]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/07/12/nodejs/"/>
+    <updated>2016-07-12T20:23:52+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/07/12/nodejs</id>
+    <content type="html"><![CDATA[<p>This post is just for making notes during my learning of Node.js through various courses and online material. This will be always a work in progress blog post</p>
+
+<p>Node.js is an open source server side runtime environment, which is cross platform.It uses Javascript as its language</p>
+
+<p><strong>check node version</strong>
+ <code>
+ node --version
+</code></p>
+
+<p><strong>Making web request in Node</strong>
+we can make webrequest by using inbuilt <em>http</em> or by using &lsquo;<em>request</em>&rsquo;
+example : For making web request by http</p>
+
+<pre><code class="javascript">var http = require('http');
+var req = http.request('http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:TCS', function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+req.end();
+</code></pre>
+
+<p>example: Please note that there is no space between key and : while defining options</p>
+
+<pre><code class="javascript">var http = require('http');
+
+var options = {
+  host: 'www.google.com',
+  port: 80,
+  path: '/finance/info?infotype=infoquoteall&amp;q=NSE:TCS',
+  method: 'GET'
+};
+
+var req = http.request(options, function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+req.end();
+</code></pre>
+
+<p>Example:
+We can simply by giving GET . There is no need to close request since we are not going to send any more information to request</p>
+
+<pre><code class="javascript">var http = require('http');
+
+var options = {
+  host: 'www.google.com',
+  port: 80,
+  path: '/finance/info?infotype=infoquoteall&amp;q=NSE:TCS',
+  method: 'GET'
+};
+
+http.get(options, function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+</code></pre>
+
+<p>Another option is</p>
+
+<pre><code>http.get(options, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function(){
+        console.log("Got a response: ", body);
+    });
+}).on('error', function(e){
+      console.log("Got an error: ", e);
+});
+</code></pre>
+
+<h3>Starting with Node.js and Express</h3>
+
+<pre><code>npm init
+</code></pre>
+
+<p>Above command will create a package.json. Leave details are default or change accordingly</p>
+
+<pre><code>npm install express --save
+</code></pre>
+
+<p>Above will install express and also add it as dependency in package.json</p>
+
+<pre><code>touch app.js
+</code></pre>
+
+<p>Above will create a app.js file.
+In package.json add below</p>
+
+<pre><code>  "scripts": {
+    "test": "echo \"Error: no test specified\" &amp;&amp; exit 1",
+    "start": "node app.js"
+  },
+</code></pre>
+
+<p>  Now, if we run &ldquo;npm start&rdquo; from command line, it will run app.js</p>
+
+<h2>Bower</h2>
+
+<p>  Package manager for web/front end. It is installed with NPM and have flat package hierarchy(doesnt install dependency underneath one level) .It works similar to NPM and have Bower.json for dependency managament.</p>
+
+<p>  Create a .bowerrc file and have project specific settings. Now move the components from bower_component to public folder defined earlier. update .bowerrc with below</p>
+
+<pre><code>  {
+      "directory" : "public/lib"
+  }
+</code></pre>
+
+<p>now run below</p>
+
+<pre><code>  bower init
+  \\ leave all settings as default
+  bower install --save bootstrap
+  \\ it will install bootstrap. It create a directory under public/lib and under that it will have bootstrap andjquery since jquery is a dependency for bootstrap
+</code></pre>
+
+<h2>Gulp</h2>
+
+<p>It is a task manager for web projects. It have code based config. It is packaged base so that we can use different external packages</p>
+
+<h2>Mongo DB</h2>
+
+<ul>
+<li>Install MongoDB from website</li>
+<li><em>mongoD</em> is command for running server</li>
+<li><em>mongo</em> is command for running another terminal for interacting with mongo db</li>
+<li><em>show dbs</em> will show list of db</li>
+<li>Install MongoDB Node.js driver using NPM
+```</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

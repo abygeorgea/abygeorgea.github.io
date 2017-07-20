@@ -85,6 +85,10 @@
 <lastmod>2016-07-30T05:49:22+10:00</lastmod>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/2016/07/12/nodejs/</loc>
+<lastmod>2016-07-12T20:23:52+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2015/10/16/volunteering-experience/</loc>
 <lastmod>2015-10-16T20:40:35+10:00</lastmod>
 </url>
@@ -123,6 +127,9 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/volunteering/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/nodejs/</loc>
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/data-driven-testing-framework/</loc>
@@ -165,11 +172,5 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/galen/</loc>
-</url>
-<url>
-<loc>http://www.abygeorgea.com/posts/2/</loc>
-</url>
-<url>
-<loc>http://www.abygeorgea.com/posts/3/</loc>
 </url>
 </urlset>
