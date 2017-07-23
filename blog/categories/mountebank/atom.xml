@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mountebank | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/mountebank/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-07-21T06:01:42+10:00</updated>
+  <updated>2017-07-23T10:06:45+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Extracting Substring Using Javascript]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/07/21/extracting-substring-using-javascript/"/>
+    <updated>2017-07-21T06:09:53+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/07/21/extracting-substring-using-javascript</id>
+    <content type="html"><![CDATA[<p>In previous blogs <a href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">here</a> , I have explained how we return a XML response using mountebank. However , most of the time, we will have to make some modification to the template response before returning a response. Say for example, we may have to replace details like timestamp, or use an input from request parameter and update that in response etc.</p>
+
+<p>One of the easiest way to do this without using other frameworks like xml2js etc is to extract the substring between the node values and replace it . Below is a code snippet which will help to achieve this</p>
+
+<p>The sample xml which we need to return is</p>
+
+<pre><code>&lt;Status&gt;Added&lt;/Status&gt;
+&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;
+</code></pre>
+
+<p>In above example, assume that we need to replace the inserted record value every time based on the request coming through . We can do that by below</p>
+
+<pre><code class="javascript">
+var xmldata = "&lt;Status&gt;Added&lt;/Status&gt;\r\n&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;"
+
+var generatedId = xmldata.match(new RegExp("&lt;GeneratedID&gt;"+"(.*)"+"&lt;/GeneratedID&gt;"));
+console.log(generatedId);
+// Output will be as below. from Array we can extract the substring, index of its location etc
+/*
+[ '&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;',
+  '12345',
+  index: 24,
+  input: '&lt;Status&gt;Added&lt;/Status&gt;\r\n&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;' ]
+  */
+
+//so extract data from first location to get substring  
+generatedId = xmldata.match(new RegExp("&lt;GeneratedID&gt;"+"(.*)"+"&lt;/GeneratedID&gt;"))[1];
+console.log(generatedId);
+//Above will print "12345" , which is the expected value
+// This can be used for extracting value of xml nodes
+
+//if we need to replace this with another value ( possibly coming from request parameter)
+var result = xmldata.replace(generatedId, "99999");
+console.log(result);
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stubbing XML Responses Using Mountebank]]></title>
@@ -292,7 +335,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#109;&#97;&#105;&#108;&#x74;&#x6f;&#x3a;&#74;&#111;&#x68;&#110;&#x2e;&#67;&#x69;&#116;&#x69;&#122;&#101;&#110;&#x40;&#x61;&#98;&#x63;&#97;&#98;&#x61;&#x63;&#x61;&#115;&#46;&#x63;&#111;&#109;">&#74;&#111;&#104;&#x6e;&#x2e;&#67;&#x69;&#116;&#105;&#122;&#x65;&#x6e;&#64;&#97;&#x62;&#99;&#97;&#98;&#x61;&#99;&#97;&#x73;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x4a;&#x6f;&#x68;&#110;&#46;&#67;&#105;&#116;&#x69;&#x7a;&#x65;&#110;&#64;&#97;&#x62;&#99;&#97;&#98;&#x61;&#x63;&#97;&#115;&#46;&#x63;&#x6f;&#109;">&#74;&#x6f;&#104;&#110;&#46;&#x43;&#x69;&#x74;&#x69;&#122;&#x65;&#x6e;&#64;&#97;&#x62;&#x63;&#97;&#x62;&#x61;&#x63;&#97;&#115;&#46;&#x63;&#x6f;&#109;</a>&rdquo;</p>
 
 <p>}</p>
 
@@ -586,37 +629,6 @@ mb --configfile StubResponse/test.json
 <p>As you can see, both request has succesfully received expected response message</p>
 
 <p>For actual development usage, just point your application to this localhost URL and start consuming virtualised API</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Service Virtualisation Using Mountebank]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/"/>
-    <updated>2017-02-13T11:13:58+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank</id>
-    <content type="html"><![CDATA[<h1>What is Mountebank?</h1>
-
-<blockquote>As per mbtest.org "_mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire. Simply point your application under test to mountebank instead of the real dependency, and test like you would with traditional stubs and mocks_"</blockquote>
-
-
-<p>In short mountebank is a open source service virtualisation tool . Mountebank uses imposters to act as on demand test doubles. Hence our test cases communicate to Mountebank and mountebank responds back with relevant stubs as defined.</p>
-
-<h1>How to Setup Mountebank ?</h1>
-
-<p>Installation can be done via two methods</p>
-
-<h3>npm</h3>
-
-<p>Mountebank can be installed as a npm package. Node.js should be installed for this option to work</p>
-
-<pre><code>&lt;code&gt;npm install -g mountebank&lt;/code&gt;
-</code></pre>
-
-<h3>Self contained Installation file</h3>
-
-<p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
-
-<p>Note: Please read through the windows path limitation mentioned in above link</p>
 ]]></content>
   </entry>
   

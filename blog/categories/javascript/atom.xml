@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Javascript | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-07-23T10:06:45+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Extracting Substring Using Javascript]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/07/21/extracting-substring-using-javascript/"/>
+    <updated>2017-07-21T06:09:53+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/07/21/extracting-substring-using-javascript</id>
+    <content type="html"><![CDATA[<p>In previous blogs <a href="/blog/2017/04/27/stubbing-xml-responses-using-mountebank/">here</a> , I have explained how we return a XML response using mountebank. However , most of the time, we will have to make some modification to the template response before returning a response. Say for example, we may have to replace details like timestamp, or use an input from request parameter and update that in response etc.</p>
+
+<p>One of the easiest way to do this without using other frameworks like xml2js etc is to extract the substring between the node values and replace it . Below is a code snippet which will help to achieve this</p>
+
+<p>The sample xml which we need to return is</p>
+
+<pre><code>&lt;Status&gt;Added&lt;/Status&gt;
+&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;
+</code></pre>
+
+<p>In above example, assume that we need to replace the inserted record value every time based on the request coming through . We can do that by below</p>
+
+<pre><code class="javascript">
+var xmldata = "&lt;Status&gt;Added&lt;/Status&gt;\r\n&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;"
+
+var generatedId = xmldata.match(new RegExp("&lt;GeneratedID&gt;"+"(.*)"+"&lt;/GeneratedID&gt;"));
+console.log(generatedId);
+// Output will be as below. from Array we can extract the substring, index of its location etc
+/*
+[ '&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;',
+  '12345',
+  index: 24,
+  input: '&lt;Status&gt;Added&lt;/Status&gt;\r\n&lt;GeneratedID&gt;12345&lt;/GeneratedID&gt;' ]
+  */
+
+//so extract data from first location to get substring  
+generatedId = xmldata.match(new RegExp("&lt;GeneratedID&gt;"+"(.*)"+"&lt;/GeneratedID&gt;"))[1];
+console.log(generatedId);
+//Above will print "12345" , which is the expected value
+// This can be used for extracting value of xml nodes
+
+//if we need to replace this with another value ( possibly coming from request parameter)
+var result = xmldata.replace(generatedId, "99999");
+console.log(result);
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
