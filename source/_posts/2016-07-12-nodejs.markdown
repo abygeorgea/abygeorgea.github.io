@@ -1,0 +1,159 @@
+---
+layout: post
+title: "Nodejs"
+date: 2016-07-12 20:23:52 +1000
+comments: true
+categories: nodejs
+keywords: nodejs
+description: Learning Nodejs
+---
+This post is just for making notes during my learning of Node.js through various courses and online material. This will be always a work in progress blog post
+
+Node.js is an open source server side runtime environment, which is cross platform.It uses Javascript as its language
+
+
+**check node version**
+ ```
+ node --version
+ ```
+ 
+
+**Making web request in Node**
+we can make webrequest by using inbuilt *http* or by using '*request*'
+example : For making web request by http
+
+``` javascript
+var http = require('http');
+var req = http.request('http://www.google.com/finance/info?infotype=infoquoteall&q=NSE:TCS', function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+req.end();
+```
+example: Please note that there is no space between key and : while defining options
+
+``` javascript
+var http = require('http');
+
+var options = {
+  host: 'www.google.com',
+  port: 80,
+  path: '/finance/info?infotype=infoquoteall&q=NSE:TCS',
+  method: 'GET'
+};
+
+var req = http.request(options, function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+req.end();
+```
+
+Example:
+We can simply by giving GET . There is no need to close request since we are not going to send any more information to request 
+
+``` javascript
+var http = require('http');
+
+var options = {
+  host: 'www.google.com',
+  port: 80,
+  path: '/finance/info?infotype=infoquoteall&q=NSE:TCS',
+  method: 'GET'
+};
+
+http.get(options, function(response) {
+    console.log(response.statusCode);
+    response.pipe(process.stdout);
+});
+
+```
+Another option is 
+
+```
+http.get(options, function(res){
+    var body = '';
+
+    res.on('data', function(chunk){
+        body += chunk;
+    });
+
+    res.on('end', function(){
+        console.log("Got a response: ", body);
+    });
+}).on('error', function(e){
+      console.log("Got an error: ", e);
+});
+
+```
+
+###Starting with Node.js and Express###
+```
+npm init
+```
+Above command will create a package.json. Leave details are default or change accordingly
+
+```
+npm install express --save
+```
+Above will install express and also add it as dependency in package.json
+
+```
+touch app.js
+```
+Above will create a app.js file. 
+In package.json add below
+
+```
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+```
+
+
+  
+  Now, if we run "npm start" from command line, it will run app.js
+  
+  
+##   Bower
+  
+  Package manager for web/front end. It is installed with NPM and have flat package hierarchy(doesnt install dependency underneath one level) .It works similar to NPM and have Bower.json for dependency managament.
+  
+  
+  Create a .bowerrc file and have project specific settings. Now move the components from bower_component to public folder defined earlier. update .bowerrc with below
+  
+```
+  {
+      "directory" : "public/lib"
+  }
+```
+
+now run below
+
+  
+```
+  bower init
+  \\ leave all settings as default
+  bower install --save bootstrap
+  \\ it will install bootstrap. It create a directory under public/lib and under that it will have bootstrap andjquery since jquery is a dependency for bootstrap
+```
+
+    
+
+## Gulp
+It is a task manager for web projects. It have code based config. It is packaged base so that we can use different external packages
+
+
+## Mongo DB
+- Install MongoDB from website
+- *mongoD* is command for running server
+- *mongo* is command for running another terminal for interacting with mongo db
+- *show dbs* will show list of db
+- Install MongoDB Node.js driver using NPM
+```
+
+  
+  
+  
+  
