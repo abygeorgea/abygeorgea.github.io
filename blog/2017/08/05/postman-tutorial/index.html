@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Postman Tutorial - Aby George A</title>
+  <meta name="author" content="Aby George A">
+
+  <meta name="description" content="how to get started with postman and newman">
+  <meta name="keywords" content="postman tutorial, newman tutorial">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Aby George A" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/">
+  <meta property="og:title" content="Postman Tutorial - Aby George A">
+  <meta property="og:description" content="how to get started with postman and newman">
+
+  <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-99127431-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" title="toggle navbar" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Aby George A</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+				<li >
+                    <a href="/resources">Resources</a>
+                </li>
+				<li >
+                    <a href="/about">About Me</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                    <input type="hidden" name="sitesearch" value="www.abygeorgea.com">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="Aby George A" />
+    
+    <meta itemprop="url" content="http://www.abygeorgea.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-08-05T07:09:48+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Aug, 2017</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Postman Tutorial
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Recently one of my colleagues has asked me to train him on using postman and Newman for API testing. Below is a cut down version of training session which I took for him.</p>
+
+<h3>What is Postman</h3>
+
+<p>Postman is an Http client for testing web services. It has a friendly GUI for constructing request and analyzing the response. There is a command line tool called Newman for running the postman collections from command line. This will help to integrate postman to other testing tools.</p>
+
+<h3>How to Install</h3>
+
+<p>Postman is available as both chrome extension and also as a native install. Native install files can be found <a href="https://www.getpostman.com/apps">here</a>.</p>
+
+<h3>Example - GET Request</h3>
+
+<p>In order to trigger a get request, we need to identify below information</p>
+
+<ul>
+<li>URL of API</li>
+<li>Authentication details</li>
+<li>Header details</li>
+</ul>
+
+
+<p>For this example, let us look at a google finance API.  API URL(including parameters) is <a href="http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL">http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL</a>
+There is no authentication details and header details that need to be passed with this. The <code>params</code> button will list down various parameters passed in a tabular format , which makes it easy to edit.</p>
+
+<p>In postman, Select drop down as <code>GET</code> and enter the API Url. Screen will look like below
+<img src="/images/2017/08/05/Postman%20Tutorial%201.png" alt="Request" /></p>
+
+<p>Now hit <code>Send</code> button. This will trigger a call to API and get the response which will then displayed in UI. Screen will look like below</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%202.png" alt="Body" /></p>
+
+<p>Headers returned are</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%203.png" alt="Headers" /></p>
+
+<h3>Writing Tests</h3>
+
+<p>Above is an example of calling an API and analyzing its response. Postman also has a facility to write test cases to verify the response. Test cases are written in javascript. Tests are run after the request is sent and it will allow access to response objects. The editor also provides commonly used code snippets which make it easier to write test.</p>
+
+<p>The Below example is written for calling one of free API mentioned <a href="https://jsonplaceholder.typicode.com">here</a>.
+In this example, we have test scripts for checking status code, values in the header, values in response, response time. We can even expand the test cases to complex verifications by writing javascript tests.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%204.png" alt="Tests" /></p>
+
+<p>We notice following from above screenshot,</p>
+
+<ul>
+<li>6 test cases written on the top part to check for the status code, response time, header and response.</li>
+<li>The response received on the bottom part.</li>
+<li>Test tab shows that 6/6 test cases are passed ( in Green).</li>
+</ul>
+
+
+<p> Now let us dive into details of the test results. Below screenshot shows details of test cases and their status.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%205.png" alt="Test Result" /></p>
+
+<h3>Collections</h3>
+
+<p>We can save the current request and it associated tests ( if any) for future use in postman. It can also be exported and shared with others. Select option as <code>Save As</code> from drop down next to <code>Save</code>. We can specify request name, provide a description and select a folder and sub folder to save the response.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%206.png" alt="Collections" /></p>
+
+<p> Once saved, it will be available for use in collections.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%207.png" alt="Collections" /></p>
+
+<h3>Environments</h3>
+
+<p>Very frequently, we will have to run API test in different environments. Most of the time, there will be few differences in the requests, like different URL. In such cases, we can use environments in Postman.</p>
+
+<p>Click on the Settings button on top right corner and select <code>Manage environments</code>. This is open up a new pop up where we can add Environment or import an existing environment file. For this tutorial, we will use Add option.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%208.png" alt="Environment" /></p>
+
+<p> Now we can specify all unique parameter for each environment. In this case, I have given a key called &ldquo;URL&rdquo; and entered corresponding values and saved it as an environment named <code>Test</code>.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%209.png" alt="Environment" /></p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%2010.png" alt="Environment" /></p>
+
+<p> Now let us run the request using environments. First step is to replace <code>https://jsonplaceholder.typicode.com</code> with <code>url</code> in double curly braces. Then select <code>Test</code> in the Environment drop down at the top. Now click send. This will execute the request and run all associated test cases. Postman will dynamically replace  with corresponding URL value specified in selected environment file. So assuming we have different environment files, each time the request will be sent to different URL based on environment selected. We can have any number of keys and values in one environment file.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%2011.png" alt="Environment" /></p>
+
+<p>  From above, we can see that one test case is failed. Let us have a look into failed test case.</p>
+
+<p>   <img src="/images/2017/08/05/Postman%20Tutorial%2012.png" alt="Environment" /></p>
+
+<p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
+
+<h3>What Next ?</h3>
+
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Aby George A</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-08-05T07:09:48+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Aug, 2017</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/newman/'>newman</a>, <a class='category' href='/blog/categories/postman/'>postman</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/" >Tweet</a>
+  
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2017/07/21/extracting-substring-using-javascript/" title="Previous Post: Extracting Substring using Javascript">&laquo; Extracting Substring using Javascript</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
+        <span class="badge">5</span>
+        codesnippets
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/java/index.html">
+        <span class="badge">2</span>
+        java
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/excel/index.html">
+        <span class="badge">3</span>
+        excel
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/volunteering/index.html">
+        <span class="badge">1</span>
+        volunteering
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/nodejs/index.html">
+        <span class="badge">1</span>
+        nodejs
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/data-driven-testing-framework/index.html">
+        <span class="badge">3</span>
+        data driven testing framework
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium-webdriver/index.html">
+        <span class="badge">3</span>
+        selenium webdriver
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/xml/index.html">
+        <span class="badge">1</span>
+        xml
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/specflow/index.html">
+        <span class="badge">4</span>
+        specflow
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/bdd/index.html">
+        <span class="badge">1</span>
+        bdd
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/element-identification/index.html">
+        <span class="badge">3</span>
+        element identification
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium/index.html">
+        <span class="badge">3</span>
+        selenium
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/git/index.html">
+        <span class="badge">2</span>
+        git
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/powershell/index.html">
+        <span class="badge">2</span>
+        powershell
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/mountebank/index.html">
+        <span class="badge">6</span>
+        mountebank
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
+        <span class="badge">5</span>
+        service virtualisation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octopress/index.html">
+        <span class="badge">1</span>
+        octopress
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octostrap3/index.html">
+        <span class="badge">1</span>
+        octostrap3
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/galen/index.html">
+        <span class="badge">2</span>
+        galen
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/javascript/index.html">
+        <span class="badge">1</span>
+        javascript
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/postman/index.html">
+        <span class="badge">1</span>
+        postman
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/newman/index.html">
+        <span class="badge">1</span>
+        newman
+      </a>
+    
+  </div>
+</section><section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
+    
+    <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
+    
+    <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
+    
+    <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
+    
+    <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
+    
+  </div>
+</section>
+
+<section class="panel panel-default clearfix">
+  <div class="panel-heading">
+      <h3 class="panel-title">GitHub Repos</h3>
+  </div>
+  <div class="list-group" id="gh_repos">
+    <p class="loading">Status updating...</p>
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'abygeorgea',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2017 - Aby George A<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'abygeorgea';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/';
+        var disqus_url = 'http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr.js"></script>
+
+
+	
+  </body>
+</html>

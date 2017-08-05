@@ -131,6 +131,198 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T19:43:44+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/" itemprop="url">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In the previous two blog post, I have explained about how to setup mountebank (<a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
+
+<p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
+
+<p>Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png" alt="folderstructure" /></p>
+
+<p>Let us first create the imposter.ejs file</p>
+
+<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>"imposters": [
+</span><span class='line'>
+</span><span class='line'>&lt;% include 4547.json %&gt;
+</span><span class='line'>
+</span><span class='line'>]
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let us create the file which specifies the port number where it should run and order of responses. Below code tells mountebank that port which it needs to listen for incoming request is 4547 and protocol is http. There are two set of mock responses planned.</p>
+
+<figure class='code'><figcaption><span>4545</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"port": 4547,
+</span><span class='line'>"protocol": "http",
+</span><span class='line'>"stubs": [
+</span><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>&lt;% include CustomerNotFound.json %&gt;
+</span><span class='line'>},
+</span><span class='line'>{
+</span><span class='line'>&lt;% include CustomerFound.json %&gt;
+</span><span class='line'>}
+</span><span class='line'>]
+</span><span class='line'>} 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, let us look at first mock response.</p>
+
+<figure class='code'><figcaption><span>CustomerNotFOund.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
+</span><span class='line'>{
+</span><span class='line'>"inject": "&lt;%- stringify(filename, 'ResponseInjection\\GetCustomerNotFound.js') %&gt;"
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>],
+</span><span class='line'>"predicates": [
+</span><span class='line'>{
+</span><span class='line'>"matches": {
+</span><span class='line'>"method" : "GET",
+</span><span class='line'>"path" : "/Blog.Api/1[0-9]+/CustomerView"
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From above response, we can infer below. When ever an http GET request come to port 4547 , with a path matching &ldquo;/Blog.Api/1[0-9]+/CustomerView', then we will call the Javascript function "GetCustomerNotFound.js&rdquo; which is kept inside a directory &ldquo;ResponseInjection&rdquo; in same location. It is also good to notice that , predicate is a regular expression ( hence use matches) and all request where 1 followed by any number of numeric will be returned with this response</p>
+
+<p>The javascript function listed here is responsible for reading the sample template response and sending it back .</p>
+
+<figure class='code'><figcaption><span>GetCustomerNotFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
+</span><span class='line'>
+</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerNotFoundView.json') %&gt;");
+</span><span class='line'>
+</span><span class='line'>return {
+</span><span class='line'>statusCode : 404,
+</span><span class='line'>headers: {
+</span><span class='line'>'Content-Type': 'application/json; charset=utf-8'
+</span><span class='line'>},
+</span><span class='line'>body: response
+</span><span class='line'>
+</span><span class='line'>};
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Above function reads a json response kept inside directory &ldquo;StubTemplate&rdquo; and convert it to json and return to mountebank. Since this is for a scenario where customer records are not found,we set the status code as 404. We can also set the headers if needed</p>
+
+<p>The stub template is as below</p>
+
+<figure class='code'><figcaption><span>CustomerNotFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"status": "fail",
+</span><span class='line'>"code": "CUSTOMER_NOT_FOUND",
+</span><span class='line'>"message": "Customer details not found."
+</span><span class='line'>
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let us run mountebank</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
+
+<p>Request through postman</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/notfound.png" alt="notfound.png" /></p>
+
+<p>As you can see , the GET request matching with predicate is returning the stubbed response with status 404.</p>
+
+<p>For real time usage for testing any web application which needs to get a 404 message from back end API calls, just point the end point to this local host end point and fire a request which matches the predicate.</p>
+
+<p>Details of second response will be shared in next blog post</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-03T11:46:48+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Mar, 2017</time>
         
       </p>
@@ -972,112 +1164,6 @@ remaining will be generated dynamically , which will keep on changing. This will
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-01T02:12:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/01/specflow-sharing-data-between-steps/" itemprop="url">Specflow - Sharing Data Between Steps</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
-
-<p>There are multiple ways to do it</p>
-
-<ol>
-<li><p>Context Injection</p></li>
-<li><p>Feature Context</p></li>
-<li><p>Scenario Context</p></li>
-</ol>
-
-
-<p>Let us look into more details about how to store and retrieve data using Scenario Context .</p>
-
-<p><strong>ScenarioContext.Current</strong></p>
-
-<p>How do we add a key value pair to Scenario Context ? It is as simple as below</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[Given(@"I have entered (.*) and (.*) into the Login Page")]
-</span><span class='line'>public void GivenIHaveEnteredAndIntoTheLoginPage(string p0, string p1)
-</span><span class='line'> {
-</span><span class='line'> ScenarioContext.Current.Add("username", p0);
-</span><span class='line'> ScenarioContext.Current.Add("password", p1);
-</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
-
-
-<p>How do we retrieve the value from ScenarioContext ?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>When(@"I press retrieve data")]
-</span><span class='line'>public void WhenIRetrieveData()
-</span><span class='line'>{
-</span><span class='line'>string username = (string)ScenarioContext.Current["username"];
-</span><span class='line'>string password = (string)ScenarioContext.Current["password"];
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note: While retrieving , scenarioContext.Current always return an object . Hence we need use explicit casting while retrieving data from scenario context.</p>
-
-<p>In Nut Shell,</p>
-
-<blockquote>**Set a value for a key ( Store data ) **
-ScenarioContext.Current.Add(string key, object value);
-
-**Get a value of the key ( Retrieve data) **
-var value =(Type) ScenarioContext.Current.[string Key];
-
-var value = ScenarioContext.Current.Get(string Key);</blockquote>
-
-
-<p>We can use this for storing and passing objects as well</p>
-
-<blockquote>Example of storing webdriver object is as below.(where "browser" is current webdriver object )
-
-ScenarioContext.Current.Add("driver1", browser);
-
-IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1220,6 +1306,18 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
         javascript
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/postman/index.html">
+        <span class="badge">1</span>
+        postman
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/newman/index.html">
+        <span class="badge">1</span>
+        newman
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1228,6 +1326,8 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
+    
     <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
     
     <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
@@ -1235,8 +1335,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
     
     <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
-    
-    <a class="list-group-item " href="/blog/2017/05/20/migrating-to-octopress/">Migrating to Octopress</a>
     
   </div>
 </section>

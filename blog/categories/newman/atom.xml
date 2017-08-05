@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Newman | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/newman/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-08-05T19:48:13+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Postman Tutorial]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/"/>
+    <updated>2017-08-05T07:09:48+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial</id>
+    <content type="html"><![CDATA[<p>Recently one of my colleagues has asked me to train him on using postman and Newman for API testing. Below is a cut down version of training session which I took for him.</p>
+
+<h3>What is Postman</h3>
+
+<p>Postman is an Http client for testing web services. It has a friendly GUI for constructing request and analyzing the response. There is a command line tool called Newman for running the postman collections from command line. This will help to integrate postman to other testing tools.</p>
+
+<h3>How to Install</h3>
+
+<p>Postman is available as both chrome extension and also as a native install. Native install files can be found <a href="https://www.getpostman.com/apps">here</a>.</p>
+
+<h3>Example - GET Request</h3>
+
+<p>In order to trigger a get request, we need to identify below information</p>
+
+<ul>
+<li>URL of API</li>
+<li>Authentication details</li>
+<li>Header details</li>
+</ul>
+
+
+<p>For this example, let us look at a google finance API.  API URL(including parameters) is <a href="http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL">http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL</a>
+There is no authentication details and header details that need to be passed with this. The <code>params</code> button will list down various parameters passed in a tabular format , which makes it easy to edit.</p>
+
+<p>In postman, Select drop down as <code>GET</code> and enter the API Url. Screen will look like below
+<img src="/images/2017/08/05/Postman%20Tutorial%201.png" alt="Request" /></p>
+
+<p>Now hit <code>Send</code> button. This will trigger a call to API and get the response which will then displayed in UI. Screen will look like below</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%202.png" alt="Body" /></p>
+
+<p>Headers returned are</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%203.png" alt="Headers" /></p>
+
+<h3>Writing Tests</h3>
+
+<p>Above is an example of calling an API and analyzing its response. Postman also has a facility to write test cases to verify the response. Test cases are written in javascript. Tests are run after the request is sent and it will allow access to response objects. The editor also provides commonly used code snippets which make it easier to write test.</p>
+
+<p>The Below example is written for calling one of free API mentioned <a href="https://jsonplaceholder.typicode.com">here</a>.
+In this example, we have test scripts for checking status code, values in the header, values in response, response time. We can even expand the test cases to complex verifications by writing javascript tests.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%204.png" alt="Tests" /></p>
+
+<p>We notice following from above screenshot,</p>
+
+<ul>
+<li>6 test cases written on the top part to check for the status code, response time, header and response.</li>
+<li>The response received on the bottom part.</li>
+<li>Test tab shows that 6/6 test cases are passed ( in Green).</li>
+</ul>
+
+
+<p> Now let us dive into details of the test results. Below screenshot shows details of test cases and their status.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%205.png" alt="Test Result" /></p>
+
+<h3>Collections</h3>
+
+<p>We can save the current request and it associated tests ( if any) for future use in postman. It can also be exported and shared with others. Select option as <code>Save As</code> from drop down next to <code>Save</code>. We can specify request name, provide a description and select a folder and sub folder to save the response.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%206.png" alt="Collections" /></p>
+
+<p> Once saved, it will be available for use in collections.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%207.png" alt="Collections" /></p>
+
+<h3>Environments</h3>
+
+<p>Very frequently, we will have to run API test in different environments. Most of the time, there will be few differences in the requests, like different URL. In such cases, we can use environments in Postman.</p>
+
+<p>Click on the Settings button on top right corner and select <code>Manage environments</code>. This is open up a new pop up where we can add Environment or import an existing environment file. For this tutorial, we will use Add option.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%208.png" alt="Environment" /></p>
+
+<p> Now we can specify all unique parameter for each environment. In this case, I have given a key called &ldquo;URL&rdquo; and entered corresponding values and saved it as an environment named <code>Test</code>.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%209.png" alt="Environment" /></p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%2010.png" alt="Environment" /></p>
+
+<p> Now let us run the request using environments. First step is to replace <code>https://jsonplaceholder.typicode.com</code> with <code>url</code> in double curly braces. Then select <code>Test</code> in the Environment drop down at the top. Now click send. This will execute the request and run all associated test cases. Postman will dynamically replace  with corresponding URL value specified in selected environment file. So assuming we have different environment files, each time the request will be sent to different URL based on environment selected. We can have any number of keys and values in one environment file.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%2011.png" alt="Environment" /></p>
+
+<p>  From above, we can see that one test case is failed. Let us have a look into failed test case.</p>
+
+<p>   <img src="/images/2017/08/05/Postman%20Tutorial%2012.png" alt="Environment" /></p>
+
+<p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
+
+<h3>What Next ?</h3>
+
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.</p>
+]]></content>
+  </entry>
+  
+</feed>
