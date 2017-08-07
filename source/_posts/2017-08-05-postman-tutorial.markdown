@@ -94,7 +94,47 @@ Click on the Settings button on top right corner and select `Manage environments
     
   Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.
   
+### Exporting Collections and environment files
+Postman provides facility to export collections and environment files as JSON. This helps to share the details with other team members and also to use Newman for running postman collections. Let us have a look into how to export them.
+
+**Exporting Collections**
+
+* Click on Collections Tab.
+* Click on `...` next to Collections Name.
+* Click on Export.
+* Select V2 option and save the file.
+
+	
+  ![Collection]({{site.images_dir}}/2017/08/05/Postman Tutorial 13.png)
+  
+  ![Collection]({{site.images_dir}}/2017/08/05/Postman Tutorial 14.png)
+ 
+**Exporting Environment File**
+
+* Click on Settings button on top right corner.
+* Click on Manage environment.
+* Download the file.
+
+  ![Export]({{site.images_dir}}/2017/08/05/Postman Tutorial 15.png)
+  
+### Running Collections Using Postman Collection Runner
+
+Postman provides a feature to run collections using collection Runner.
+ 
+* Click on Runner button on Top left to open collection runner
+* Select Collection name in drop down and select environment and then hit `Start Run`.
+
+
+  ![Collection Runner]({{site.images_dir}}/2017/08/05/Postman Tutorial 16.png)
+
+This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .
+
+Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
+  ![Collection Runner]({{site.images_dir}}/2017/08/05/Postman Tutorial 17.png)
+  
+
+  
 ### What Next ?
 
-In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.  
+In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. We can also use Newman , which is command line collection runner , to execute collections. I will write another post about it sometime soon.  
   
