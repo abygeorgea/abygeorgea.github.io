@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Postman | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/postman/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-05T19:48:13+10:00</updated>
+  <updated>2017-08-07T17:03:11+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,127 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Running Postman Collection Using Newman]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman/"/>
+    <updated>2017-08-07T15:46:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman</id>
+    <content type="html"><![CDATA[<p>In previous <a href="/blog/2017/08/05/postman-tutorial/">blog</a>, I explained about how to create a GET request, analyze its response, write test cases for API and to save details to a collection for future use. In this blog, let me explain about how to run collections using Newman.</p>
+
+<h3>What is Newman</h3>
+
+<p>Newman is a command line collection runner for postman. Newman also has feature parity with Postman and it runs collection in the same way how it is run through Postman. Newman also makes it easier to integrate API test case execution with other systems like Jenkins.</p>
+
+<h3>Installing Newman</h3>
+
+<p>Newman is built on Node.js and hence it requires Node.js to be installed as prerequisite. Newman can be installed from npm with below command</p>
+
+<pre><code>$ npm install -g newman
+</code></pre>
+
+<h3>Running collection using Newman</h3>
+
+<p>Collections are executed by calling run command in Newman. Basic command for executing collections is</p>
+
+<pre><code>newman run PathToCollectionFile -e PathToEnvironmentFileIfAny
+</code></pre>
+
+<p>Below is an example of running collections created in previous blog post using newman.
+Command will look like below
+<code>newman run /Users/abygeorgea/Projects/Postman/Postman\ Tutorial.postman_collection.json -e /Users/abygeorgea/Projects/Postman/Test.postman_environment.json</code></p>
+
+<h3>Results</h3>
+
+<p>The result of API test case execution will look like below. It has a detailed report of number of iterations, number of request, test scripts, pre-requisites, assertions etc. As per standard, passed ones are shown in green and failed in red. The results look similar to details provided if collections are executed using postman.</p>
+
+<p><img src="/images/2017/08/07/Newman%201.png" alt="NewmanResult" /></p>
+
+<h3>Additional Options of run command</h3>
+
+<p>Newman has various options to customize run. Different options can be found by running with <code>-h</code> flag</p>
+
+<pre><code>newman run -h
+</code></pre>
+
+<p>Different options listed are below</p>
+
+<pre><code>Abys-MacBook-Pro:~ abygeorgea$ newman run -h
+usage: newman run [-h] [-v VERSION] [--no-color] [--color]
+                  [--timeout-request TIMEOUT_REQUEST] [--ignore-redirects]
+                  [-k] [--ssl-client-cert SSL_CLIENT_CERT]
+                  [--ssl-client-key SSL_CLIENT_KEY]
+                  [--ssl-client-passphrase SSL_CLIENT_PASSPHRASE]
+                  [-e ENVIRONMENT] [-g GLOBALS] [--folder FOLDER]
+                  [-r REPORTERS] [-n ITERATION_COUNT] [-d ITERATION_DATA]
+                  [--export-environment [EXPORT_ENVIRONMENT]]
+                  [--export-globals [EXPORT_GLOBALS]]
+                  [--export-collection [EXPORT_COLLECTION]]
+                  [--delay-request DELAY_REQUEST] [--bail] [-x] [--silent]
+                  [--disable-unicode] [--global-var GLOBAL_VAR]
+                  collection
+
+The "run" command can be used to run Postman Collections
+
+Positional arguments:
+  collection            URL or path to a Postman Collection
+
+Optional arguments:
+  -h, --help            Show this help message and exit.
+  -v VERSION, --version VERSION
+                        Display the newman version
+  --no-color            Disable colored output
+  --color               Force colored output (for use in CI environments)
+  --timeout-request TIMEOUT_REQUEST
+                        Specify a timeout for requests (in milliseconds)
+  --ignore-redirects    If present, Newman will not follow HTTP Redirects
+  -k, --insecure        Disables SSL validations.
+  --ssl-client-cert SSL_CLIENT_CERT
+                        Specify the path to the Client SSL certificate. 
+                        Supports .cert and .pfx files.
+  --ssl-client-key SSL_CLIENT_KEY
+                        Specify the path to the Client SSL key (not needed 
+                        for .pfx files).
+  --ssl-client-passphrase SSL_CLIENT_PASSPHRASE
+                        Specify the Client SSL passphrase (optional, needed 
+                        for passphrase protected keys).
+  -e ENVIRONMENT, --environment ENVIRONMENT
+                        Specify a URL or Path to a Postman Environment
+  -g GLOBALS, --globals GLOBALS
+                        Specify a URL or Path to a file containing Postman 
+                        Globals
+  --folder FOLDER       Run a single folder from a collection
+  -r REPORTERS, --reporters REPORTERS
+                        Specify the reporters to use for this run.
+  -n ITERATION_COUNT, --iteration-count ITERATION_COUNT
+                        Define the number of iterations to run.
+  -d ITERATION_DATA, --iteration-data ITERATION_DATA
+                        Specify a data file to use for iterations (either 
+                        json or csv)
+  --export-environment [EXPORT_ENVIRONMENT]
+                        Exports the environment to a file after completing 
+                        the run
+  --export-globals [EXPORT_GLOBALS]
+                        Specify an output file to dump Globals before exiting
+  --export-collection [EXPORT_COLLECTION]
+                        Specify an output file to save the executed collection
+  --delay-request DELAY_REQUEST
+                        Specify the extent of delay between requests 
+                        (milliseconds)
+  --bail                Specify whether or not to gracefully stop a 
+                        collection run on encountering the first error
+  -x, --suppress-exit-code
+                        Specify whether or not to override the default exit 
+                        code for the current run
+  --silent              Prevents newman from showing output to CLI
+  --disable-unicode     Forces unicode compliant symbols to be replaced by 
+                        their plain text equivalents
+  --global-var GLOBAL_VAR
+                        Allows the specification of global variables via the 
+                        command line, in a key=value format
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Postman Tutorial]]></title>
@@ -109,9 +230,55 @@ In this example, we have test scripts for checking status code, values in the he
 
 <p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
 
+<h3>Exporting Collections and environment files</h3>
+
+<p>Postman provides facility to export collections and environment files as JSON. This helps to share the details with other team members and also to use Newman for running postman collections. Let us have a look into how to export them.</p>
+
+<p><strong>Exporting Collections</strong></p>
+
+<ul>
+<li>Click on Collections Tab.</li>
+<li>Click on <code>...</code> next to Collections Name.</li>
+<li>Click on Export.</li>
+<li><p>Select V2 option and save the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2013.png" alt="Collection" /></p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2014.png" alt="Collection" /></p></li>
+</ul>
+
+
+<p><strong>Exporting Environment File</strong></p>
+
+<ul>
+<li>Click on Settings button on top right corner.</li>
+<li>Click on Manage environment.</li>
+<li><p>Download the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2015.png" alt="Export" /></p></li>
+</ul>
+
+
+<h3>Running Collections Using Postman Collection Runner</h3>
+
+<p>Postman provides a feature to run collections using collection Runner.</p>
+
+<ul>
+<li>Click on Runner button on Top left to open collection runner</li>
+<li><p>Select Collection name in drop down and select environment and then hit <code>Start Run</code>.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2016.png" alt="Collection Runner" /></p></li>
+</ul>
+
+
+<p>This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .</p>
+
+<p>Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
+  <img src="/images/2017/08/05/Postman%20Tutorial%2017.png" alt="Collection Runner" /></p>
+
 <h3>What Next ?</h3>
 
-<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.</p>
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. We can also use Newman , which is command line collection runner , to execute collections. I will write another post about it sometime soon.</p>
 ]]></content>
   </entry>
   

@@ -131,6 +131,84 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-17T20:30:54+00:00"  data-updated="true" itemprop="datePublished dateCreated">17 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/" itemprop="url">Identifying Elements Using Locators in Selenium</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
+
+<p>Selenium Web Driver provides two different methods for identifying html elements .</p>
+
+<ul>
+<li><p><em><strong>FindElement  </strong></em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return the first matching element. If there are no matching element, it will throw NoSuchElementFoundException</p></li>
+<li><p><em><strong>FindElements</strong> </em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return a list of all matching element. If there are no matching elements, then it will return an empty list .</p></li>
+</ul>
+
+
+<p>Note: Both of them doesn&rsquo;t support regular expression for finding element. Simple way to do that will be to get list of all elements and then iterate to find a matching regular expression</p>
+
+<p>There are multiple criteria which we can use for looking for an element. FindElement and FindElements work exactly same way except for above difference. Different critieria are</p>
+
+<ul>
+<li><p>driver.FindElement(By.Id(<elementID>))</p></li>
+<li><p>driver.FindElement(By.Name(<element name>))</p></li>
+<li><p>driver.FindElement(By.ClassName(<element class>))</p></li>
+<li><p>driver.FindElement(By.TagName(<htmltagname>))</p></li>
+<li><p>driver.FindElement(By.LinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.PartialLinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.CssSelector(<css selector >))</p></li>
+<li><p>driver.FindElement(By.XPath(<xpath query expression>))</p></li>
+</ul>
+
+
+<p>Example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>WebElement _firstElement = driver.findElement(By.id("div1"));
+</span><span class='line'>WebElement _secondElementInsideFirstOne =_firstElement .findElement(By.linkText("username"));
+</span><span class='line'>
+</span><span class='line'>IList&lt;IWebElement&gt; elements = driverOne.FindElements(By.ClassName(&lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;“&lt;/span&gt;green&lt;span class="pl-pds"&gt;“&lt;/span&gt;&lt;/span&gt;));
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using any attributes other than XPath and CssSelector are straight forward. More about using XPath and CssSelector in next blog.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-01T02:12:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Aug, 2016</time>
         
       </p>
@@ -1374,13 +1452,13 @@ In package.json add below</p>
     
     
     <a class="list-group-item " href="/blog/categories/postman/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         postman
       </a>
     
     
     <a class="list-group-item " href="/blog/categories/newman/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         newman
       </a>
     
@@ -1392,6 +1470,8 @@ In package.json add below</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/08/07/running-postman-collection-using-newman/">Running Postman Collection Using Newman</a>
+    
     <a class="list-group-item " href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
     
     <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
@@ -1399,8 +1479,6 @@ In package.json add below</p>
     <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
     
     <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
-    
-    <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
     
   </div>
 </section>

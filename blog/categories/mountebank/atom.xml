@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mountebank | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/mountebank/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-05T19:48:13+10:00</updated>
+  <updated>2017-08-07T17:03:11+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -335,7 +335,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#x61;&#105;&#108;&#116;&#x6f;&#x3a;&#74;&#x6f;&#x68;&#110;&#x2e;&#67;&#105;&#116;&#x69;&#122;&#101;&#x6e;&#x40;&#97;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#97;&#115;&#46;&#x63;&#111;&#109;">&#x4a;&#111;&#104;&#110;&#x2e;&#67;&#x69;&#116;&#x69;&#x7a;&#x65;&#x6e;&#x40;&#97;&#98;&#x63;&#x61;&#x62;&#x61;&#x63;&#97;&#115;&#46;&#99;&#111;&#109;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x4a;&#x6f;&#104;&#x6e;&#46;&#x43;&#x69;&#x74;&#105;&#x7a;&#x65;&#110;&#64;&#x61;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#x61;&#115;&#x2e;&#x63;&#111;&#109;">&#x4a;&#x6f;&#x68;&#x6e;&#x2e;&#x43;&#105;&#116;&#105;&#122;&#x65;&#x6e;&#x40;&#x61;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#97;&#115;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;</p>
 
 <p>}</p>
 

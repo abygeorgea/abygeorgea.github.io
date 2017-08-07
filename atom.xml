@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-05T19:48:13+10:00</updated>
+  <updated>2017-08-07T17:03:11+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,205 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Running Postman Collection Using Newman]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman/"/>
+    <updated>2017-08-07T15:46:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman</id>
+    <content type="html"><![CDATA[<p>In previous <a href="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/">blog</a>, I explained about how to create a GET request, analyze its response, write test cases for API and to save details to a collection for future use. In this blog, let me explain about how to run collections using Newman.</p>
+
+<h3>What is Newman</h3>
+
+<p>Newman is a command line collection runner for postman. Newman also has feature parity with Postman and it runs collection in the same way how it is run through Postman. Newman also makes it easier to integrate API test case execution with other systems like Jenkins.</p>
+
+<h3>Installing Newman</h3>
+
+<p>Newman is built on Node.js and hence it requires Node.js to be installed as prerequisite. Newman can be installed from npm with below command</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ npm install -g newman</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Running collection using Newman</h3>
+
+<p>Collections are executed by calling run command in Newman. Basic command for executing collections is</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>newman run PathToCollectionFile -e PathToEnvironmentFileIfAny</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is an example of running collections created in previous blog post using newman.
+Command will look like below
+<code>newman run /Users/abygeorgea/Projects/Postman/Postman\ Tutorial.postman_collection.json -e /Users/abygeorgea/Projects/Postman/Test.postman_environment.json</code></p>
+
+<h3>Results</h3>
+
+<p>The result of API test case execution will look like below. It has a detailed report of number of iterations, number of request, test scripts, pre-requisites, assertions etc. As per standard, passed ones are shown in green and failed in red. The results look similar to details provided if collections are executed using postman.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/08/07/Newman%201.png" alt="NewmanResult" /></p>
+
+<h3>Additional Options of run command</h3>
+
+<p>Newman has various options to customize run. Different options can be found by running with <code>-h</code> flag</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>newman run -h</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Different options listed are below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Abys-MacBook-Pro:~ abygeorgea$ newman run -h
+</span><span class='line'>usage: newman run [-h] [-v VERSION] [--no-color] [--color]
+</span><span class='line'>                  [--timeout-request TIMEOUT_REQUEST] [--ignore-redirects]
+</span><span class='line'>                  [-k] [--ssl-client-cert SSL_CLIENT_CERT]
+</span><span class='line'>                  [--ssl-client-key SSL_CLIENT_KEY]
+</span><span class='line'>                  [--ssl-client-passphrase SSL_CLIENT_PASSPHRASE]
+</span><span class='line'>                  [-e ENVIRONMENT] [-g GLOBALS] [--folder FOLDER]
+</span><span class='line'>                  [-r REPORTERS] [-n ITERATION_COUNT] [-d ITERATION_DATA]
+</span><span class='line'>                  [--export-environment [EXPORT_ENVIRONMENT]]
+</span><span class='line'>                  [--export-globals [EXPORT_GLOBALS]]
+</span><span class='line'>                  [--export-collection [EXPORT_COLLECTION]]
+</span><span class='line'>                  [--delay-request DELAY_REQUEST] [--bail] [-x] [--silent]
+</span><span class='line'>                  [--disable-unicode] [--global-var GLOBAL_VAR]
+</span><span class='line'>                  collection
+</span><span class='line'>
+</span><span class='line'>The "run" command can be used to run Postman Collections
+</span><span class='line'>
+</span><span class='line'>Positional arguments:
+</span><span class='line'>  collection            URL or path to a Postman Collection
+</span><span class='line'>
+</span><span class='line'>Optional arguments:
+</span><span class='line'>  -h, --help            Show this help message and exit.
+</span><span class='line'>  -v VERSION, --version VERSION
+</span><span class='line'>                        Display the newman version
+</span><span class='line'>  --no-color            Disable colored output
+</span><span class='line'>  --color               Force colored output (for use in CI environments)
+</span><span class='line'>  --timeout-request TIMEOUT_REQUEST
+</span><span class='line'>                        Specify a timeout for requests (in milliseconds)
+</span><span class='line'>  --ignore-redirects    If present, Newman will not follow HTTP Redirects
+</span><span class='line'>  -k, --insecure        Disables SSL validations.
+</span><span class='line'>  --ssl-client-cert SSL_CLIENT_CERT
+</span><span class='line'>                        Specify the path to the Client SSL certificate. 
+</span><span class='line'>                        Supports .cert and .pfx files.
+</span><span class='line'>  --ssl-client-key SSL_CLIENT_KEY
+</span><span class='line'>                        Specify the path to the Client SSL key (not needed 
+</span><span class='line'>                        for .pfx files).
+</span><span class='line'>  --ssl-client-passphrase SSL_CLIENT_PASSPHRASE
+</span><span class='line'>                        Specify the Client SSL passphrase (optional, needed 
+</span><span class='line'>                        for passphrase protected keys).
+</span><span class='line'>  -e ENVIRONMENT, --environment ENVIRONMENT
+</span><span class='line'>                        Specify a URL or Path to a Postman Environment
+</span><span class='line'>  -g GLOBALS, --globals GLOBALS
+</span><span class='line'>                        Specify a URL or Path to a file containing Postman 
+</span><span class='line'>                        Globals
+</span><span class='line'>  --folder FOLDER       Run a single folder from a collection
+</span><span class='line'>  -r REPORTERS, --reporters REPORTERS
+</span><span class='line'>                        Specify the reporters to use for this run.
+</span><span class='line'>  -n ITERATION_COUNT, --iteration-count ITERATION_COUNT
+</span><span class='line'>                        Define the number of iterations to run.
+</span><span class='line'>  -d ITERATION_DATA, --iteration-data ITERATION_DATA
+</span><span class='line'>                        Specify a data file to use for iterations (either 
+</span><span class='line'>                        json or csv)
+</span><span class='line'>  --export-environment [EXPORT_ENVIRONMENT]
+</span><span class='line'>                        Exports the environment to a file after completing 
+</span><span class='line'>                        the run
+</span><span class='line'>  --export-globals [EXPORT_GLOBALS]
+</span><span class='line'>                        Specify an output file to dump Globals before exiting
+</span><span class='line'>  --export-collection [EXPORT_COLLECTION]
+</span><span class='line'>                        Specify an output file to save the executed collection
+</span><span class='line'>  --delay-request DELAY_REQUEST
+</span><span class='line'>                        Specify the extent of delay between requests 
+</span><span class='line'>                        (milliseconds)
+</span><span class='line'>  --bail                Specify whether or not to gracefully stop a 
+</span><span class='line'>                        collection run on encountering the first error
+</span><span class='line'>  -x, --suppress-exit-code
+</span><span class='line'>                        Specify whether or not to override the default exit 
+</span><span class='line'>                        code for the current run
+</span><span class='line'>  --silent              Prevents newman from showing output to CLI
+</span><span class='line'>  --disable-unicode     Forces unicode compliant symbols to be replaced by 
+</span><span class='line'>                        their plain text equivalents
+</span><span class='line'>  --global-var GLOBAL_VAR
+</span><span class='line'>                        Allows the specification of global variables via the 
+</span><span class='line'>                        command line, in a key=value format</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Postman Tutorial]]></title>
@@ -109,9 +308,55 @@ In this example, we have test scripts for checking status code, values in the he
 
 <p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
 
+<h3>Exporting Collections and environment files</h3>
+
+<p>Postman provides facility to export collections and environment files as JSON. This helps to share the details with other team members and also to use Newman for running postman collections. Let us have a look into how to export them.</p>
+
+<p><strong>Exporting Collections</strong></p>
+
+<ul>
+<li>Click on Collections Tab.</li>
+<li>Click on <code>...</code> next to Collections Name.</li>
+<li>Click on Export.</li>
+<li><p>Select V2 option and save the file.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/08/05/Postman%20Tutorial%2013.png" alt="Collection" /></p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/08/05/Postman%20Tutorial%2014.png" alt="Collection" /></p></li>
+</ul>
+
+
+<p><strong>Exporting Environment File</strong></p>
+
+<ul>
+<li>Click on Settings button on top right corner.</li>
+<li>Click on Manage environment.</li>
+<li><p>Download the file.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/08/05/Postman%20Tutorial%2015.png" alt="Export" /></p></li>
+</ul>
+
+
+<h3>Running Collections Using Postman Collection Runner</h3>
+
+<p>Postman provides a feature to run collections using collection Runner.</p>
+
+<ul>
+<li>Click on Runner button on Top left to open collection runner</li>
+<li><p>Select Collection name in drop down and select environment and then hit <code>Start Run</code>.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2017/08/05/Postman%20Tutorial%2016.png" alt="Collection Runner" /></p></li>
+</ul>
+
+
+<p>This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .</p>
+
+<p>Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
+  <img src="http://www.abygeorgea.com/images/2017/08/05/Postman%20Tutorial%2017.png" alt="Collection Runner" /></p>
+
 <h3>What Next ?</h3>
 
-<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.</p>
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. We can also use Newman , which is command line collection runner , to execute collections. I will write another post about it sometime soon.</p>
 ]]></content>
   </entry>
   
@@ -2000,56 +2245,6 @@ remaining will be generated dynamically , which will keep on changing. This will
 </span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
 </span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Identifying Elements Using Locators in Selenium]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium/"/>
-    <updated>2016-08-17T20:30:54+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium</id>
-    <content type="html"><![CDATA[<p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
-
-<p>Selenium Web Driver provides two different methods for identifying html elements .</p>
-
-<ul>
-<li><p><em><strong>FindElement  </strong></em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return the first matching element. If there are no matching element, it will throw NoSuchElementFoundException</p></li>
-<li><p><em><strong>FindElements</strong> </em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return a list of all matching element. If there are no matching elements, then it will return an empty list .</p></li>
-</ul>
-
-
-<p>Note: Both of them doesn&rsquo;t support regular expression for finding element. Simple way to do that will be to get list of all elements and then iterate to find a matching regular expression</p>
-
-<p>There are multiple criteria which we can use for looking for an element. FindElement and FindElements work exactly same way except for above difference. Different critieria are</p>
-
-<ul>
-<li><p>driver.FindElement(By.Id(<elementID>))</p></li>
-<li><p>driver.FindElement(By.Name(<element name>))</p></li>
-<li><p>driver.FindElement(By.ClassName(<element class>))</p></li>
-<li><p>driver.FindElement(By.TagName(<htmltagname>))</p></li>
-<li><p>driver.FindElement(By.LinkText(<linktext >))</p></li>
-<li><p>driver.FindElement(By.PartialLinkText(<linktext >))</p></li>
-<li><p>driver.FindElement(By.CssSelector(<css selector >))</p></li>
-<li><p>driver.FindElement(By.XPath(<xpath query expression>))</p></li>
-</ul>
-
-
-<p>Example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>WebElement _firstElement = driver.findElement(By.id("div1"));
-</span><span class='line'>WebElement _secondElementInsideFirstOne =_firstElement .findElement(By.linkText("username"));
-</span><span class='line'>
-</span><span class='line'>IList&lt;IWebElement&gt; elements = driverOne.FindElements(By.ClassName(&lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;“&lt;/span&gt;green&lt;span class="pl-pds"&gt;“&lt;/span&gt;&lt;/span&gt;));
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Using any attributes other than XPath and CssSelector are straight forward. More about using XPath and CssSelector in next blog.</p>
 ]]></content>
   </entry>
   

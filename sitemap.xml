@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman/</loc>
+<lastmod>2017-08-07T15:46:28+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/</loc>
 <lastmod>2017-08-05T07:09:48+10:00</lastmod>
 </url>

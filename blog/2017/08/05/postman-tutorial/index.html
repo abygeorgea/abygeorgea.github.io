@@ -231,9 +231,55 @@ In this example, we have test scripts for checking status code, values in the he
 
 <p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
 
+<h3>Exporting Collections and environment files</h3>
+
+<p>Postman provides facility to export collections and environment files as JSON. This helps to share the details with other team members and also to use Newman for running postman collections. Let us have a look into how to export them.</p>
+
+<p><strong>Exporting Collections</strong></p>
+
+<ul>
+<li>Click on Collections Tab.</li>
+<li>Click on <code>...</code> next to Collections Name.</li>
+<li>Click on Export.</li>
+<li><p>Select V2 option and save the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2013.png" alt="Collection" /></p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2014.png" alt="Collection" /></p></li>
+</ul>
+
+
+<p><strong>Exporting Environment File</strong></p>
+
+<ul>
+<li>Click on Settings button on top right corner.</li>
+<li>Click on Manage environment.</li>
+<li><p>Download the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2015.png" alt="Export" /></p></li>
+</ul>
+
+
+<h3>Running Collections Using Postman Collection Runner</h3>
+
+<p>Postman provides a feature to run collections using collection Runner.</p>
+
+<ul>
+<li>Click on Runner button on Top left to open collection runner</li>
+<li><p>Select Collection name in drop down and select environment and then hit <code>Start Run</code>.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2016.png" alt="Collection Runner" /></p></li>
+</ul>
+
+
+<p>This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .</p>
+
+<p>Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
+  <img src="/images/2017/08/05/Postman%20Tutorial%2017.png" alt="Collection Runner" /></p>
+
 <h3>What Next ?</h3>
 
-<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. I will write another post sometime soon.</p>
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. We can also use Newman , which is command line collection runner , to execute collections. I will write another post about it sometime soon.</p>
 </div>
 
 
@@ -284,6 +330,8 @@ In this example, we have test scripts for checking status code, values in the he
             
             <li class="previous"><a href="/blog/2017/07/21/extracting-substring-using-javascript/" title="Previous Post: Extracting Substring using Javascript">&laquo; Extracting Substring using Javascript</a></li>
             
+            
+            <li class="next"><a href="/blog/2017/08/07/running-postman-collection-using-newman/" title="Next Post: Running Postman collection using Newman">Running Postman collection using Newman &raquo;</a></li>
             
           </ul>
         
@@ -429,13 +477,13 @@ In this example, we have test scripts for checking status code, values in the he
     
     
     <a class="list-group-item " href="/blog/categories/postman/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         postman
       </a>
     
     
     <a class="list-group-item " href="/blog/categories/newman/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         newman
       </a>
     
@@ -447,6 +495,8 @@ In this example, we have test scripts for checking status code, values in the he
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/08/07/running-postman-collection-using-newman/">Running Postman Collection Using Newman</a>
+    
     <a class="list-group-item active" href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
     
     <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
@@ -454,8 +504,6 @@ In this example, we have test scripts for checking status code, values in the he
     <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
     
     <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
-    
-    <a class="list-group-item " href="/blog/2017/06/15/how-to-squash-commits-in-git/">How to Squash Commits in Git</a>
     
   </div>
 </section>
