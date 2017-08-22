@@ -1,0 +1,28 @@
+---
+layout: post
+title: "Selenium"
+date: 2015-06-22 21:27:24 +1000
+comments: true
+categories: selenium
+keywords: 
+description: Selenium WebDriver Notes
+---
+
+### Difference between / and // in XPath
+/ is used to create absolute XPath which starts from root. This is highly brittle since any changes to UI will change element locator.
+
+// is used to create relative XPath . The XPath is created relative to another element in UI
+
+### Difference between driver.get() and driver.navigate().to()
+Both `driver.get()` and `driver.navigate().to()` will try to open a webpage and wait for the page to load. It means, it will wait till `Onload` event has fired. But it will not wait for all AJAX calls to trigger and process. Both of them are essentially the same. How ever Navigate() interface exposes the ability to move backward and forward  in browser history.
+
+```
+driver.get("http://www.google.com");
+driver.navigate().to("http://www.yahoo.com");
+driver.navigate().forward();
+driver.navigate().back();
+```
+
+### Difference between driver.close() and driver.quit()
+driver.close() will close the window which is currently accessed by webdriver.
+driver.quit() will close all windows that are opened by the webdriver during current execution.
