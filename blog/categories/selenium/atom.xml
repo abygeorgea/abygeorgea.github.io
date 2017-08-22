@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Selenium | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/selenium/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-07T17:03:11+10:00</updated>
+  <updated>2017-08-22T21:53:29+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -173,6 +173,34 @@ WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'
 WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
 // Above will identify first element with input tag which also has id containing with "password".
 </code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Selenium]]></title>
+    <link href="http://www.abygeorgea.com/blog/2015/06/22/selenium/"/>
+    <updated>2015-06-22T21:27:24+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2015/06/22/selenium</id>
+    <content type="html"><![CDATA[<h3>Difference between / and // in XPath</h3>
+
+<p>/ is used to create absolute XPath which starts from root. This is highly brittle since any changes to UI will change element locator.</p>
+
+<p>// is used to create relative XPath . The XPath is created relative to another element in UI</p>
+
+<h3>Difference between driver.get() and driver.navigate().to()</h3>
+
+<p>Both <code>driver.get()</code> and <code>driver.navigate().to()</code> will try to open a webpage and wait for the page to load. It means, it will wait till <code>Onload</code> event has fired. But it will not wait for all AJAX calls to trigger and process. Both of them are essentially the same. How ever Navigate() interface exposes the ability to move backward and forward  in browser history.</p>
+
+<pre><code>driver.get("http://www.google.com");
+driver.navigate().to("http://www.yahoo.com");
+driver.navigate().forward();
+driver.navigate().back();
+</code></pre>
+
+<h3>Difference between driver.close() and driver.quit()</h3>
+
+<p>driver.close() will close the window which is currently accessed by webdriver.
+driver.quit() will close all windows that are opened by the webdriver during current execution.</p>
 ]]></content>
   </entry>
   

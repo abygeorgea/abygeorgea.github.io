@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mountebank | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/mountebank/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-07T17:03:11+10:00</updated>
+  <updated>2017-08-22T21:53:29+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -52,6 +52,91 @@ console.log(generatedId);
 //if we need to replace this with another value ( possibly coming from request parameter)
 var result = xmldata.replace(generatedId, "99999");
 console.log(result);
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Predicates in Mountebank]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/07/15/predicates-in-mountebank/"/>
+    <updated>2017-07-15T21:07:40+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/07/15/predicates-in-mountebank</id>
+    <content type="html"><![CDATA[<p>Predicates in Mountebank imposter files is a pretty powerful way to configure stubs. It helps us to return different responses based on the request parameters like type, query string , headers, body etc. Let us have some quick look at extracting values from request</p>
+
+<h3>Based on Query String</h3>
+
+<p>Below is an example of extracting the records based on query string.
+If the request is like <code>path?customerId=123&amp;customerId=456&amp;email=abc.com</code>
+Note: This is slightly modified version of code in mbtest.org</p>
+
+<pre><code>{
+  "port": 4547,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [{
+        "equals": {
+          "query": { "customerId": ["123", "456"] }
+        }
+      }],
+      "responses": [{
+        "is": {
+          "body": "Customer ID is either 123 or 456"
+        }
+      }]
+    },
+    {
+      "predicates": [{
+        "equals": {
+          "query": { 
+            "customerId": "123",
+            "email" :"abc.com"
+             }
+        }
+      }],
+      "responses": [{
+        "is": {
+          "body": "Customer ID is 123 and email is abc.com"
+        }
+      }]
+    }
+  ]
+}
+</code></pre>
+
+<h3>Based on Header Content</h3>
+
+<p>If input data is shared through values in header, that can be extracted. Below snippet is directly from mbtest.org</p>
+
+<pre><code>{
+  "port": 4545,
+  "protocol": "http",
+  "stubs": [
+    {
+      "responses": [{ "is": { "statusCode": 400 } }],
+      "predicates": [
+        {
+          "equals": {
+            "method": "POST",
+            "path": "/test",
+            "query": {
+              "first": "1",
+              "second": "2"
+            },
+            "headers": {
+              "Accept": "text/plain"
+            }
+          }
+        },
+        {
+          "equals": { "body": "hello, world" },
+          "caseSensitive": true,
+          "except": "!$"
+        }
+      ]
+    }
+   ]
+ }
 </code></pre>
 ]]></content>
   </entry>
@@ -335,7 +420,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x4a;&#x6f;&#104;&#x6e;&#46;&#x43;&#x69;&#x74;&#105;&#x7a;&#x65;&#110;&#64;&#x61;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#x61;&#115;&#x2e;&#x63;&#111;&#109;">&#x4a;&#x6f;&#x68;&#x6e;&#x2e;&#x43;&#105;&#116;&#105;&#122;&#x65;&#x6e;&#x40;&#x61;&#98;&#x63;&#x61;&#98;&#97;&#x63;&#97;&#115;&#x2e;&#99;&#x6f;&#109;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#74;&#111;&#x68;&#110;&#x2e;&#x43;&#105;&#x74;&#105;&#x7a;&#x65;&#x6e;&#64;&#97;&#98;&#99;&#x61;&#98;&#97;&#99;&#x61;&#115;&#x2e;&#x63;&#111;&#109;">&#x4a;&#111;&#x68;&#x6e;&#x2e;&#x43;&#105;&#116;&#105;&#x7a;&#x65;&#110;&#x40;&#x61;&#98;&#99;&#97;&#98;&#97;&#x63;&#97;&#x73;&#x2e;&#x63;&#x6f;&#109;</a>&rdquo;</p>
 
 <p>}</p>
 
@@ -479,156 +564,6 @@ body: response
 <p>For real time usage for testing any web application which needs to get a 404 message from back end API calls, just point the end point to this local host end point and fire a request which matches the predicate.</p>
 
 <p>Details of second response will be shared in next blog post</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mountebank - Your First Service Virtualisation]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/"/>
-    <updated>2017-03-03T11:46:48+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation</id>
-    <content type="html"><![CDATA[<p>In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here (Install Mountebank)</a>, we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response</p>
-
-<h2>How to Create a Stub</h2>
-
-<ol>
-<li><p>Navigate to mountebank installation path</p></li>
-<li><p>Create a folder and name it as &ldquo;StubResponse&rdquo;. ( You can name it whatever you want)</p></li>
-<li><p>Create two json file using notepad and save it as &ldquo;MockResponeForApiOne.json&rdquo; and &ldquo;MockResponeForApiTwo.json&rdquo;( Or what ever you want).</p></li>
-<li><p>Copy paste below code to &ldquo;MockResponeForApiOne.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</p></li>
-</ol>
-
-
-<pre><code class="plain MockResponseForApiOne.json">
-"responses": [
- {
- "is": {
- "statusCode": 200,
- "body": {
- "Text":"Response ONE ","token":"username","expires_in":90
- }
- }
- }
- ],
- "predicates": [
- {
- "exists": {
- "body" :
- {
- "username": true,"password" : true
- },
- "method" : "POST",
- "path" : "/Apitesting/v1/test?type=ResponseOne"
- }
- }
- ]
-</code></pre>
-
-<p>-</p>
-
-<ol>
-<li>Copy paste below code to &ldquo;MockResponeForApiTwo.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</li>
-</ol>
-
-
-<pre><code class="plain MockResponseForApiTwo.json"> "responses": [
- {
- "is": {
- "statusCode": 200,
- "body": {
- "Text":"Response TWO ","token":"emailAddress","expires_in":90
- }
- }
- }
- ],
- "predicates": [
- {
- "exists": {
- "body" :
- {
- "email": true,"password" : true
- },
- "method" : "POST",
- "path" : "/Apitesting/v1/test?type=ResponseTwo"
- }
- }
- ]
-</code></pre>
-
-<h2>How to create an Imposter</h2>
-
-<ol>
-<li><p>Create another file called test.json in same path as above</p></li>
-<li><p>copy and paste below contents to it</p></li>
-</ol>
-
-
-<pre><code class="plain test.json">
-{
-"imposters": [
-{
-"port": 4547,
-"protocol": "http",
-"stubs": [
-{
-&lt;% include MockResponseForApiOne.json %&gt;
-},
-{
-&lt;% include MockResponseForApiTwo.json %&gt;
-}
-]
-}
-]
-}
-</code></pre>
-
-<h2>Let us have a close look into Imposter and stubs</h2>
-
-<p>Responses – Contains an array of responses expected to return for the defined stub. In the above scenario the response will include status code as 200 and response body. For more info, <a href="http://www.mbtest.org/docs/api/contracts">http://www.mbtest.org/docs/api/contracts</a>
-Predicates – is an array of predicates which will be used during matching process. Predicate object can be quite complex, it supports lots of different matching techniques.
-For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mbtest.org/docs/api/predicates</a></p>
-
-<h2>Let&rsquo;s Mock it</h2>
-
-<p>Once all required files are created and saved, mountebank can be started by following command in command prompt , after navigating to installation folder of mountebank</p>
-
-<pre><code class="">
-mb --configfile StubResponse/test.json
-</code></pre>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/cmd.jpg" alt="cmd.jpg" /></p>
-
-<p>Once mountebank is started, we can verify it by navigating to path <a href="http://localhost:2525/imposters">http://localhost:2525/imposters</a></p>
-
-<p>It will list out all active ports and a list of stubs available</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/imposter.jpg" alt="imposter" /></p>
-
-<h2>Test It</h2>
-
-<p>Once we complete above steps, mountebank is ready with stubs. Now comes the part to test it and use. You can use any api testing tool ( Postman, soapUi etc ) for testing this. Just send the request matching the predicates and look for the responses</p>
-
-<p>Below are the screenshot of Postman request</p>
-
-<p><strong>Requesting for First API.</strong></p>
-
-<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;username&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=ResponseOne"</p>
-
-<p>Now construct a postman request matching above and fire it</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgone.jpg" alt="bgone" /></p>
-
-<p><strong>Request for second API</strong></p>
-
-<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;<strong>email</strong>&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=Response<strong>Two</strong>"</p>
-
-<p>Now construct a postman request matching above and fire it</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg" alt="bgtwo" /></p>
-
-<p>As you can see, both request has succesfully received expected response message</p>
-
-<p>For actual development usage, just point your application to this localhost URL and start consuming virtualised API</p>
 ]]></content>
   </entry>
   

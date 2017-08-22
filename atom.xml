@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-07T17:03:11+10:00</updated>
+  <updated>2017-08-22T21:53:29+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -422,6 +422,155 @@ In this example, we have test scripts for checking status code, values in the he
 </span><span class='line'><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">xmldata</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="nx">generatedId</span><span class="p">,</span> <span class="s2">&quot;99999&quot;</span><span class="p">);</span>
 </span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Predicates in Mountebank]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/07/15/predicates-in-mountebank/"/>
+    <updated>2017-07-15T21:07:40+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/07/15/predicates-in-mountebank</id>
+    <content type="html"><![CDATA[<p>Predicates in Mountebank imposter files is a pretty powerful way to configure stubs. It helps us to return different responses based on the request parameters like type, query string , headers, body etc. Let us have some quick look at extracting values from request</p>
+
+<h3>Based on Query String</h3>
+
+<p>Below is an example of extracting the records based on query string.
+If the request is like <code>path?customerId=123&amp;customerId=456&amp;email=abc.com</code>
+Note: This is slightly modified version of code in mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4547,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { "customerId": ["123", "456"] }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is either 123 or 456"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    },
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { 
+</span><span class='line'>              "customerId": "123",
+</span><span class='line'>              "email" :"abc.com"
+</span><span class='line'>               }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is 123 and email is abc.com"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    }
+</span><span class='line'>  ]
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Based on Header Content</h3>
+
+<p>If input data is shared through values in header, that can be extracted. Below snippet is directly from mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4545,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "responses": [{ "is": { "statusCode": 400 } }],
+</span><span class='line'>      "predicates": [
+</span><span class='line'>        {
+</span><span class='line'>          "equals": {
+</span><span class='line'>            "method": "POST",
+</span><span class='line'>            "path": "/test",
+</span><span class='line'>            "query": {
+</span><span class='line'>              "first": "1",
+</span><span class='line'>              "second": "2"
+</span><span class='line'>            },
+</span><span class='line'>            "headers": {
+</span><span class='line'>              "Accept": "text/plain"
+</span><span class='line'>            }
+</span><span class='line'>          }
+</span><span class='line'>        },
+</span><span class='line'>        {
+</span><span class='line'>          "equals": { "body": "hello, world" },
+</span><span class='line'>          "caseSensitive": true,
+</span><span class='line'>          "except": "!$"
+</span><span class='line'>        }
+</span><span class='line'>      ]
+</span><span class='line'>    }
+</span><span class='line'>   ]
+</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
 
 
 
@@ -2160,91 +2309,6 @@ Eg:</p>
 <p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
 
 <p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Element Location Using XPath]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/"/>
-    <updated>2016-08-30T10:58:16+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath</id>
-    <content type="html"><![CDATA[<p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
-
-<h4><strong>Absolute XPath</strong></h4>
-
-<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
-
-<p>Example of Xpath using absolute path is as below</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath</strong></h4>
-
-<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
-
-<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input"));
-</span><span class='line'>// This retrieve first element with input tag.
-</span><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input[2]"));
-</span><span class='line'>// This retrieve second element with input tag.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath  - With Attributes</strong></h4>
-
-<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has id as "password".
-</span><span class='line'>
-</span><span class='line'>WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
-</span><span class='line'>//Note you can use "or" as well.
-</span><span class='line'>WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has any attribute as "password".</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath - Partial Match</strong></h4>
-
-<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
-remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
-
-<ul>
-<li><p>starts-with()</p></li>
-<li><p>ends-with()</p></li>
-<li><p>contains()</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id starting with "password".
-</span><span class='line'>WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id ending with "password".
-</span><span class='line'>
-</span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

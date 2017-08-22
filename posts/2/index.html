@@ -131,6 +131,102 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-20T21:59:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 Apr, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/" itemprop="url">Zip and Extract Zip Files Using Csharp</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
+
+<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
+
+<h3>Pre-Requisite</h3>
+
+<ul>
+<li>.Net 4.5 is needed</li>
+<li>Add reference to below dll to solution
+
+<ul>
+<li>System.IO.Compression.dll</li>
+<li>System.IO.Compression.FileSystem.dll</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='c#'><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">ZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">CreateFromDirectory</span><span class="p">(</span><span class="n">startPath</span><span class="p">,</span> <span class="n">zipPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">UnZipFile</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">ExtractToDirectory</span><span class="p">(</span><span class="n">zipPath</span><span class="p">,</span> <span class="n">extractPath</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T20:24:20+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
         
       </p>
@@ -1246,119 +1342,6 @@ Eg:</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-30T10:58:16+00:00"  data-updated="true" itemprop="datePublished dateCreated">30 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/30/element-location-using-xpath/" itemprop="url">Element Location Using XPath</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
-
-<h4><strong>Absolute XPath</strong></h4>
-
-<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
-
-<p>Example of Xpath using absolute path is as below</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath</strong></h4>
-
-<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
-
-<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input"));
-</span><span class='line'>// This retrieve first element with input tag.
-</span><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input[2]"));
-</span><span class='line'>// This retrieve second element with input tag.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath  - With Attributes</strong></h4>
-
-<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has id as "password".
-</span><span class='line'>
-</span><span class='line'>WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
-</span><span class='line'>//Note you can use "or" as well.
-</span><span class='line'>WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has any attribute as "password".</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath - Partial Match</strong></h4>
-
-<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
-remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
-
-<ul>
-<li><p>starts-with()</p></li>
-<li><p>ends-with()</p></li>
-<li><p>contains()</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id starting with "password".
-</span><span class='line'>WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id ending with "password".
-</span><span class='line'>
-</span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1397,6 +1380,12 @@ remaining will be generated dynamically , which will keep on changing. This will
     <a class="list-group-item " href="/blog/categories/excel/index.html">
         <span class="badge">3</span>
         excel
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium/index.html">
+        <span class="badge">4</span>
+        selenium
       </a>
     
     
@@ -1448,9 +1437,9 @@ remaining will be generated dynamically , which will keep on changing. This will
       </a>
     
     
-    <a class="list-group-item " href="/blog/categories/selenium/index.html">
-        <span class="badge">3</span>
-        selenium
+    <a class="list-group-item " href="/blog/categories/nunit/index.html">
+        <span class="badge">1</span>
+        nunit
       </a>
     
     
@@ -1467,7 +1456,7 @@ remaining will be generated dynamically , which will keep on changing. This will
     
     
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
-        <span class="badge">6</span>
+        <span class="badge">7</span>
         mountebank
       </a>
     
@@ -1527,9 +1516,9 @@ remaining will be generated dynamically , which will keep on changing. This will
     
     <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
     
-    <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
+    <a class="list-group-item " href="/blog/2017/07/15/predicates-in-mountebank/">Predicates in Mountebank</a>
     
-    <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
+    <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
     
   </div>
 </section>

@@ -13,6 +13,10 @@
 <lastmod>2017-07-21T06:09:53+10:00</lastmod>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/2017/07/15/predicates-in-mountebank/</loc>
+<lastmod>2017-07-15T21:07:40+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2017/06/25/galen-framework-getting-started/</loc>
 <lastmod>2017-06-25T05:39:02+10:00</lastmod>
 </url>
@@ -81,6 +85,10 @@
 <lastmod>2016-08-30T10:58:16+00:00</lastmod>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/2016/08/22/nunit-assert/</loc>
+<lastmod>2016-08-22T20:55:39+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium/</loc>
 <lastmod>2016-08-17T20:30:54+00:00</lastmod>
 </url>
@@ -103,6 +111,10 @@
 <url>
 <loc>http://www.abygeorgea.com/blog/2015/10/16/volunteering-experience/</loc>
 <lastmod>2015-10-16T20:40:35+10:00</lastmod>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/2015/06/22/selenium/</loc>
+<lastmod>2015-06-22T21:27:24+10:00</lastmod>
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel/</loc>
@@ -141,6 +153,9 @@
 <loc>http://www.abygeorgea.com/blog/categories/excel/</loc>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/categories/selenium/</loc>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/categories/volunteering/</loc>
 </url>
 <url>
@@ -165,7 +180,7 @@
 <loc>http://www.abygeorgea.com/blog/categories/element-identification/</loc>
 </url>
 <url>
-<loc>http://www.abygeorgea.com/blog/categories/selenium/</loc>
+<loc>http://www.abygeorgea.com/blog/categories/nunit/</loc>
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/git/</loc>

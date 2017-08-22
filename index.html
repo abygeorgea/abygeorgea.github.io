@@ -630,6 +630,183 @@ In this example, we have test scripts for checking status code, values in the he
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-07-15T21:07:40+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jul, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/07/15/predicates-in-mountebank/" itemprop="url">Predicates in Mountebank</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Predicates in Mountebank imposter files is a pretty powerful way to configure stubs. It helps us to return different responses based on the request parameters like type, query string , headers, body etc. Let us have some quick look at extracting values from request</p>
+
+<h3>Based on Query String</h3>
+
+<p>Below is an example of extracting the records based on query string.
+If the request is like <code>path?customerId=123&amp;customerId=456&amp;email=abc.com</code>
+Note: This is slightly modified version of code in mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4547,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { "customerId": ["123", "456"] }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is either 123 or 456"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    },
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { 
+</span><span class='line'>              "customerId": "123",
+</span><span class='line'>              "email" :"abc.com"
+</span><span class='line'>               }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is 123 and email is abc.com"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    }
+</span><span class='line'>  ]
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Based on Header Content</h3>
+
+<p>If input data is shared through values in header, that can be extracted. Below snippet is directly from mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4545,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "responses": [{ "is": { "statusCode": 400 } }],
+</span><span class='line'>      "predicates": [
+</span><span class='line'>        {
+</span><span class='line'>          "equals": {
+</span><span class='line'>            "method": "POST",
+</span><span class='line'>            "path": "/test",
+</span><span class='line'>            "query": {
+</span><span class='line'>              "first": "1",
+</span><span class='line'>              "second": "2"
+</span><span class='line'>            },
+</span><span class='line'>            "headers": {
+</span><span class='line'>              "Accept": "text/plain"
+</span><span class='line'>            }
+</span><span class='line'>          }
+</span><span class='line'>        },
+</span><span class='line'>        {
+</span><span class='line'>          "equals": { "body": "hello, world" },
+</span><span class='line'>          "caseSensitive": true,
+</span><span class='line'>          "except": "!$"
+</span><span class='line'>        }
+</span><span class='line'>      ]
+</span><span class='line'>    }
+</span><span class='line'>   ]
+</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-25T05:39:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">25 Jun, 2017</time>
         
       </p>
@@ -1564,102 +1741,6 @@ Below commands can be run on cmd.exe</li>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-20T21:59:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 Apr, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/" itemprop="url">Zip and Extract Zip Files Using Csharp</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
-
-<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
-
-<h3>Pre-Requisite</h3>
-
-<ul>
-<li>.Net 4.5 is needed</li>
-<li>Add reference to below dll to solution
-
-<ul>
-<li>System.IO.Compression.dll</li>
-<li>System.IO.Compression.FileSystem.dll</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Example</h3>
-
-<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='c#'><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">ZipFile</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">CreateFromDirectory</span><span class="p">(</span><span class="n">startPath</span><span class="p">,</span> <span class="n">zipPath</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">UnZipFile</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">ExtractToDirectory</span><span class="p">(</span><span class="n">zipPath</span><span class="p">,</span> <span class="n">extractPath</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1698,6 +1779,12 @@ Below commands can be run on cmd.exe</li>
     <a class="list-group-item " href="/blog/categories/excel/index.html">
         <span class="badge">3</span>
         excel
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium/index.html">
+        <span class="badge">4</span>
+        selenium
       </a>
     
     
@@ -1749,9 +1836,9 @@ Below commands can be run on cmd.exe</li>
       </a>
     
     
-    <a class="list-group-item " href="/blog/categories/selenium/index.html">
-        <span class="badge">3</span>
-        selenium
+    <a class="list-group-item " href="/blog/categories/nunit/index.html">
+        <span class="badge">1</span>
+        nunit
       </a>
     
     
@@ -1768,7 +1855,7 @@ Below commands can be run on cmd.exe</li>
     
     
     <a class="list-group-item " href="/blog/categories/mountebank/index.html">
-        <span class="badge">6</span>
+        <span class="badge">7</span>
         mountebank
       </a>
     
@@ -1828,9 +1915,9 @@ Below commands can be run on cmd.exe</li>
     
     <a class="list-group-item " href="/blog/2017/07/21/extracting-substring-using-javascript/">Extracting Substring Using Javascript</a>
     
-    <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
+    <a class="list-group-item " href="/blog/2017/07/15/predicates-in-mountebank/">Predicates in Mountebank</a>
     
-    <a class="list-group-item " href="/blog/2017/06/21/automated-testing-of-responsive-web-design/">Automated Testing of CSS for Responsive Web Design</a>
+    <a class="list-group-item " href="/blog/2017/06/25/galen-framework-getting-started/">Galen Framework - Getting Started</a>
     
   </div>
 </section>

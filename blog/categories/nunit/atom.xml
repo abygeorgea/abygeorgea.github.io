@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nunit | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/nunit/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-08-22T21:53:29+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Nunit Assert]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/08/22/nunit-assert/"/>
+    <updated>2016-08-22T20:55:39+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/08/22/nunit-assert</id>
+    <content type="html"><![CDATA[<h2>Assert.AreEqual vs Assert.AreSame</h2>
+
+<p>Very frequently I use Assert.AreEqual and Assert.AreSame for doing assertions in the code. Below is high level difference between both.</p>
+
+<h3>Assert.AreSame</h3>
+
+<p>Assert.AreSame checks whether both comparing objects are exactly the same ( reference indicate same object in memory) .It is normally known as Reference Equality</p>
+
+<h3>Assert.AreEqual</h3>
+
+<p>Assert.AreEqual checks whether both objects contain same value. It is normally known as Value Equality. For primitive value types ( like int, bool) this is straight forward. But for other types ( especially user defined objects) , it is depends on how the type defines equality.</p>
+
+<p>Hence Assert.AreEqual will fail ( most of the time) when we compare two objects. This <a href="https://github.com/nunit/nunit/issues/730">link</a> have some discussion point about the same.</p>
+]]></content>
+  </entry>
+  
+</feed>
