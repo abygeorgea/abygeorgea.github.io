@@ -33,7 +33,9 @@ footer: true
 	* Discuss with test team to come up 
 5. What to do when there is not enough time for testing
 6. What to do when a critical bug is found one day prior to release
-7. 
+7. What will you do when you find defects
+  	* Analyze logs to identify root cause
+  	* Use debugger in Visual studio to identify what is causing issue
 
 ##Test Process##
 
