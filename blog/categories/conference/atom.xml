@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Conference | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/conference/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-08-29T22:22:57+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ANZTB SIGiST Conference]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/29/anztb-sigist-conference/"/>
+    <updated>2017-08-29T21:32:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/29/anztb-sigist-conference</id>
+    <content type="html"><![CDATA[<p>Today, I had a chance to attend SIGiST conference organised by ANZTB. It was a 2-hour session which includes a presentation, discussion, and networking opportunities. Being a first-time attendee to SIGiST, I was not sure what surprise I may have. Overall it was a fruitful session and I had a chance to meet people from other organisation and to understand what is happening at their end.</p>
+
+<p>Today&rsquo;s presentation was about &ldquo;Test Automation – What YOU need to know&rdquo;. Over all, it was a good session even though I found the presentation is more geared towards uplifting manual testers and what steps they should take to stay relevant in today&rsquo;s world. Going by crowd surrounding presenters after the session, it seems topic was well received and resonated with most of the people in the room. But those who have experience in automation / performance testing will find it basic. The presentation is expected to be uploaded <a href="http://www.anztb.org/downloads.php">here</a> in few days.</p>
+
+<p>The topic for discussion was &ldquo;Carriers in Testing&rdquo;. This was really engaging and people participated actively sharing their experiences in career progression, experience in getting jobs etc. There was pretty lengthy discussion about how to make your resume stand out in the crowd, importance of certification, soft skill, analytically and debugging skills and how to market yourself. Few recruiters/managers shed thoughts on what they look in prospective employee&rsquo;s resume and how they short list candidates for interview.</p>
+]]></content>
+  </entry>
+  
+</feed>

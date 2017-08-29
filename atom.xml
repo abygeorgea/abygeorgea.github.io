@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-08-22T21:53:29+10:00</updated>
+  <updated>2017-08-29T22:22:57+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[ANZTB SIGiST Conference]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/29/anztb-sigist-conference/"/>
+    <updated>2017-08-29T21:32:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/29/anztb-sigist-conference</id>
+    <content type="html"><![CDATA[<p>Today, I had a chance to attend SIGiST conference organised by ANZTB. It was a 2-hour session which includes a presentation, discussion, and networking opportunities. Being a first-time attendee to SIGiST, I was not sure what surprise I may have. Overall it was a fruitful session and I had a chance to meet people from other organisation and to understand what is happening at their end.</p>
+
+<p>Today&rsquo;s presentation was about &ldquo;Test Automation – What YOU need to know&rdquo;. Over all, it was a good session even though I found the presentation is more geared towards uplifting manual testers and what steps they should take to stay relevant in today&rsquo;s world. Going by crowd surrounding presenters after the session, it seems topic was well received and resonated with most of the people in the room. But those who have experience in automation / performance testing will find it basic. The presentation is expected to be uploaded <a href="http://www.anztb.org/downloads.php">here</a> in few days.</p>
+
+<p>The topic for discussion was &ldquo;Carriers in Testing&rdquo;. This was really engaging and people participated actively sharing their experiences in career progression, experience in getting jobs etc. There was pretty lengthy discussion about how to make your resume stand out in the crowd, importance of certification, soft skill, analytically and debugging skills and how to market yourself. Few recruiters/managers shed thoughts on what they look in prospective employee&rsquo;s resume and how they short list candidates for interview.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Running Postman Collection Using Newman]]></title>
@@ -2227,88 +2240,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 </span><span class='line'>
 </span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis/"/>
-    <updated>2016-09-03T22:33:04+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/09/03/element-location-using-xpath-axis</id>
-    <content type="html"><![CDATA[<p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
-
-<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
-If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="http://www.abygeorgea.com/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="http://www.abygeorgea.com/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
-
-<p>Below are major one&rsquo;s which we will frequently use</p>
-
-<h3>1. ancestor</h3>
-
-<p>This selects all ancestors of current node. That will include parent, grand parents etc
-Eg :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Product Desc']/ancestor::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2. descendant</h3>
-
-<p>This selects all children of current node. That will include child, grand child etc
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/table/descendant::td/input</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3. followingis</h3>
-
-<p>Th selects everything after the closing tag of current node Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/following::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4. following-sibling</h3>
-
-<p>This selects all siblings after the closing tah of current node.
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/followingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>5. preceding</h3>
-
-<p>This selects everything prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Add to cart']/preceding::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>preceding-sibling</li>
-</ol>
-
-
-<p>This selects all siblings prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Add to cart']/precedingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>7. child</h3>
-
-<p>This selects all children of current node</p>
-
-<h3>8. parent</h3>
-
-<p>This select parent of current node</p>
-
-<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
-
-<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
 ]]></content>
   </entry>
   
