@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Newman | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/newman/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-09-10T22:25:47+10:00</updated>
+  <updated>2017-09-13T21:56:59+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Postman - Using Data File]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/08/13/postman-using-data-file/"/>
+    <updated>2017-08-13T20:56:01+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/08/13/postman-using-data-file</id>
+    <content type="html"><![CDATA[<p>One of the common requirement for automated testing is to run same test case against multiple test data. Luckily postman supports this by providing facility to use data files. This is available only when we run through postman collection runner or newman.</p>
+
+<p>For this example, let us take a free public API <code>http://services.groupkt.com/country/get/iso2code/AU</code> . This API will return the name of the country depending on the 2 digit code passed. Let us assume that, we need to test this API with multiple country codes. For eg: AU, IN, GB etc.  Let us take a look to see how this can be achieved using postman data files.</p>
+
+<h4>Environment file</h4>
+
+<p>First, create an enviornment Manage Environment option at top right. Create an entry for endpoint as below.</p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%201.png" alt="EnivironmentSetup" /></p>
+
+<h4>Create Collection</h4>
+
+<p>Next step is to create a collection with a GET request and write tests to verify the response. GET request used here is <code>{EndPoint}/country/get/iso2code/{countrycode}</code></p>
+
+<p>Endpoint is defined in environment file and countrycode will be in data file</p>
+
+<p>Now write some tests to check the results. The data coming from data file will be available under &ldquo;data&rdquo; dictionary  ( similar to global/environment variable. It can be accessed as <code>data.VARIABLENAME</code> or <code>data["VARIABLENAME"]</code> in both test and pre requisite scripts. Below screenshot shows the test which is for validating country name based on the data file.</p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%202.png" alt="EnivironmentSetup" /></p>
+
+<h4>DateFile</h4>
+
+<p>Postman supports both CSV and JSON format. For CSV files, the first row should be the variable names as the header. All subsequent rows are data row. JSON file should be an array of the keyvalue pair where the variable name is the key.</p>
+
+<p>Data file used in this example is below. It has 3 column, where the first column is test case ID and the second one is country code which is used in the request and the third one is the country name, which is used for asserting the response received. In this example, I am looking for 3 different country codes.</p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%203.png" alt="datafile" /></p>
+
+<h4>Running Collections</h4>
+
+<p>While running collections, we need to specify below inputs.</p>
+
+<ul>
+<li>Collection Name</li>
+<li>Environment file</li>
+<li>Data File</li>
+</ul>
+
+
+<p>Depending on number of records in the data file, iterations will be auto populated. The results will also show the details for each iteration using the data. Details of response can be found by expanding response body</p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%204.png" alt="collection" /></p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%205.png" alt="result" /></p>
+
+<h4>Running through Newman</h4>
+
+<p>We can run same collection through Newman as well</p>
+
+<pre><code>newman run PathToCollectionsFile -e PathToEnvironmentFiles -d PathToDataFile
+</code></pre>
+
+<p>In this cases, I should run <code>newman run DataDriven.postman_collection.json -e DataDrivenEnvironment.postman_environment.json   -d data-article.csv</code>.</p>
+
+<p>Results will be as below</p>
+
+<p><img src="/images/2017/08/13/PostmanDatafile%206.png" alt="NewmanResults" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Running Postman Collection Using Newman]]></title>
