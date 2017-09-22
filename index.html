@@ -131,6 +131,94 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-09-22T21:14:25+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Sep, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/" itemprop="url">Taking Emotions Out of Sprint Retrospective</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>An agile retrospective is a meeting held at end of a sprint to analyse their ways of working over past sprint and identify how to become more effective and then adjust accordingly. This is a ritual which belongs to team and criticism is given for facts/output and not for people. Retrospective creates an environment where the team feels safe and comfortable, which will allow them to talk freely about their thoughts and let go their frustration.</p>
+
+<p>As an agile team, our team was pretty matured. Everyone knows what to do and what not to do. They come with solutions for most of the impediments faced during the sprint . Even then, there will be few issues which are still not resolved. Often retrospective meetings end up being a place for the team to let out their frustration rather than focusing on identifying what worked well and what could have been done better. Also action items coming out of discussion may be already tried out during sprint and was not working as expected.</p>
+
+<p>Last week, I had a chance to run retrospective for the team. I wanted to focus more on proactive actions taken by the team while dealing with impediments. I decided to run a different retro in which I tried to keep emotions out and focus more on facts.</p>
+
+<h3>Goals of this retrospective</h3>
+
+<p>Hope below exercise will help to achieve :</p>
+
+<ul>
+<li>Take emotions out of discussion and focus on facts</li>
+<li>Review the actions taken by team during sprint and asses its effectiveness</li>
+<li>Identify improvements which were not tried out during sprint</li>
+</ul>
+
+
+<h3>How to do it</h3>
+
+<h6>Sprint Goals</h6>
+
+<ul>
+<li>First step is to identify the sprint goals and write it down on board for everyone to see. This reminds the team about their every day work to achieve the goals.</li>
+</ul>
+
+
+<h6>Negatives</h6>
+
+<ul>
+<li>Next step is to identify the risk, issues and blockers which prevented the team from achieving it. It can be anything which team found as an impediment.</li>
+<li>Each team member has to write down a unique impediment on a card. Hence for a team of 10 members, you will have 10 unique impediments.</li>
+<li>Team will then rate the impediments on a scale of 1 - 10. Where 1 being least and 10 is a complete blocker.</li>
+<li>Once that is done, cards are exchanged with team members.</li>
+</ul>
+
+
+<h6>Positives</h6>
+
+<ul>
+<li>Next person will then have to think about what all good ideas happened for impediment on their card ( written by someone else). It can be anything which team has tried to overcome the blockers, any innovative ideas tried out, usage of extra time for learning and development etc. Team members are free to discuss this with others to find out all positives of that issue.</li>
+<li>Once it is written, team member will rate it on a scale of 1 - 10. On practical world, the rating for positives will be less than the rating for negatives.  Else, it will not be an impediment to start with.</li>
+</ul>
+
+
+<h6>Actions</h6>
+
+<ul>
+<li>Now facilitator has to collect back all cards and look for three cards having a maximum difference between negative and positive ratings.</li>
+<li>By end of this, team will have three pressing impediments which they could not overcome in the sprint. It takes into account of all pro-active actions taken by the team while dealing with that specific impediments. It is also based on facts and collective feedback .</li>
+<li>Now it is time to discuss and come up with action items. Obviously new action items coming out of discussion should be new and was not tried earlier.</li>
+</ul>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-09-07T22:42:15+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 7 Sep, 2017</time>
         
       </p>
@@ -1246,67 +1334,6 @@ Galen framework can be used for automation of CSS testing easier. It has evolved
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-15T05:46:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jun, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/15/how-to-squash-commits-in-git/" itemprop="url">How to Squash Commits in Git</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very often we will be committing smaller pieces of work in our local machine as we go. However before we push them to a centralized repository, we may have to combine these small commits to single large commit, which makes sense for rest of the team. I will explain how this can be achieved by using interactive rebasing.</p>
-
-<p>To start with, let us assume the initial commits history look like below. It have 4 minor commits done to the same file.
-<img src="/images/2017/06/15/HowToSquashCommits_image1.png" alt="Initial Commit Structure" /></p>
-
-<p>Now we need to squash last for commits into a single commit. The command required for that is as below. This tells git to rebase head with previous 4 commits in an interactive mode.</p>
-
-<pre><code>    $ git rebase -i HEAD~4
-</code></pre>
-
-<p>This will pop up another editor with details of last 4 commits and some description about possible actions on this. Initially, all of them will have a default value of PICK. Since we are trying to squash commits together, we can select one of the commits as PICK and rest all needs to be changed as SQUASH. Save and close the editor once all changes are made.</p>
-
-<p><img src="/images/2017/06/15/HowToSquashCommits_image2.png" alt="Interactive Rebasing" /></p>
-
-<p>After this, another popup will appear with comments given for each of the commits. We can comment out unnecessary comments by using <code>#</code> and also modify required comments as we need. In below screen, I have modified comments for the first commit and commented out rest all. Save and close the editor once all changes are made.</p>
-
-<p><img src="/images/2017/06/15/HowToSquashCommits_image3.png" alt="Selecting comments" /></p>
-
-<p>Now Git will continue rebasing and it will squash all commits as selected in the previous step.</p>
-
-<p><img src="/images/2017/06/15/HowToSquashCommits_image4.png" alt="Git rebase" /></p>
-
-<p>If we look at commit history, we can see that commits are now squashed to single commit.</p>
-
-<p><img src="/images/2017/06/15/HowToSquashCommits_image5.png" alt="Squashed Result" /></p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1485,6 +1512,12 @@ Galen framework can be used for automation of CSS testing easier. It has evolved
         automation
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/agile/index.html">
+        <span class="badge">1</span>
+        agile
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1493,6 +1526,8 @@ Galen framework can be used for automation of CSS testing easier. It has evolved
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
+    
     <a class="list-group-item " href="/blog/2017/09/07/test-automation/">Setting Right Expectation About Benefits of Test Automation</a>
     
     <a class="list-group-item " href="/blog/2017/08/29/anztb-sigist-conference/">ANZTB SIGiST Conference</a>
@@ -1500,8 +1535,6 @@ Galen framework can be used for automation of CSS testing easier. It has evolved
     <a class="list-group-item " href="/blog/2017/08/13/postman-using-data-file/">Postman - Using Data File</a>
     
     <a class="list-group-item " href="/blog/2017/08/07/running-postman-collection-using-newman/">Running Postman Collection Using Newman</a>
-    
-    <a class="list-group-item " href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
     
   </div>
 </section>

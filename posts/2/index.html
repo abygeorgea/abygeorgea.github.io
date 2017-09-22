@@ -131,6 +131,67 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-15T05:46:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jun, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/15/how-to-squash-commits-in-git/" itemprop="url">How to Squash Commits in Git</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very often we will be committing smaller pieces of work in our local machine as we go. However before we push them to a centralized repository, we may have to combine these small commits to single large commit, which makes sense for rest of the team. I will explain how this can be achieved by using interactive rebasing.</p>
+
+<p>To start with, let us assume the initial commits history look like below. It have 4 minor commits done to the same file.
+<img src="/images/2017/06/15/HowToSquashCommits_image1.png" alt="Initial Commit Structure" /></p>
+
+<p>Now we need to squash last for commits into a single commit. The command required for that is as below. This tells git to rebase head with previous 4 commits in an interactive mode.</p>
+
+<pre><code>    $ git rebase -i HEAD~4
+</code></pre>
+
+<p>This will pop up another editor with details of last 4 commits and some description about possible actions on this. Initially, all of them will have a default value of PICK. Since we are trying to squash commits together, we can select one of the commits as PICK and rest all needs to be changed as SQUASH. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image2.png" alt="Interactive Rebasing" /></p>
+
+<p>After this, another popup will appear with comments given for each of the commits. We can comment out unnecessary comments by using <code>#</code> and also modify required comments as we need. In below screen, I have modified comments for the first commit and commented out rest all. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image3.png" alt="Selecting comments" /></p>
+
+<p>Now Git will continue rebasing and it will squash all commits as selected in the previous step.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image4.png" alt="Git rebase" /></p>
+
+<p>If we look at commit history, we can see that commits are now squashed to single commit.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image5.png" alt="Squashed Result" /></p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-20T05:57:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 May, 2017</time>
         
       </p>
@@ -1664,101 +1725,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-10-10T06:47:54+10:00"  data-updated="true" itemprop="datePublished dateCreated">10 Oct, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/10/10/powershell-copying-folders-and-files/" itemprop="url">Powershell - Copying Folders and Files</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Two options for copying files are below.</p>
-
-<ul>
-<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
-<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
-</ul>
-
-
-<h3>Copying Folder structure Only</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'>Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
-</span><span class='line'>
-</span><span class='line'>#OR
-</span><span class='line'>robocopy $source $dest /e /xf *.*
-</span><span class='line'>
-</span><span class='line'># /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
-</span><span class='line'># /e can be replaced with /s for ignoring empty folders</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'># Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
-</span><span class='line'>#New-Item $dest -type directory 
-</span><span class='line'>
-</span><span class='line'>Get-ChildItem $source -Recurse | `
-</span><span class='line'>    Where-Object { $_.PSIsContainer -eq $False } | `
-</span><span class='line'>    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} </span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Copy same folder structure</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
-</span><span class='line'>$dest = "D:\delete"
-</span><span class='line'>robocopy $source $dest /e</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1937,6 +1903,12 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
         automation
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/agile/index.html">
+        <span class="badge">1</span>
+        agile
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1945,6 +1917,8 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
+    
     <a class="list-group-item " href="/blog/2017/09/07/test-automation/">Setting Right Expectation About Benefits of Test Automation</a>
     
     <a class="list-group-item " href="/blog/2017/08/29/anztb-sigist-conference/">ANZTB SIGiST Conference</a>
@@ -1952,8 +1926,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     <a class="list-group-item " href="/blog/2017/08/13/postman-using-data-file/">Postman - Using Data File</a>
     
     <a class="list-group-item " href="/blog/2017/08/07/running-postman-collection-using-newman/">Running Postman Collection Using Newman</a>
-    
-    <a class="list-group-item " href="/blog/2017/08/05/postman-tutorial/">Postman Tutorial</a>
     
   </div>
 </section>

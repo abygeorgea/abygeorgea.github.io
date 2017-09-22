@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/</loc>
+<lastmod>2017-09-22T21:14:25+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2017/09/07/test-automation/</loc>
 <lastmod>2017-09-07T22:42:15+10:00</lastmod>
 </url>
@@ -232,5 +236,8 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/automation/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/agile/</loc>
 </url>
 </urlset>
