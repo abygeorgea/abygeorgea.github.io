@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-09-23T08:30:24+10:00</updated>
+  <updated>2017-10-24T21:57:12+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Highlights of Past One Month]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/10/24/blog-traffic/"/>
+    <updated>2017-10-24T21:32:10+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/10/24/blog-traffic</id>
+    <content type="html"><![CDATA[<p>I was not active in this blog over past one month due to multiple reasons - both personal and professional. Following are some highlights over past one month.</p>
+
+<h3>ISTQB Test Automation Engineer</h3>
+
+<p>As mentioned in previous <a href="http://www.abygeorgea.com/blog/2017/08/29/anztb-sigist-conference/">post</a>, I had a chance to attend ANZTB SIGiST conference in August 2017. There were some good talks about various certifications offered by ISTQB/ANZTB.  ISTQB <a href="http://www.anztb.org/advancedlevel.php">Test Automation Engineer</a> was one among them. I decided to give that a try . Spend some time over past one month to prepare based on the syllabus and I gave it a shot. Fortunately, I passed the exam with good marks</p>
+
+<h3>Traffic to  blog</h3>
+
+<p>I had an interesting observation when I looked into google analytics for the blog. The traffic to this blog has grown over ten times compared to previous months. I analyzed the data and found that my blog and <a href="https://github.com/abygeorgea/MountebankExamples">github repo</a> for mountebank examples are mentioned in <a href="http://www.mbtest.org/docs/examples">mountebank website</a>. This resulted in having more traffic to the blog. I hope others are also benefitted from my experience. Hopefully, this will give me the motivation to write more.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Taking Emotions Out of Sprint Retrospective]]></title>
@@ -2254,37 +2271,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 <p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
 
 <p>Note: Please read through the windows path limitation mentioned in above link</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[UI Testing- Decoupling Back End Dependency]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/02/12/ui-testing-in-isolation/"/>
-    <updated>2017-02-12T07:41:43+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/02/12/ui-testing-in-isolation</id>
-    <content type="html"><![CDATA[<p>The traditional approach for automating UI test cases is to create selenium web driver based ( or any UI testing tools) scripts for exercising complete end to end flow. However, it comes with its own challenges. It will have multiple steps as pre-requiste for reaching required UI page and hence it behaves as an E2E integration test rather than UI test.</p>
-
-<p>A typical web application architecture will have one or more front-end application, which will talk to multiple back-end services, API&rsquo;s etc. They will, in turn, talk to other back-end services or to different databases. On High level , architecture looks like below
-<img src="http://www.abygeorgea.com/images/2017/02/02/UIinIsolation_1.png" alt="" /></p>
-
-<p> On an enterprise world, all these will be developed and maintained by different teams. All of them will be working in parallel and will push in their code changes ( including occasional broken code) frequently. This will result in breakages since test automation scripts heavily depending on UI and its integration. Even if there is no broken code, a test can still fail due to multiple environmental issues for any of the backend services and other components.  Hence it will become increasingly difficult for achieving a green build.</p>
-
-<p>Hence UI based test cases are less robust due different reasons like</p>
-
-<ol>
-<li><p>Test depends on external factors which are outside of our control and not part of scope of testing</p></li>
-<li><p>Failing test may not pin point exact location of failure since it is trying to test too many things.</p></li>
-<li><p>There are chances that all components will not be ready when we want to test UI. Hence testing it pushed to the end , which will increase cost of fixing defects.</p></li>
-<li><p>Re - running of test cases may pass (if failure is caused by environmental issues)</p></li>
-<li><p>UI test are brittle by nature since they will even fail  due to timing issues because it is depending on data from back end services.</p></li>
-</ol>
-
-
-<p>The solution for above is to adopt more unit test like structure for UI testing. We should be testing UI in isolation to other back-end services and their dependency. This allows testing as much as possible early in lifecycle without any dependency on other streams. We should replace all backend service calls with stubs</p>
-
-<p><img src="http://www.abygeorgea.com/images/2017/02/02/UIinIsolation_2.png" alt="" /></p>
-
-<p>Mountebank is a tool which we can use for mocking the service calls. As per <a href="http://www.mbtest.org/">mbtest.org</a>, mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire.  We can use mountebank for stubbing the back-end service calls and there by use it for decoupling UI from unpredictable back end.</p>
 ]]></content>
   </entry>
   
