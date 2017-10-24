@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-10-24T21:57:12+11:00</updated>
+  <updated>2017-10-24T21:59:02+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -26,7 +26,7 @@
 
 <h3>Traffic to  blog</h3>
 
-<p>I had an interesting observation when I looked into google analytics for the blog. The traffic to this blog has grown over ten times compared to previous months. I analyzed the data and found that my blog and <a href="https://github.com/abygeorgea/MountebankExamples">github repo</a> for mountebank examples are mentioned in <a href="http://www.mbtest.org/docs/examples">mountebank website</a>. This resulted in having more traffic to the blog. I hope others are also benefitted from my experience. Hopefully, this will give me the motivation to write more.</p>
+<p>I had an interesting observation when I looked into google analytics for the blog. The traffic to this blog has grown over ten times compared to previous months. I analyzed the data and found that my blog and <a href="https://github.com/abygeorgea/MountebankExamples">github repo</a> for mountebank examples are mentioned in <a href="http://www.mbtest.org/docs/examples">mountebank website</a>. This resulted in having more traffic to the blog. I hope others are also benefitted from my experience with mountebank and the tutorial which I have in this blog. Hopefully, this will give me the motivation to write more.</p>
 ]]></content>
   </entry>
   
