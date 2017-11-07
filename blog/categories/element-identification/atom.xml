@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Element Identification | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/element-identification/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-10-24T21:59:02+11:00</updated>
+  <updated>2017-11-07T21:22:25+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Element Location Using XPath Axis Part 2]]></title>
+    <link href="http://www.abygeorgea.com/blog/2016/09/07/element-location-using-xpath-axis-part-2/"/>
+    <updated>2016-09-07T20:54:13+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2016/09/07/element-location-using-xpath-axis-part-2</id>
+    <content type="html"><![CDATA[<p>In previous post, I have mentioned different ways of identifying web elements using XPath . Very often , we will have to identify child elements while automating using selenium. Let us consider below example . This is an HTML layout of table</p>
+
+<p>``` html</p>
+
+<table id=table1 style="width:100%">
+  <tr>
+    <td>John</th>
+    <td>Smith</th> 
+    <td>50</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td> 
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td> 
+    <td>94</td>
+  </tr>
+</table>
+
+
+<pre><code>
+Assuming we need to iterate across all the rows to identify which row have the name "Eve" and then do some action on that row . This can be achieved by below
+</code></pre>
+
+<p> // Identify the table header using ID
+ IWebElement e = driver.FindElement(By.Id(&ldquo;table1&rdquo;));</p>
+
+<p> /<em> Identify all child nodes for the webelement e (table) . Note the &ldquo;.&rdquo; in XPath which means to search within current node. </em>/</p>
+
+<p> IList<IWebElement> rowlist = e.FindElements(By.XPath(&ldquo;.\tr&rdquo;));
+ foreach(var row in rowlist){
+ IList<IWebElement> collist = row.FindElements(By.XPath(&ldquo;.\td&rdquo;));</p>
+
+<p> // Now iterate over each value in collist to check whether it have &ldquo;Eve&rdquo;.
+ }
+```
+Important step here is to use &ldquo;.&rdquo; in XPath so that selenium limit its search for current node rather than everywhere on document. This will help to identify elements with respective to another element.</p>
+
+<p>Further details of how to use XPath can be found in <a href="https://www.w3schools.com/xml/xpath_syntax.asp">https://www.w3schools.com/xml/xpath_syntax.asp</a></p>
+
+<p>Main ones are</p>
+
+<ul>
+<li>/    - Search from root</li>
+<li>//   - Search anywhere in document which match selection</li>
+<li>.    - select current node</li>
+<li>..   - select parent of current node</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Element Location Using XPath Axis]]></title>
