@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Service Virtualization | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/service-virtualization/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2017-11-16T10:34:46+11:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mountebank - Adding Delay to Response]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/11/16/mountebank-adding-delay-to-response/"/>
+    <updated>2017-11-16T09:59:17+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/11/16/mountebank-adding-delay-to-response</id>
+    <content type="html"><![CDATA[<p>In previous blog post, I have explained about how to create a json response in mountebank. You can read about that <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>. Recently , I had to test a scenario about what will happen to application if downstream API response is delayed for some time . Let us have a look about how we can use mountebank to simulate this scenario.</p>
+
+<p>Mountebank supports adding latency to response by adding a behaviour. You can read about that <a href="http://www.mbtest.org/docs/api/behaviors">here</a> . Let us try to implement the wait behaviour in one of the previous examples . This is a slight modification of the files used as part of examples mentioned <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>.  You can clone my github repo and look at &ldquo;ExamplesForWaitBehaviour&rdquo; for the files.</p>
+
+<p>The only change which we need is to add a behavior to the response. This is added in &ldquo;CustomerFound.json&rdquo; file. After injecting file, we need to add behavior for waiting 5000 milliseconds.</p>
+
+<pre><code>
+"responses": [
+{
+"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;",
+"_behaviors": {
+    "wait": 5000
+  }
+}
+],
+"predicates": [
+{
+"matches": {
+"method" : "GET",
+"path" : "/Blog.Api/[0-9]+/CustomerView"
+}
+}
+]
+</code></pre>
+
+<p>Now run Mountebank. If you are using the GitHub repo, you can do this by running RunMounteBankStubsWithExampleForWait.bat file. Else run below command inside the directory where mountebank is available. If needed, modify the path to Imposter.ejs as required.</p>
+
+<pre><code>mb --configfile ExamplesForWaitBehaviour/Imposter.ejs --allowInjection
+</code></pre>
+
+<p>When we trigger a request via postman, we will get a response after specified delay + time for getting a response.  Have a look at response time in below screenshot. Response time is more than 5000 ms.</p>
+
+<p><img src="/images/2017/11/16/Mountebank_Adding_Delay_PostmanRequest1.png" alt="PostManRequest" /></p>
+]]></content>
+  </entry>
+  
+</feed>

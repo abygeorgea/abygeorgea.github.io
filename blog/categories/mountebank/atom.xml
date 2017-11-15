@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mountebank | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/mountebank/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2017-11-07T21:22:25+11:00</updated>
+  <updated>2017-11-16T10:34:46+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mountebank - Adding Delay to Response]]></title>
+    <link href="http://www.abygeorgea.com/blog/2017/11/16/mountebank-adding-delay-to-response/"/>
+    <updated>2017-11-16T09:59:17+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2017/11/16/mountebank-adding-delay-to-response</id>
+    <content type="html"><![CDATA[<p>In previous blog post, I have explained about how to create a json response in mountebank. You can read about that <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>. Recently , I had to test a scenario about what will happen to application if downstream API response is delayed for some time . Let us have a look about how we can use mountebank to simulate this scenario.</p>
+
+<p>Mountebank supports adding latency to response by adding a behaviour. You can read about that <a href="http://www.mbtest.org/docs/api/behaviors">here</a> . Let us try to implement the wait behaviour in one of the previous examples . This is a slight modification of the files used as part of examples mentioned <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>.  You can clone my github repo and look at &ldquo;ExamplesForWaitBehaviour&rdquo; for the files.</p>
+
+<p>The only change which we need is to add a behavior to the response. This is added in &ldquo;CustomerFound.json&rdquo; file. After injecting file, we need to add behavior for waiting 5000 milliseconds.</p>
+
+<pre><code>
+"responses": [
+{
+"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;",
+"_behaviors": {
+    "wait": 5000
+  }
+}
+],
+"predicates": [
+{
+"matches": {
+"method" : "GET",
+"path" : "/Blog.Api/[0-9]+/CustomerView"
+}
+}
+]
+</code></pre>
+
+<p>Now run Mountebank. If you are using the GitHub repo, you can do this by running RunMounteBankStubsWithExampleForWait.bat file. Else run below command inside the directory where mountebank is available. If needed, modify the path to Imposter.ejs as required.</p>
+
+<pre><code>mb --configfile ExamplesForWaitBehaviour/Imposter.ejs --allowInjection
+</code></pre>
+
+<p>When we trigger a request via postman, we will get a response after specified delay + time for getting a response.  Have a look at response time in below screenshot. Response time is more than 5000 ms.</p>
+
+<p><img src="/images/2017/11/16/Mountebank_Adding_Delay_PostmanRequest1.png" alt="PostManRequest" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Extracting Substring Using Javascript]]></title>
@@ -420,7 +461,7 @@ Finally , the template response
 <p>&ldquo;customerID&rdquo;: &ldquo;123&rdquo;,
 &ldquo;firstName&rdquo;: &ldquo;John&rdquo;,
 &ldquo;lastName&rdquo;: &ldquo;Citizen&rdquo;,
-&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#x4a;&#111;&#104;&#110;&#46;&#x43;&#x69;&#x74;&#x69;&#122;&#101;&#x6e;&#x40;&#97;&#x62;&#x63;&#97;&#x62;&#x61;&#99;&#x61;&#115;&#x2e;&#99;&#x6f;&#x6d;">&#74;&#111;&#x68;&#110;&#46;&#67;&#x69;&#116;&#105;&#x7a;&#x65;&#x6e;&#64;&#97;&#98;&#x63;&#97;&#x62;&#x61;&#x63;&#97;&#x73;&#46;&#99;&#x6f;&#x6d;</a>&rdquo;</p>
+&ldquo;email&rdquo;: &ldquo;<a href="&#x6d;&#x61;&#x69;&#108;&#116;&#x6f;&#58;&#x4a;&#111;&#x68;&#x6e;&#46;&#67;&#105;&#116;&#x69;&#x7a;&#x65;&#110;&#64;&#97;&#98;&#x63;&#x61;&#98;&#x61;&#99;&#x61;&#115;&#x2e;&#x63;&#x6f;&#109;">&#x4a;&#x6f;&#x68;&#110;&#x2e;&#67;&#105;&#116;&#x69;&#122;&#101;&#110;&#64;&#x61;&#x62;&#99;&#x61;&#x62;&#97;&#99;&#97;&#x73;&#46;&#x63;&#x6f;&#x6d;</a>&rdquo;</p>
 
 <p>}</p>
 
@@ -457,113 +498,6 @@ Finally , the template response
 <p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p>
 
 <p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
-    <updated>2017-04-06T19:43:44+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
-    <content type="html"><![CDATA[<p>In the previous two blog post, I have explained about how to setup mountebank (<a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
-
-<p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
-
-<p>Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png" alt="folderstructure" /></p>
-
-<p>Let us first create the imposter.ejs file</p>
-
-<pre><code class="plain Imposter.ejs">
-{
-"imposters": [
-
-&lt;% include 4547.json %&gt;
-
-]
-}
-</code></pre>
-
-<p>Now let us create the file which specifies the port number where it should run and order of responses. Below code tells mountebank that port which it needs to listen for incoming request is 4547 and protocol is http. There are two set of mock responses planned.</p>
-
-<pre><code class="plain 4545">{
-"port": 4547,
-"protocol": "http",
-"stubs": [
-
-{
-&lt;% include CustomerNotFound.json %&gt;
-},
-{
-&lt;% include CustomerFound.json %&gt;
-}
-]
-} 
-</code></pre>
-
-<p>In this example, let us look at first mock response.</p>
-
-<pre><code class="plain CustomerNotFOund.json">"responses": [
-{
-"inject": "&lt;%- stringify(filename, 'ResponseInjection\\GetCustomerNotFound.js') %&gt;"
-}
-
-],
-"predicates": [
-{
-"matches": {
-"method" : "GET",
-"path" : "/Blog.Api/1[0-9]+/CustomerView"
-}
-}
-]
-</code></pre>
-
-<p>From above response, we can infer below. When ever an http GET request come to port 4547 , with a path matching &ldquo;/Blog.Api/1[0-9]+/CustomerView', then we will call the Javascript function "GetCustomerNotFound.js&rdquo; which is kept inside a directory &ldquo;ResponseInjection&rdquo; in same location. It is also good to notice that , predicate is a regular expression ( hence use matches) and all request where 1 followed by any number of numeric will be returned with this response</p>
-
-<p>The javascript function listed here is responsible for reading the sample template response and sending it back .</p>
-
-<pre><code class="plain GetCustomerNotFound.js">function GetTemplateResponse (request, state, logger) {
-
-response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerNotFoundView.json') %&gt;");
-
-return {
-statusCode : 404,
-headers: {
-'Content-Type': 'application/json; charset=utf-8'
-},
-body: response
-
-};
-}
-</code></pre>
-
-<p>Above function reads a json response kept inside directory &ldquo;StubTemplate&rdquo; and convert it to json and return to mountebank. Since this is for a scenario where customer records are not found,we set the status code as 404. We can also set the headers if needed</p>
-
-<p>The stub template is as below</p>
-
-<pre><code class="plain CustomerNotFoundView.json">{
-"status": "fail",
-"code": "CUSTOMER_NOT_FOUND",
-"message": "Customer details not found."
-
-}
-</code></pre>
-
-<p>Now let us run mountebank</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
-
-<p>Request through postman</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/notfound.png" alt="notfound.png" /></p>
-
-<p>As you can see , the GET request matching with predicate is returning the stubbed response with status 404.</p>
-
-<p>For real time usage for testing any web application which needs to get a 404 message from back end API calls, just point the end point to this local host end point and fire a request which matches the predicate.</p>
-
-<p>Details of second response will be shared in next blog post</p>
 ]]></content>
   </entry>
   
