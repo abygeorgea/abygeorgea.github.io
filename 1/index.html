@@ -198,13 +198,55 @@
 <h2>Selenium</h2>
 
 <ul>
-<li>explain page objectg model</li>
+<li>explain page objectg model
+POM is the most widely used design pattern by the Selenium community on which each web page (or significant ones) considered as a different class. On each of this page classes (i.e page objects), you may define the elements of that page and specific methods for that page. Each page object represents the page of the web page or application. It is a layer between the test scripts and UI and encapsulates the features of the page. problems with page objects are they dont follow SOLID principles . Single responsibility principle and Open to extension and closed to modification principle</li>
+<li>explain page factory
+Page Factory
+Page Factory is an extension to page objects that is used to initialize the web elements that are defined on the page object. You can define the web elements by using annotation with the help of page factory.</li>
+</ul>
+
+
+<p>In constructor , we call Pagefactory.init elements</p>
+
+<ul>
 <li>what all are element locators and preference to use them</li>
-<li>how to synchronise AUT and selenium- implcit and explicit wait</li>
-<li>how to make code readable and maintanble
-functon name
-proper syntaxing
-constant togethr</li>
+<li>ID Locator</li>
+<li>NAME Locator</li>
+<li>CSS Locator</li>
+<li><p>XPATH Locato</p></li>
+<li><p>how to synchronise AUT and selenium- implcit and explicit wait
+Implicit Wait - It instructs the web driver to wait for some time by poll the DOM. Once you declared implicit wait it will be available for the entire life of web driver instance. By default the value will be 0. If you set a longer default, then the behavior will poll the DOM on a periodic basis depending on the browser/driver implementation.</p></li>
+</ul>
+
+
+<p>driver.manage().timeouts().implicitlyWait(TimeOut, TimeUnit.SECONDS);</p>
+
+<p>Explicit Wait + ExpectedConditions - It is the custom one. It will be used if we want the execution to wait for some time until some condition achieved.
+Explicit waits are intelligent waits that are confined to a particular web element. Using explicit waits you are basically telling WebDriver at the max it is to wait for X units of time before it gives up</p>
+
+<p>WebDriverWait wait = new WebDriverWait(WebDriverRefrence,TimeOut);
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath( &ldquo;/html/body/&rdquo;)));</p>
+
+<p>Fluent Wait</p>
+
+<p>The fluent wait is used to tell the web driver to wait for a condition, as well as the frequency with which we want to check the condition before throwing an &ldquo;ElementNotVisibleException&rdquo; exception.</p>
+
+<p>Wait wait = new FluentWait(WebDriver reference)
+.withTimeout(timeout, SECONDS)
+.pollingEvery(timeout, SECONDS)
+.ignoring(Exception.class);</p>
+
+<ul>
+<li>how to make code readable and maintanble</li>
+<li>Create base class and do proper inheritence  ( base class to have browser related specs, waits etc)</li>
+<li>Follow Page object model and group together UI elements and their acions</li>
+<li>Follow principles of clean code</li>
+<li>Follow DRY ( dont repear yourself)</li>
+<li>functon name to be readable</li>
+<li>proper syntaxing for all variable ,</li>
+<li>constant togethr</li>
+<li>Define only needed variable and function as public</li>
+<li>Hide away implementation details by proper encapsulatiom</li>
 </ul>
 
 
@@ -261,6 +303,23 @@ technology used</p>
 
 <p>What process are you using for testing currently? Can you describe how you might improve it?</p>
 
+<p>Describe a major goal you have set to yourself</p>
+
+<p>what is your weekness??</p>
+
+<p>Why do you want to work with us??</p>
+
+<p>What type of decision do you have difficulty in making</p>
+
+<p>What are the your major success ??</p>
+
+<p>Where do you want to be in 5 years</p>
+
+<p>Why should we hire you
+Tell me about a time you didn’t perform to your capabilities.
+How do you manage stress in your daily work?
+How do you regroup when things haven’t gone as planned?</p>
+
 <h2>Testing Skills</h2>
 
 <p>What kind of tests have you been doing? What do you enjoy about them? How do you develop those tests?</p>
@@ -316,10 +375,62 @@ how to take screenshots</p>
 
 <h2>Object Oriented</h2>
 
-<p>Explain class
-Abstract class
-inheritence
-constructor</p>
+<p>class - A class is a blueprint or template or set of instructions to build a specific type of object. Every object is built from a class.</p>
+
+<p>Instance - An instance is a specific object built from a specific class. It is assigned to a reference variable that is used to access all of the instance&rsquo;s properties and methods.</p>
+
+<p>Abstract class - an abstract class is a generic class (or type of object) used as a basis for creating specific objects that conform to its protocol, or the set of operations it supports. Abstract classes are not instantiated directly. An abstract class has at least one abstract method. An abstract method will not have any code in the base class; the code will be added in its derived classes. The abstract method in the derived class should be implemented with the same access modifier, number and type of argument, and with the same return type as that of the base class.</p>
+
+<p>inheritence - Inheritance is one such concept where the properties of one class can be inherited by the other. It helps to reuse the code and establish a relationship between different classes.</p>
+
+<p>Encapsulation - Encapsulation is a mechanism where you bind your data and code together as a single unit. It also means to hide your data in order to make it safe from any modification.
+We can achieve encapsulation in Java by:
+Declaring the variables of a class as private.
+Providing public setter and getter methods to modify and view the variables values.</p>
+
+<p>constructor - A constructor is responsible for preparing the object for action, and in particular establishing initial values for all its data,. Always called when an object is initialised. will have same name as of class with no return type</p>
+
+<h2>Test Automation Estimation</h2>
+
+<ul>
+<li>How to do Test automation estimation?
+Answers
+Factors affecting automation</li>
+<li>Scope of project ( break down project into small modules, analyse modules for suitability for automation , identify test candidate)</li>
+<li>Identify complexity of test cases ( Identify steps/ verification points in test cases, preconditions, effort to setup date and cleanse them, split them into various complexity ( small , medium, large - use fibanocci series ) .</li>
+<li>Identify tools required ( IDE, loggers, build tool, reporting tool etc)</li>
+<li>Identify features needed for automation framework. Estimate time required for features implementaion, add buffer etc</li>
+<li>Estimate time required for env setup</li>
+<li>Estimate effort needed for setting up/ validating pre conditions</li>
+<li>Estimate management overhead for coordination, reporting etc</li>
+</ul>
+
+
+<h2>ROI Calculation</h2>
+
+<p>ROI = Gain from Automation / Investment
+Gain from automation include time saved by running automation( difference between automated run and manua run) , savings on analysis time, etc
+Investment include tool cost, script development time effort, additional cost for automated testers</p>
+
+<p>Above this, ROI should consider factors like additional test run, increase coverage, frequent test execution , more chances of doing exploratory tetsing etc</p>
+
+<h2>Things to ask back</h2>
+
+<ul>
+<li>why is this role open</li>
+<li>Have you had track record of mentoring people</li>
+<li>where do u see this role leading me to</li>
+<li>what type of person do you look for ?</li>
+<li>what all attributes should be there to be a cultural fit</li>
+<li>What exactly is my role</li>
+<li>Will I be working desktop application or web application</li>
+<li>how long is current project running for ? or am i  going to start a new one? who all are team members and what skill set do they have.</li>
+<li>do we have enough forecast for long term</li>
+<li>How many projects will I have to work parallely</li>
+<li>how will be a normal day for me in office</li>
+<li>do you have flexible work cultureo</li>
+</ul>
+
 
       </div>
       
@@ -591,7 +702,7 @@ constructor</p>
     </div>
     <footer role="contentinfo"><div class="container">
     <p class="text-muted credits">
-  Copyright &copy; 2017 - Aby George A<br>
+  Copyright &copy; 2018 - Aby George A<br>
   <small>
       <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
       <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
