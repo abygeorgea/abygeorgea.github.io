@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Accessibility | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/accessibility/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2018-03-01T22:07:57+11:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Automate Accessibility Testing Using aXe]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/03/01/automating-accessibility-testing/"/>
+    <updated>2018-03-01T21:30:32+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/03/01/automating-accessibility-testing</id>
+    <content type="html"><![CDATA[<h3>What is Accessibility testing ?</h3>
+
+<p>It is a kind of testing performed to ensure application under test is usable by people with disabilities. One of the most common accessibility testing for web applications is to ensure it is easily usable by people with vision impairment. They normally use screen readers to read the screen and use key board to navigate.</p>
+
+<p>Web Content Accessibility Guideline (WCAG) list down guidelines and rules for creating accessible website. There are various browser extensions and developer tools available for scanning web pages to find out obvious accessibility issues. aXe is one of the widely used extension. Details of aXe can be found <a href="https://www.deque.com/products/axe/">here</a>.  Once browser extension is installed, you can analyze any web page to find out accessibility issues. They also have a javascript API for aXe core .</p>
+
+<p>I recently came across <a href="https://github.com/javnov/axe-selenium-csharp">axe-selenium-csharp</a> , which is a .NET wrapper around aXe. It is relatively very easy to setup and use.  Below are the steps</p>
+
+<ol>
+<li>Install Globant.Selenium.Axe nuget package for solution. This will add reference to dll</li>
+<li>Import namespace <em>using Globant.Selenium.Axe</em></li>
+<li>Call &ldquo;Analyze&rdquo; method to run accessibility check on the current page.</li>
+</ol>
+
+
+<p>Automated accessibility testing is NOT a completely foolproof solution. we will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
+]]></content>
+  </entry>
+  
+</feed>

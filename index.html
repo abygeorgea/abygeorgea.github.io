@@ -131,6 +131,58 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-03-01T21:30:32+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Mar, 2018</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/03/01/automating-accessibility-testing/" itemprop="url">Automate Accessibility Testing Using aXe</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>What is Accessibility testing ?</h3>
+
+<p>It is a kind of testing performed to ensure application under test is usable by people with disabilities. One of the most common accessibility testing for web applications is to ensure it is easily usable by people with vision impairment. They normally use screen readers to read the screen and use key board to navigate.</p>
+
+<p>Web Content Accessibility Guideline (WCAG) list down guidelines and rules for creating accessible website. There are various browser extensions and developer tools available for scanning web pages to find out obvious accessibility issues. aXe is one of the widely used extension. Details of aXe can be found <a href="https://www.deque.com/products/axe/">here</a>.  Once browser extension is installed, you can analyze any web page to find out accessibility issues. They also have a javascript API for aXe core .</p>
+
+<p>I recently came across <a href="https://github.com/javnov/axe-selenium-csharp">axe-selenium-csharp</a> , which is a .NET wrapper around aXe. It is relatively very easy to setup and use.  Below are the steps</p>
+
+<ol>
+<li>Install Globant.Selenium.Axe nuget package for solution. This will add reference to dll</li>
+<li>Import namespace <em>using Globant.Selenium.Axe</em></li>
+<li>Call &ldquo;Analyze&rdquo; method to run accessibility check on the current page.</li>
+</ol>
+
+
+<p>Automated accessibility testing is NOT a completely foolproof solution. we will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-11-16T09:59:17+11:00"  data-updated="true" itemprop="datePublished dateCreated">16 Nov, 2017</time>
         
       </p>
@@ -1027,183 +1079,6 @@ In this example, we have test scripts for checking status code, values in the he
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-07-15T21:07:40+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jul, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/07/15/predicates-in-mountebank/" itemprop="url">Predicates in Mountebank</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Predicates in Mountebank imposter files is a pretty powerful way to configure stubs. It helps us to return different responses based on the request parameters like type, query string , headers, body etc. Let us have some quick look at extracting values from request</p>
-
-<h3>Based on Query String</h3>
-
-<p>Below is an example of extracting the records based on query string.
-If the request is like <code>path?customerId=123&amp;customerId=456&amp;email=abc.com</code>
-Note: This is slightly modified version of code in mbtest.org</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>  "port": 4547,
-</span><span class='line'>  "protocol": "http",
-</span><span class='line'>  "stubs": [
-</span><span class='line'>    {
-</span><span class='line'>      "predicates": [{
-</span><span class='line'>        "equals": {
-</span><span class='line'>          "query": { "customerId": ["123", "456"] }
-</span><span class='line'>        }
-</span><span class='line'>      }],
-</span><span class='line'>      "responses": [{
-</span><span class='line'>        "is": {
-</span><span class='line'>          "body": "Customer ID is either 123 or 456"
-</span><span class='line'>        }
-</span><span class='line'>      }]
-</span><span class='line'>    },
-</span><span class='line'>    {
-</span><span class='line'>      "predicates": [{
-</span><span class='line'>        "equals": {
-</span><span class='line'>          "query": { 
-</span><span class='line'>              "customerId": "123",
-</span><span class='line'>              "email" :"abc.com"
-</span><span class='line'>               }
-</span><span class='line'>        }
-</span><span class='line'>      }],
-</span><span class='line'>      "responses": [{
-</span><span class='line'>        "is": {
-</span><span class='line'>          "body": "Customer ID is 123 and email is abc.com"
-</span><span class='line'>        }
-</span><span class='line'>      }]
-</span><span class='line'>    }
-</span><span class='line'>  ]
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Based on Header Content</h3>
-
-<p>If input data is shared through values in header, that can be extracted. Below snippet is directly from mbtest.org</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>  "port": 4545,
-</span><span class='line'>  "protocol": "http",
-</span><span class='line'>  "stubs": [
-</span><span class='line'>    {
-</span><span class='line'>      "responses": [{ "is": { "statusCode": 400 } }],
-</span><span class='line'>      "predicates": [
-</span><span class='line'>        {
-</span><span class='line'>          "equals": {
-</span><span class='line'>            "method": "POST",
-</span><span class='line'>            "path": "/test",
-</span><span class='line'>            "query": {
-</span><span class='line'>              "first": "1",
-</span><span class='line'>              "second": "2"
-</span><span class='line'>            },
-</span><span class='line'>            "headers": {
-</span><span class='line'>              "Accept": "text/plain"
-</span><span class='line'>            }
-</span><span class='line'>          }
-</span><span class='line'>        },
-</span><span class='line'>        {
-</span><span class='line'>          "equals": { "body": "hello, world" },
-</span><span class='line'>          "caseSensitive": true,
-</span><span class='line'>          "except": "!$"
-</span><span class='line'>        }
-</span><span class='line'>      ]
-</span><span class='line'>    }
-</span><span class='line'>   ]
-</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1394,6 +1269,18 @@ Note: This is slightly modified version of code in mbtest.org</p>
         service virtualization
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/accessibility/index.html">
+        <span class="badge">1</span>
+        accessibility
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/testing/index.html">
+        <span class="badge">1</span>
+        testing
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1402,6 +1289,8 @@ Note: This is slightly modified version of code in mbtest.org</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
+    
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
     
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
@@ -1409,8 +1298,6 @@ Note: This is slightly modified version of code in mbtest.org</p>
     <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
     
     <a class="list-group-item " href="/blog/2017/09/07/test-automation/">Setting Right Expectation About Benefits of Test Automation</a>
-    
-    <a class="list-group-item " href="/blog/2017/08/29/anztb-sigist-conference/">ANZTB SIGiST Conference</a>
     
   </div>
 </section>
