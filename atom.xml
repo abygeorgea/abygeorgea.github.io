@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-03-01T22:07:57+11:00</updated>
+  <updated>2018-03-01T23:00:19+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,42 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Extracting Metrics From TeamCity]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/03/01/extracting-metrics-from-teamcity/"/>
+    <updated>2018-03-01T22:18:25+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/03/01/extracting-metrics-from-teamcity</id>
+    <content type="html"><![CDATA[<p>TeamCity is a java based build management and continuous Integration server from JetBrains. Very often , we will have to extract various metrics from TeamCity for tracking and trend analysis.  TeamCity provides versatile api for extracting various metrics which can then be manipulated or interpreted as we need.</p>
+
+<p>Below are basic api calls which can be used for extracting mertics. Please note that TeamCity api is powerful enough to do much more than extraction of data. However, for this blog post, I am focussing on metrics extraction part alone. All of these are GET request to TeamCity api with a valid user credentials ( use any id/password which can access TeamCity)</p>
+
+<ol>
+<li>Get List of Projects - <a href="http://teamcityURL:9999/app/rest/projects">http://teamcityURL:9999/app/rest/projects</a></li>
+<li>Get details of a project - <a href="http://teamcityURL:9999/app/rest/projects/">http://teamcityURL:9999/app/rest/projects/</a>(projectlocator)
+Project locator  can be either &ldquo;id:projectID&rdquo; or &ldquo;name:projectName&rdquo;</li>
+<li>Get List of Build configuration - <a href="http://teamcityURL:9999/app/rest/buildTypes">http://teamcityURL:9999/app/rest/buildTypes</a></li>
+<li>Get List of Build configuration for a project- <a href="http://teamcityURL:9999/app/rest/projects/">http://teamcityURL:9999/app/rest/projects/</a>(projectLocator)buildTypes</li>
+<li>Get List of Build  - <a href="http://teamcityURL:9999/app/rest/builds/?locator=">http://teamcityURL:9999/app/rest/builds/?locator=</a>(buildLocator)</li>
+<li>Get details of a specific Build  - <a href="http://teamcityURL:9999/app/rest/builds/">http://teamcityURL:9999/app/rest/builds/</a>(buildLocator)
+Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo; Or a combination of these like &ldquo;id:BuildId,number:buildNumber,dimension3:dimensionvalue&rdquo;. We can use various different values for these dimension. Details can be found in TeamCity documentation</li>
+<li>Get List of tests in a build - <a href="http://teamcityURL:9999/app/rest/testOccurrences?locator=build:">http://teamcityURL:9999/app/rest/testOccurrences?locator=build:</a>(buildLocator)</li>
+<li>Get individual test history - <a href="http://teamcityURL:9999/app/rest/testOccurrences?locator=test:">http://teamcityURL:9999/app/rest/testOccurrences?locator=test:</a>(testLocator)</li>
+</ol>
+
+
+<p>Recently I created a Nodejs program to extract below metrics by chaining some of the above api calls.</p>
+
+<ul>
+<li>Number of builds between any two given dates and their status</li>
+<li>Details of number of test cases and their status , pass percentage, fail percentage etc for each build</li>
+<li>Details as above for entire period.</li>
+<li>Trend of test progress, build failures etc between those dates</li>
+<li>Create an output JSON with cumulative counts of passed/failed/ignored builds, passed/failed/ignored test cases , percentage of sucessful builds, frequency of pull request and their success rates etc.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Automate Accessibility Testing Using aXe]]></title>
@@ -1944,170 +1980,6 @@ Below commands can be run on cmd.exe</li>
 <p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p>
 
 <p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/"/>
-    <updated>2017-04-06T19:43:44+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1</id>
-    <content type="html"><![CDATA[<p>In the previous two blog post, I have explained about how to setup mountebank (<a href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
-
-<p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
-
-<p>Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png" alt="folderstructure" /></p>
-
-<p>Let us first create the imposter.ejs file</p>
-
-<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>"imposters": [
-</span><span class='line'>
-</span><span class='line'>&lt;% include 4547.json %&gt;
-</span><span class='line'>
-</span><span class='line'>]
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now let us create the file which specifies the port number where it should run and order of responses. Below code tells mountebank that port which it needs to listen for incoming request is 4547 and protocol is http. There are two set of mock responses planned.</p>
-
-<figure class='code'><figcaption><span>4545</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>"port": 4547,
-</span><span class='line'>"protocol": "http",
-</span><span class='line'>"stubs": [
-</span><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>&lt;% include CustomerNotFound.json %&gt;
-</span><span class='line'>},
-</span><span class='line'>{
-</span><span class='line'>&lt;% include CustomerFound.json %&gt;
-</span><span class='line'>}
-</span><span class='line'>]
-</span><span class='line'>} 
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In this example, let us look at first mock response.</p>
-
-<figure class='code'><figcaption><span>CustomerNotFOund.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
-</span><span class='line'>{
-</span><span class='line'>"inject": "&lt;%- stringify(filename, 'ResponseInjection\\GetCustomerNotFound.js') %&gt;"
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>],
-</span><span class='line'>"predicates": [
-</span><span class='line'>{
-</span><span class='line'>"matches": {
-</span><span class='line'>"method" : "GET",
-</span><span class='line'>"path" : "/Blog.Api/1[0-9]+/CustomerView"
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>From above response, we can infer below. When ever an http GET request come to port 4547 , with a path matching &ldquo;/Blog.Api/1[0-9]+/CustomerView', then we will call the Javascript function "GetCustomerNotFound.js&rdquo; which is kept inside a directory &ldquo;ResponseInjection&rdquo; in same location. It is also good to notice that , predicate is a regular expression ( hence use matches) and all request where 1 followed by any number of numeric will be returned with this response</p>
-
-<p>The javascript function listed here is responsible for reading the sample template response and sending it back .</p>
-
-<figure class='code'><figcaption><span>GetCustomerNotFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
-</span><span class='line'>
-</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerNotFoundView.json') %&gt;");
-</span><span class='line'>
-</span><span class='line'>return {
-</span><span class='line'>statusCode : 404,
-</span><span class='line'>headers: {
-</span><span class='line'>'Content-Type': 'application/json; charset=utf-8'
-</span><span class='line'>},
-</span><span class='line'>body: response
-</span><span class='line'>
-</span><span class='line'>};
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Above function reads a json response kept inside directory &ldquo;StubTemplate&rdquo; and convert it to json and return to mountebank. Since this is for a scenario where customer records are not found,we set the status code as 404. We can also set the headers if needed</p>
-
-<p>The stub template is as below</p>
-
-<figure class='code'><figcaption><span>CustomerNotFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>"status": "fail",
-</span><span class='line'>"code": "CUSTOMER_NOT_FOUND",
-</span><span class='line'>"message": "Customer details not found."
-</span><span class='line'>
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now let us run mountebank</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
-
-<p>Request through postman</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/notfound.png" alt="notfound.png" /></p>
-
-<p>As you can see , the GET request matching with predicate is returning the stubbed response with status 404.</p>
-
-<p>For real time usage for testing any web application which needs to get a 404 message from back end API calls, just point the end point to this local host end point and fire a request which matches the predicate.</p>
-
-<p>Details of second response will be shared in next blog post</p>
 ]]></content>
   </entry>
   

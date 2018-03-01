@@ -131,6 +131,55 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-22T20:55:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/22/nunit-assert/" itemprop="url">Nunit Assert</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h2>Assert.AreEqual vs Assert.AreSame</h2>
+
+<p>Very frequently I use Assert.AreEqual and Assert.AreSame for doing assertions in the code. Below is high level difference between both.</p>
+
+<h3>Assert.AreSame</h3>
+
+<p>Assert.AreSame checks whether both comparing objects are exactly the same ( reference indicate same object in memory) .It is normally known as Reference Equality</p>
+
+<h3>Assert.AreEqual</h3>
+
+<p>Assert.AreEqual checks whether both objects contain same value. It is normally known as Value Equality. For primitive value types ( like int, bool) this is straight forward. But for other types ( especially user defined objects) , it is depends on how the type defines equality.</p>
+
+<p>Hence Assert.AreEqual will fail ( most of the time) when we compare two objects. This <a href="https://github.com/nunit/nunit/issues/730">link</a> have some discussion point about the same.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-17T20:30:54+00:00"  data-updated="true" itemprop="datePublished dateCreated">17 Aug, 2016</time>
         
       </p>
@@ -1331,48 +1380,11 @@ driver.quit() will close all windows that are opened by the webdriver during cur
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-05-21T07:41:32+10:00"  data-updated="true" itemprop="datePublished dateCreated">21 May, 2014</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/05/21/hello-world/" itemprop="url">Hello World</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="/blog/2016/09/04/element-location-using-xpath-axis/">Redirect</a></p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
       
-        <li class="previous disabled"><a href="#">&larr;&nbsp;Older</a></li>
+        <li class="previous"><a href="/posts/5">&larr;&nbsp;Older</a></li>
       
       <li><a href="/blog/archives">Blog Archives</a></li>
       
@@ -1570,6 +1582,18 @@ driver.quit() will close all windows that are opened by the webdriver during cur
         testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/team-city/index.html">
+        <span class="badge">1</span>
+        team city
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/metrics/index.html">
+        <span class="badge">1</span>
+        metrics
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1578,6 +1602,8 @@ driver.quit() will close all windows that are opened by the webdriver during cur
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
+    
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
     
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
@@ -1585,8 +1611,6 @@ driver.quit() will close all windows that are opened by the webdriver during cur
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
     
     <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
-    
-    <a class="list-group-item " href="/blog/2017/09/07/test-automation/">Setting Right Expectation About Benefits of Test Automation</a>
     
   </div>
 </section>

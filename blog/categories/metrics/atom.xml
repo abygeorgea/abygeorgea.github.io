@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Metrics | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/metrics/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2018-03-01T23:00:19+11:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Extracting Metrics From TeamCity]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/03/01/extracting-metrics-from-teamcity/"/>
+    <updated>2018-03-01T22:18:25+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/03/01/extracting-metrics-from-teamcity</id>
+    <content type="html"><![CDATA[<p>TeamCity is a java based build management and continuous Integration server from JetBrains. Very often , we will have to extract various metrics from TeamCity for tracking and trend analysis.  TeamCity provides versatile api for extracting various metrics which can then be manipulated or interpreted as we need.</p>
+
+<p>Below are basic api calls which can be used for extracting mertics. Please note that TeamCity api is powerful enough to do much more than extraction of data. However, for this blog post, I am focussing on metrics extraction part alone. All of these are GET request to TeamCity api with a valid user credentials ( use any id/password which can access TeamCity)</p>
+
+<ol>
+<li>Get List of Projects - <a href="http://teamcityURL:9999/app/rest/projects">http://teamcityURL:9999/app/rest/projects</a></li>
+<li>Get details of a project - <a href="http://teamcityURL:9999/app/rest/projects/">http://teamcityURL:9999/app/rest/projects/</a>(projectlocator)
+Project locator  can be either &ldquo;id:projectID&rdquo; or &ldquo;name:projectName&rdquo;</li>
+<li>Get List of Build configuration - <a href="http://teamcityURL:9999/app/rest/buildTypes">http://teamcityURL:9999/app/rest/buildTypes</a></li>
+<li>Get List of Build configuration for a project- <a href="http://teamcityURL:9999/app/rest/projects/">http://teamcityURL:9999/app/rest/projects/</a>(projectLocator)buildTypes</li>
+<li>Get List of Build  - <a href="http://teamcityURL:9999/app/rest/builds/?locator=">http://teamcityURL:9999/app/rest/builds/?locator=</a>(buildLocator)</li>
+<li>Get details of a specific Build  - <a href="http://teamcityURL:9999/app/rest/builds/">http://teamcityURL:9999/app/rest/builds/</a>(buildLocator)
+Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo; Or a combination of these like &ldquo;id:BuildId,number:buildNumber,dimension3:dimensionvalue&rdquo;. We can use various different values for these dimension. Details can be found in TeamCity documentation</li>
+<li>Get List of tests in a build - <a href="http://teamcityURL:9999/app/rest/testOccurrences?locator=build:">http://teamcityURL:9999/app/rest/testOccurrences?locator=build:</a>(buildLocator)</li>
+<li>Get individual test history - <a href="http://teamcityURL:9999/app/rest/testOccurrences?locator=test:">http://teamcityURL:9999/app/rest/testOccurrences?locator=test:</a>(testLocator)</li>
+</ol>
+
+
+<p>Recently I created a Nodejs program to extract below metrics by chaining some of the above api calls.</p>
+
+<ul>
+<li>Number of builds between any two given dates and their status</li>
+<li>Details of number of test cases and their status , pass percentage, fail percentage etc for each build</li>
+<li>Details as above for entire period.</li>
+<li>Trend of test progress, build failures etc between those dates</li>
+<li>Create an output JSON with cumulative counts of passed/failed/ignored builds, passed/failed/ignored test cases , percentage of sucessful builds, frequency of pull request and their success rates etc.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

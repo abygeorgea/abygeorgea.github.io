@@ -131,6 +131,198 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T19:43:44+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/" itemprop="url">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 1</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In the previous two blog post, I have explained about how to setup mountebank (<a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here</a>) and how to create a virtualised respone(<a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">here</a>) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.</p>
+
+<p>In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.</p>
+
+<p>Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png" alt="folderstructure" /></p>
+
+<p>Let us first create the imposter.ejs file</p>
+
+<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>"imposters": [
+</span><span class='line'>
+</span><span class='line'>&lt;% include 4547.json %&gt;
+</span><span class='line'>
+</span><span class='line'>]
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let us create the file which specifies the port number where it should run and order of responses. Below code tells mountebank that port which it needs to listen for incoming request is 4547 and protocol is http. There are two set of mock responses planned.</p>
+
+<figure class='code'><figcaption><span>4545</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"port": 4547,
+</span><span class='line'>"protocol": "http",
+</span><span class='line'>"stubs": [
+</span><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>&lt;% include CustomerNotFound.json %&gt;
+</span><span class='line'>},
+</span><span class='line'>{
+</span><span class='line'>&lt;% include CustomerFound.json %&gt;
+</span><span class='line'>}
+</span><span class='line'>]
+</span><span class='line'>} 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this example, let us look at first mock response.</p>
+
+<figure class='code'><figcaption><span>CustomerNotFOund.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
+</span><span class='line'>{
+</span><span class='line'>"inject": "&lt;%- stringify(filename, 'ResponseInjection\\GetCustomerNotFound.js') %&gt;"
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>],
+</span><span class='line'>"predicates": [
+</span><span class='line'>{
+</span><span class='line'>"matches": {
+</span><span class='line'>"method" : "GET",
+</span><span class='line'>"path" : "/Blog.Api/1[0-9]+/CustomerView"
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>From above response, we can infer below. When ever an http GET request come to port 4547 , with a path matching &ldquo;/Blog.Api/1[0-9]+/CustomerView', then we will call the Javascript function "GetCustomerNotFound.js&rdquo; which is kept inside a directory &ldquo;ResponseInjection&rdquo; in same location. It is also good to notice that , predicate is a regular expression ( hence use matches) and all request where 1 followed by any number of numeric will be returned with this response</p>
+
+<p>The javascript function listed here is responsible for reading the sample template response and sending it back .</p>
+
+<figure class='code'><figcaption><span>GetCustomerNotFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
+</span><span class='line'>
+</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerNotFoundView.json') %&gt;");
+</span><span class='line'>
+</span><span class='line'>return {
+</span><span class='line'>statusCode : 404,
+</span><span class='line'>headers: {
+</span><span class='line'>'Content-Type': 'application/json; charset=utf-8'
+</span><span class='line'>},
+</span><span class='line'>body: response
+</span><span class='line'>
+</span><span class='line'>};
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Above function reads a json response kept inside directory &ldquo;StubTemplate&rdquo; and convert it to json and return to mountebank. Since this is for a scenario where customer records are not found,we set the status code as 404. We can also set the headers if needed</p>
+
+<p>The stub template is as below</p>
+
+<figure class='code'><figcaption><span>CustomerNotFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>"status": "fail",
+</span><span class='line'>"code": "CUSTOMER_NOT_FOUND",
+</span><span class='line'>"message": "Customer details not found."
+</span><span class='line'>
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let us run mountebank</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
+
+<p>Request through postman</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/notfound.png" alt="notfound.png" /></p>
+
+<p>As you can see , the GET request matching with predicate is returning the stubbed response with status 404.</p>
+
+<p>For real time usage for testing any web application which needs to get a 404 message from back end API calls, just point the end point to this local host end point and fire a request which matches the predicate.</p>
+
+<p>Details of second response will be shared in next blog post</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-03T11:46:48+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Mar, 2017</time>
         
       </p>
@@ -1009,55 +1201,6 @@ remaining will be generated dynamically , which will keep on changing. This will
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-22T20:55:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/22/nunit-assert/" itemprop="url">Nunit Assert</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h2>Assert.AreEqual vs Assert.AreSame</h2>
-
-<p>Very frequently I use Assert.AreEqual and Assert.AreSame for doing assertions in the code. Below is high level difference between both.</p>
-
-<h3>Assert.AreSame</h3>
-
-<p>Assert.AreSame checks whether both comparing objects are exactly the same ( reference indicate same object in memory) .It is normally known as Reference Equality</p>
-
-<h3>Assert.AreEqual</h3>
-
-<p>Assert.AreEqual checks whether both objects contain same value. It is normally known as Value Equality. For primitive value types ( like int, bool) this is straight forward. But for other types ( especially user defined objects) , it is depends on how the type defines equality.</p>
-
-<p>Hence Assert.AreEqual will fail ( most of the time) when we compare two objects. This <a href="https://github.com/nunit/nunit/issues/730">link</a> have some discussion point about the same.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1260,6 +1403,18 @@ remaining will be generated dynamically , which will keep on changing. This will
         testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/team-city/index.html">
+        <span class="badge">1</span>
+        team city
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/metrics/index.html">
+        <span class="badge">1</span>
+        metrics
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1268,6 +1423,8 @@ remaining will be generated dynamically , which will keep on changing. This will
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
+    
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
     
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
@@ -1275,8 +1432,6 @@ remaining will be generated dynamically , which will keep on changing. This will
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
     
     <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
-    
-    <a class="list-group-item " href="/blog/2017/09/07/test-automation/">Setting Right Expectation About Benefits of Test Automation</a>
     
   </div>
 </section>
