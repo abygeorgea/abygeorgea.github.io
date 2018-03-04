@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Nunit | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/nunit/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-03-04T21:42:33+11:00</updated>
+  <updated>2018-03-04T21:44:12+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Creating HTML Report for Test Execution]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/03/05/creating-html-report-for-test-execution/"/>
+    <link href="http://www.abygeorgea.com/blog/2017/03/05/creating-html-report-for-test-execution%20result/"/>
     <updated>2017-03-05T20:58:13+11:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/03/05/creating-html-report-for-test-execution</id>
+    <id>http://www.abygeorgea.com/blog/2017/03/05/creating-html-report-for-test-execution result</id>
     <content type="html"><![CDATA[<h3>How to create HTML report with details of test execution</h3>
 
 <p>Very often , we will be required to create a report with details of test execution , so that it can be presented to various stakeholders. Specflow provides a feature to create HTML reports. Let us look into more details about how is this done</p>
