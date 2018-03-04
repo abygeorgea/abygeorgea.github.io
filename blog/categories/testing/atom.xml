@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Testing | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/testing/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-03-01T23:00:19+11:00</updated>
+  <updated>2018-03-04T21:37:51+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -33,7 +33,24 @@
 </ol>
 
 
-<p>Automated accessibility testing is NOT a completely foolproof solution. we will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
+<pre><code class="csharp">using Globant.Selenium.Axe
+
+public void PerformAccessbilityAudit(IWebDriver _driver) {
+
+ private AxeResult _results;
+ _results = _driver.Analyze();
+
+  foreach (var xyz in _results.Violations)
+            {
+                log.Info(xyz.Impact.ToString());
+                log.Info(xyz.Description.ToString());
+                log.Info(xyz.Id.ToString());
+            }
+  Assert.True(_results.Violations.Length == 0, "There are accessibility violations. Please check log file");
+}
+</code></pre>
+
+<p>Automated accessibility testing is NOT a completely foolproof solution. We will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
 ]]></content>
   </entry>
   

@@ -155,7 +155,40 @@
 </ol>
 
 
-<p>Automated accessibility testing is NOT a completely foolproof solution. we will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">using</span> <span class="nn">Globant.Selenium.Axe</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">PerformAccessbilityAudit</span><span class="p">(</span><span class="n">IWebDriver</span> <span class="n">_driver</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'> <span class="k">private</span> <span class="n">AxeResult</span> <span class="n">_results</span><span class="p">;</span>
+</span><span class='line'> <span class="n">_results</span> <span class="p">=</span> <span class="n">_driver</span><span class="p">.</span><span class="n">Analyze</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">xyz</span> <span class="k">in</span> <span class="n">_results</span><span class="p">.</span><span class="n">Violations</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Impact</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Description</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>  <span class="n">Assert</span><span class="p">.</span><span class="n">True</span><span class="p">(</span><span class="n">_results</span><span class="p">.</span><span class="n">Violations</span><span class="p">.</span><span class="n">Length</span> <span class="p">==</span> <span class="m">0</span><span class="p">,</span> <span class="s">&quot;There are accessibility violations. Please check log file&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Automated accessibility testing is NOT a completely foolproof solution. We will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
 </div>
 
 
@@ -305,7 +338,7 @@
     
     
     <a class="list-group-item " href="/blog/categories/nunit/index.html">
-        <span class="badge">1</span>
+        <span class="badge">3</span>
         nunit
       </a>
     
@@ -331,6 +364,12 @@
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
         <span class="badge">5</span>
         service virtualisation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/specflow,/index.html">
+        <span class="badge">2</span>
+        specflow,
       </a>
     
     

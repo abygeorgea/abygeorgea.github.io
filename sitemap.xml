@@ -85,6 +85,14 @@
 <lastmod>2017-04-06T19:43:44+00:00</lastmod>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/2017/03/05/creating-html-report-for-test-execution/</loc>
+<lastmod>2017-03-05T20:58:13+11:00</lastmod>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit/</loc>
+<lastmod>2017-03-04T20:39:59+11:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/</loc>
 <lastmod>2017-03-03T11:46:48+00:00</lastmod>
 </url>
@@ -229,6 +237,9 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/service-virtualisation/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/specflow/</loc>
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/octopress/</loc>

@@ -131,6 +131,433 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-06-10T22:24:30+10:00"  data-updated="true" itemprop="datePublished dateCreated">10 Jun, 2014</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/06/10/java-writing-into-specific-cell-in-excel/" itemprop="url">Java - Writing Into Specific Cell in Excel</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">here</a></p>
+
+<p>In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.</p>
+
+<p>Below is the import section</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import jxl.Cell;
+</span><span class='line'>import jxl.Sheet;
+</span><span class='line'>import jxl.Workbook;
+</span><span class='line'>import jxl.format.Colour;
+</span><span class='line'>import jxl.read.biff.BiffException;
+</span><span class='line'>import jxl.write.*;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is the function for writing into excel</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span>  <span class="kt">void</span> <span class="nf">WriteDataIntoExcelCell</span> <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="n">String</span> <span class="n">field_name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">,</span> <span class="n">String</span> <span class="n">input</span><span class="o">){</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
+</span><span class='line'>        <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">Col</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="c1">// Find Column number from excel by iteration first row and comparing the names</span>
+</span><span class='line'>        <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field_name</span><span class="o">)</span> <span class="o">){</span>
+</span><span class='line'>                <span class="n">Col</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getColumn</span><span class="o">();</span>
+</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>      <span class="c1">// write to file</span>
+</span><span class='line'>        <span class="n">File</span> <span class="n">exlFile</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">WritableWorkbook</span> <span class="n">writableWorkbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="o">.</span><span class="na">createWorkbook</span><span class="o">(</span><span class="n">exlFile</span><span class="o">,</span><span class="n">wrk1</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">WritableSheet</span> <span class="n">writableSheet</span> <span class="o">=</span> <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
+</span><span class='line'>        <span class="c1">//WritableCellFormat writableCell = writableWorkbook.getSheet(sheet).</span>
+</span><span class='line'>      <span class="c1">// Update cell content and format</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">Varcolour</span> <span class="o">;</span>
+</span><span class='line'>        <span class="n">Label</span> <span class="n">label</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;PASS&quot;</span><span class="o">)){</span>
+</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">GREEN</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;FAIL&quot;</span><span class="o">))</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">RED</span><span class="o">));</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="c1">//Label label = new Label(Col,Row,input);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">writableSheet</span><span class="o">.</span><span class="na">addCell</span><span class="o">(</span><span class="n">label</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">write</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">WriteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">WritableCellFormat</span> <span class="nf">getCellFormat</span><span class="o">(</span><span class="n">Colour</span> <span class="n">colour</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">WriteException</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">WritableFont</span> <span class="n">cellFont</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableFont</span><span class="o">(</span><span class="n">WritableFont</span><span class="o">.</span><span class="na">TAHOMA</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">WritableCellFormat</span> <span class="n">cellFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableCellFormat</span><span class="o">(</span><span class="n">cellFont</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">cellFormat</span><span class="o">.</span><span class="na">setBackground</span><span class="o">(</span><span class="n">colour</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cellFormat</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-06-01T21:04:52+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Jun, 2014</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/" itemprop="url">Java - Reading a Specific Cell in Excel</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Below is a code snippet for reading a specific cell from Excel using Java.</p>
+
+<p>It is done by using importing jxl jar files which can be found <a href="https://sourceforge.net/projects/jxl/">here</a>.</p>
+
+<p>Import below in class file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>import jxl.Cell;
+</span><span class='line'>import jxl.Sheet;
+</span><span class='line'>import jxl.Workbook;
+</span><span class='line'>import jxl.format.Colour;
+</span><span class='line'>import jxl.read.biff.BiffException;
+</span><span class='line'>import jxl.write.*;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is function for reading value from specific cell in Excel</p>
+
+<figure class='code'><figcaption><span>Read From Excel based on Row and coulmn Number</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'> <span class="kd">public</span>  <span class="n">String</span> <span class="nf">readexcel</span><span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="kt">int</span> <span class="n">intRow</span><span class="o">,</span> <span class="kt">int</span> <span class="n">intCol</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">//Create a workbook object from the file at specified location.</span>
+</span><span class='line'>            <span class="c1">//Change the path of the file as per the location on your computer.</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
+</span><span class='line'>            <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
+</span><span class='line'>            <span class="c1">//Obtain reference to the Cell using getCell(int col, int row) method of sheet</span>
+</span><span class='line'>          <span class="c1">// Add &quot; - 1&quot; to both intRow , intCol depending how whether we consider excel start with row &amp; column number as 0 or 1</span>
+</span><span class='line'>            <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">intRow</span> <span class="o">,</span> <span class="n">intCol</span> <span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">//Read the contents of the Cell using getContents() method, which will return</span>
+</span><span class='line'>            <span class="c1">//it as a String</span>
+</span><span class='line'>            <span class="n">String</span> <span class="n">strReturn</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">return</span> <span class="n">strReturn</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="cm">/*  //Display the cell contents</span>
+</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col A Row 1: \&quot;&quot;+str_colArow1 + &quot;\&quot;&quot;);</span>
+</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col B Row 1: \&quot;&quot;+str_colBrow1 + &quot;\&quot;&quot;);</span>
+</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col A Row 2: \&quot;&quot;+str_colArow2 + &quot;\&quot;&quot;);*/</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="n">sheet</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Below is an example of how to read from a cell based on row number and Column NAME</p>
+
+<figure class='code'><figcaption><span>Read From Excel Based On Column Name</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'> <span class="kd">public</span>  <span class="n">String</span> <span class="nf">GetDataBasedOnRowNumAndColName</span>  <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="n">String</span> <span class="n">field_name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
+</span><span class='line'>            <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">Col</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>            <span class="kt">boolean</span> <span class="n">FOUND</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>           <span class="c1">// Find corresponding Column number based on Name</span>
+</span><span class='line'>            <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">do</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field_name</span><span class="o">)</span> <span class="o">){</span>
+</span><span class='line'>                    <span class="n">Col</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getColumn</span><span class="o">();</span>
+</span><span class='line'>                    <span class="c1">// System.out.println(Col);</span>
+</span><span class='line'>                    <span class="n">FOUND</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>                    <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>                <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">FOUND</span><span class="o">)</span>
+</span><span class='line'>            <span class="o">{</span>
+</span><span class='line'>                <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>                <span class="c1">// System.out.println(colArow1.getContents());</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>            <span class="o">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IndexOutOfBoundsException</span> <span class="n">e</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="n">sheet</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-05-21T07:41:32+10:00"  data-updated="true" itemprop="datePublished dateCreated">21 May, 2014</time>
         
       </p>
@@ -245,7 +672,7 @@
     
     
     <a class="list-group-item " href="/blog/categories/nunit/index.html">
-        <span class="badge">1</span>
+        <span class="badge">3</span>
         nunit
       </a>
     
@@ -271,6 +698,12 @@
     <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
         <span class="badge">5</span>
         service virtualisation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/specflow,/index.html">
+        <span class="badge">2</span>
+        specflow,
       </a>
     
     
