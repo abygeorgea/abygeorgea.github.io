@@ -131,6 +131,279 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T20:24:20+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/" itemprop="url">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>.  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Part1 </a>of the excercise. If you need to know more about mountebank and how to use mountebank , please read through <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">how to install mountebank </a> and <a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">service virtualisation using mountebank</a>.</p>
+
+<p>As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below</p>
+
+<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'> "imposters": [
+</span><span class='line'>
+</span><span class='line'> &lt;% include 4547.json %&gt;
+</span><span class='line'>
+</span><span class='line'> ]
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Contents of 4547.json is as below</p>
+
+<p><strong>4547.json</strong></p>
+
+<figure class='code'><figcaption><span>4547.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'> "port": 4547,
+</span><span class='line'> "protocol": "http",
+</span><span class='line'> "stubs": [
+</span><span class='line'>
+</span><span class='line'>{
+</span><span class='line'> &lt;% include  CustomerNotFound.json %&gt;
+</span><span class='line'> },
+</span><span class='line'> {
+</span><span class='line'>  &lt;% include  CustomerFound.json %&gt;
+</span><span class='line'> }
+</span><span class='line'> ]
+</span><span class='line'> }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create CustomerFound.json</p>
+
+<figure class='code'><figcaption><span>CustomerFound.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'> "responses": [
+</span><span class='line'> {
+</span><span class='line'> "inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;"
+</span><span class='line'> }
+</span><span class='line'>
+</span><span class='line'> ],
+</span><span class='line'> "predicates": [
+</span><span class='line'> {
+</span><span class='line'> "matches": {
+</span><span class='line'> "method" : "GET",
+</span><span class='line'> "path" : "/Blog.Api/[0-9]+/CustomerView"
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> ]
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As we can see from above, if there is request which matches the predicates , then response will be dictated by the GetCustomerFound javascript file kept inside directory ResponseInjection. Predicate used here is a GET request which have a matching path of /Blog.Api/[0-9]+/CustomerView.</p>
+
+<p>Contents of GetCustomerFound.js is</p>
+
+<figure class='code'><figcaption><span>GetCustomerFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
+</span><span class='line'>
+</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerFoundView.json') %&gt;");
+</span><span class='line'> var ext =require('../../../StubResponse/ResponseInjection/extractrequest');
+</span><span class='line'>
+</span><span class='line'>var reqdata = ext.extractor(request);
+</span><span class='line'>
+</span><span class='line'> response.data.customerID=reqdata.CustomerID;
+</span><span class='line'>
+</span><span class='line'> return {
+</span><span class='line'> statusCode : 200,
+</span><span class='line'> headers: {
+</span><span class='line'> 'Content-Type': 'application/json; charset=utf-8'
+</span><span class='line'> },
+</span><span class='line'> body: response
+</span><span class='line'>
+</span><span class='line'> };
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The javascript file have a single function , which reads the stubbed response kept in template file . Then it calls another Javascript function to called &ldquo;extractrequest&rdquo;. We will see the details of it soon. For now, it actually returns the customer number from the request . For eg, if request is &ldquo;<a href="http://localhost:4547/Blog.Api/3123/CustomerView">http://localhost:4547/Blog.Api/3123/CustomerView</a> &rdquo; then it return 3123 as customer ID. Once we extract the customer ID, then it will replace the customer ID in our template response with the value coming from request and return the response.</p>
+
+<p>Let us take a close look at the extractrequest function.</p>
+
+<figure class='code'><figcaption><span>extractrequest.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>module.exports = {extractor:function extractCIFAndPackageID (request) {
+</span><span class='line'>
+</span><span class='line'>if(request && request.path) {
+</span><span class='line'>var req = request.path.split('/');
+</span><span class='line'>if(req.length &gt;2 && req[1]) {
+</span><span class='line'>return { CustomerID: req[2] }
+</span><span class='line'>}
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>return null;
+</span><span class='line'>}}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This method will take the input parameter as the request and split it at &ldquo;/&rdquo; to get a an array . Then we will return the array[2] which is the customer ID from the request</p>
+
+<p>Finally , the template response</p>
+
+<p><strong>CustomerFoundView.json</strong></p>
+
+<figure class='code'><figcaption><span>CustomerFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>"status": "success",
+</span><span class='line'>"code": 0,
+</span><span class='line'>"message": "",
+</span><span class='line'>"data":
+</span><span class='line'>{
+</span><span class='line'>
+</span><span class='line'>"customerID": "123",
+</span><span class='line'>"firstName": "John",
+</span><span class='line'>"lastName": "Citizen",
+</span><span class='line'>"email": "John.Citizen@abcabacas.com"
+</span><span class='line'>
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now let us fire up mountebank</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
+
+<p>Make few request using postman, which have different request parameter</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png" alt="customerFound1" /></p>
+
+<p>Another request</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png" alt="CustomerFound2" /></p>
+
+<p>In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.</p>
+
+<p>Now let us try another example , where request is <a href="http://localhost:4547/Blog.Api/1234542323/CustomerView">http://localhost:4547/Blog.Api/1234542323/CustomerView</a></p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png" alt="CustomerNotFound2" /></p>
+
+<p>As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.</p>
+
+<ol>
+<li><p> Customer Not found which has a predicate of &ldquo;/Blog.Api/1[0-9]+/CustomerView&rdquo;</p></li>
+<li><p>Customer found which has a predicate of &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo;</p></li>
+</ol>
+
+
+<p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p>
+
+<p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T19:43:44+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
         
       </p>
@@ -328,7 +601,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/05/creating-html-report-for-test-execution%20result/" itemprop="url">Creating HTML Report for Test Execution</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/05/creating-html-report-for-test-execution%20result/" itemprop="url">Creating HTML Report for Test Execution Result</a></h2>
     
   </header>
 
@@ -1074,67 +1347,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-06T12:00:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Sep, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/" itemprop="url">How to Take Screenshots With Selenium in C#</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very frequently testers will meet a situation where they need to take screenshot of webpage they are testing , either for base line or as a proof of test result. This is same with automated testing . Even though automated test cases have their own of way of publishing test results, it is always desirable to keep a proof of result.. Screenshot come to help in this regards. In this blog post , I will explain , how to take a screenshot with Selenium Web Driver with C#. In future I will add another couple of post to explain , how to consolidate the screenshots into a PDF document.</p>
-
-<p>In .NET binding, we have an interface called ITakesScreenshot , which helps to capture screenshot of active window. Below code will help to take screenshot and save it in the path specified while calling the function</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>// PathToFolder is the location where we need to save the screenshot
-</span><span class='line'>// FileName is another string where PathToFolder is appended with timestamp
-</span><span class='line'>public void TakeScreenShot(string PathToFolder)
-</span><span class='line'>{
-</span><span class='line'>  string fileName = PathToFolder + DateTime.Now.ToString("HHmmss") +".jpeg";
-</span><span class='line'>  Screenshot cp = ((ITakesScreenshot)driver).GetScreenshot();
-</span><span class='line'>  cp.SaveAsFile(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1349,6 +1561,12 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
         metrics
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/gulp/index.html">
+        <span class="badge">1</span>
+        gulp
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1357,6 +1575,8 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
+    
     <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
     
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
@@ -1364,8 +1584,6 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
     
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
-    
-    <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
     
   </div>
 </section>

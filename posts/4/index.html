@@ -131,6 +131,67 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-06T12:00:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Sep, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/" itemprop="url">How to Take Screenshots With Selenium in C#</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very frequently testers will meet a situation where they need to take screenshot of webpage they are testing , either for base line or as a proof of test result. This is same with automated testing . Even though automated test cases have their own of way of publishing test results, it is always desirable to keep a proof of result.. Screenshot come to help in this regards. In this blog post , I will explain , how to take a screenshot with Selenium Web Driver with C#. In future I will add another couple of post to explain , how to consolidate the screenshots into a PDF document.</p>
+
+<p>In .NET binding, we have an interface called ITakesScreenshot , which helps to capture screenshot of active window. Below code will help to take screenshot and save it in the path specified while calling the function</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>// PathToFolder is the location where we need to save the screenshot
+</span><span class='line'>// FileName is another string where PathToFolder is appended with timestamp
+</span><span class='line'>public void TakeScreenShot(string PathToFolder)
+</span><span class='line'>{
+</span><span class='line'>  string fileName = PathToFolder + DateTime.Now.ToString("HHmmss") +".jpeg";
+</span><span class='line'>  Screenshot cp = ((ITakesScreenshot)driver).GetScreenshot();
+</span><span class='line'>  cp.SaveAsFile(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-03T22:33:04+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Sep, 2016</time>
         
       </p>
@@ -1116,66 +1177,6 @@ In package.json add below</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-22T21:27:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Jun, 2015</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/06/22/selenium/" itemprop="url">Selenium</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Difference between / and // in XPath</h3>
-
-<p>/ is used to create absolute XPath which starts from root. This is highly brittle since any changes to UI will change element locator.</p>
-
-<p>// is used to create relative XPath . The XPath is created relative to another element in UI</p>
-
-<h3>Difference between driver.get() and driver.navigate().to()</h3>
-
-<p>Both <code>driver.get()</code> and <code>driver.navigate().to()</code> will try to open a webpage and wait for the page to load. It means, it will wait till <code>Onload</code> event has fired. But it will not wait for all AJAX calls to trigger and process. Both of them are essentially the same. How ever Navigate() interface exposes the ability to move backward and forward  in browser history.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>driver.get("http://www.google.com");
-</span><span class='line'>driver.navigate().to("http://www.yahoo.com");
-</span><span class='line'>driver.navigate().forward();
-</span><span class='line'>driver.navigate().back();</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Difference between driver.close() and driver.quit()</h3>
-
-<p>driver.close() will close the window which is currently accessed by webdriver.
-driver.quit() will close all windows that are opened by the webdriver during current execution.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1390,6 +1391,12 @@ driver.quit() will close all windows that are opened by the webdriver during cur
         metrics
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/gulp/index.html">
+        <span class="badge">1</span>
+        gulp
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1398,6 +1405,8 @@ driver.quit() will close all windows that are opened by the webdriver during cur
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
+    
     <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
     
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
@@ -1405,8 +1414,6 @@ driver.quit() will close all windows that are opened by the webdriver during cur
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
     
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
-    
-    <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
     
   </div>
 </section>

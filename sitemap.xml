@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2018/03/20/gulp-task-for-running-automated-test/</loc>
+<lastmod>2018-03-20T11:46:30+11:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2018/03/01/extracting-metrics-from-teamcity/</loc>
 <lastmod>2018-03-01T22:18:25+11:00</lastmod>
 </url>
@@ -282,5 +286,8 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/metrics/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/gulp/</loc>
 </url>
 </urlset>

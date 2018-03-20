@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gulp | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/gulp/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2018-03-20T15:12:43+11:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Gulp Task for Running Automated Test]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/03/20/gulp-task-for-running-automated-test/"/>
+    <updated>2018-03-20T11:46:30+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/03/20/gulp-task-for-running-automated-test</id>
+    <content type="html"><![CDATA[<p><a href="https://gulpjs.com/">Gulp</a> is a toolkit for automating painful or time-consuming task in your development workflow, so you can stop messing around and build something. Gulp can be used for creating a simple task to run automated test cases.</p>
+
+<p>Firstly, we will create package.json file for this project. This can be done by below command from project folder. It will prompt you to enter a list of information required for creating package.json file</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>Once this is done, install gulp.  It can be done by below command. This will add gulp as a dev dependency.</p>
+
+<pre><code>npm install --save-dev gulp-install
+</code></pre>
+
+<p>In order to run acceptance test cases, we will need to install nunit/xunit test runners. It can be done by below command from the root folder.</p>
+
+<pre><code>npm install --save-dev gulp-nunit-runner
+        OR
+npm install --save-dev gulp-xunit-runner
+</code></pre>
+
+<p>Detailed usage of above test runners are available <a href="https://www.npmjs.com/package/gulp-nunit-runner">here</a>.</p>
+
+<p>Once above are installed, we need to create <code>gulpfile.js</code> inside root folder. This file will have details of various gulp tasks</p>
+
+<p>Sample Usage of test runner is below. Insert this code into gulpfile.js</p>
+
+<pre><code>
+var gulp = require('gulp'),
+    nunit = require('gulp-nunit-runner');
+
+gulp.task('unit-test', function () {
+    return gulp.src(['**/*.Test.dll'], {read: false})
+        .pipe(nunit({
+            executable: 'C:/nunit/bin/nunit-console.exe',
+            options : {
+                where : 'cat == test'
+            }
+        }));
+});
+</code></pre>
+
+<ul>
+<li>{read: false} means, it will read only file names and not the entire file.</li>
+<li>Executable is the path to nunit console runner, which should be available.</li>
+<li>gulp.src is that path to acceptance test solution dll. Since we use wild character, we may have to modify this path to reflect the exact path of dll.( something like ./**/Debug/Project.acceptancetest.dll)</li>
+</ul>
+
+
+<p>Once we have above in gulpfile.js, it can be run by below command</p>
+
+<pre><code>gulp unit-test
+</code></pre>
+
+<p>Out of above command will be something like</p>
+
+<pre><code>C:/nunit/bin/nunit-console.exe "C:\full\path\to\Database.Test.dll" "C:\full\path\to\Services.Test.dll"
+</code></pre>
+
+<p>Note: If it complains about assembly missing, it means path to acceptance test solution is incorrect . Retry after fixing the path.</p>
+
+<p>Gulp Nunit runner provide lot options to configure test run, like selecting test cases based on category, creating output files etc. Detailed options can be found <a href="https://github.com/keithmorris/gulp-nunit-runner">here</a>.</p>
+
+<p>Below is an example with few options</p>
+
+<pre><code>
+var gulp = require('gulp'),
+    nunit = require('gulp-nunit-runner');
+
+gulp.task('unit-test', function () {
+    return gulp.src(['**/*.Test.dll'], {read: false})
+        .pipe(nunit({
+            executable: 'C:/nunit/bin/nunit-console.exe',
+            options : {
+                where : 'cat == test',
+                work : 'TestResultsFolder',
+                result : 'TestResults.xml',
+                config : 'Debug'
+            }
+        }));
+});
+</code></pre>
+
+<ul>
+<li>Where - Selects the category which needs to be run</li>
+<li>Work - Create a folder with specified path/name for output files</li>
+<li>result - create test results in xml</li>
+<li>config - select the config which needs to be run</li>
+</ul>
+
+
+<p>If we run <code>gulp unit-test</code> now, it will execute only the test cases having category <code>test</code>. It will create a folder named <code>TestResultsFolder</code> and will have an xml report of the test run inside it .  The folder will be created in root where we have gulpfile.js.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-03-04T21:44:12+11:00</updated>
+  <updated>2018-03-20T15:12:43+11:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Gulp Task for Running Automated Test]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/03/20/gulp-task-for-running-automated-test/"/>
+    <updated>2018-03-20T11:46:30+11:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/03/20/gulp-task-for-running-automated-test</id>
+    <content type="html"><![CDATA[<p><a href="https://gulpjs.com/">Gulp</a> is a toolkit for automating painful or time-consuming task in your development workflow, so you can stop messing around and build something. Gulp can be used for creating a simple task to run automated test cases.</p>
+
+<p>Firstly, we will create package.json file for this project. This can be done by below command from project folder. It will prompt you to enter a list of information required for creating package.json file</p>
+
+<pre><code>npm init
+</code></pre>
+
+<p>Once this is done, install gulp.  It can be done by below command. This will add gulp as a dev dependency.</p>
+
+<pre><code>npm install --save-dev gulp-install
+</code></pre>
+
+<p>In order to run acceptance test cases, we will need to install nunit/xunit test runners. It can be done by below command from the root folder.</p>
+
+<pre><code>npm install --save-dev gulp-nunit-runner
+        OR
+npm install --save-dev gulp-xunit-runner
+</code></pre>
+
+<p>Detailed usage of above test runners are available <a href="https://www.npmjs.com/package/gulp-nunit-runner">here</a>.</p>
+
+<p>Once above are installed, we need to create <code>gulpfile.js</code> inside root folder. This file will have details of various gulp tasks</p>
+
+<p>Sample Usage of test runner is below. Insert this code into gulpfile.js</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>var gulp = require('gulp'),
+</span><span class='line'>    nunit = require('gulp-nunit-runner');
+</span><span class='line'> 
+</span><span class='line'>gulp.task('unit-test', function () {
+</span><span class='line'>    return gulp.src(['**/*.Test.dll'], {read: false})
+</span><span class='line'>        .pipe(nunit({
+</span><span class='line'>            executable: 'C:/nunit/bin/nunit-console.exe',
+</span><span class='line'>            options : {
+</span><span class='line'>              where : 'cat == test'
+</span><span class='line'>            }
+</span><span class='line'>        }));
+</span><span class='line'>});
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>{read: false} means, it will read only file names and not the entire file.</li>
+<li>Executable is the path to nunit console runner, which should be available.</li>
+<li>gulp.src is that path to acceptance test solution dll. Since we use wild character, we may have to modify this path to reflect the exact path of dll.( something like ./**/Debug/Project.acceptancetest.dll)</li>
+</ul>
+
+
+<p>Once we have above in gulpfile.js, it can be run by below command</p>
+
+<pre><code>gulp unit-test
+</code></pre>
+
+<p>Out of above command will be something like</p>
+
+<pre><code>C:/nunit/bin/nunit-console.exe "C:\full\path\to\Database.Test.dll" "C:\full\path\to\Services.Test.dll"
+</code></pre>
+
+<p>Note: If it complains about assembly missing, it means path to acceptance test solution is incorrect . Retry after fixing the path.</p>
+
+<p>Gulp Nunit runner provide lot options to configure test run, like selecting test cases based on category, creating output files etc. Detailed options can be found <a href="https://github.com/keithmorris/gulp-nunit-runner">here</a>.</p>
+
+<p>Below is an example with few options</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>var gulp = require('gulp'),
+</span><span class='line'>    nunit = require('gulp-nunit-runner');
+</span><span class='line'> 
+</span><span class='line'>gulp.task('unit-test', function () {
+</span><span class='line'>    return gulp.src(['**/*.Test.dll'], {read: false})
+</span><span class='line'>        .pipe(nunit({
+</span><span class='line'>            executable: 'C:/nunit/bin/nunit-console.exe',
+</span><span class='line'>            options : {
+</span><span class='line'>              where : 'cat == test',
+</span><span class='line'>              work : 'TestResultsFolder',
+</span><span class='line'>              result : 'TestResults.xml',
+</span><span class='line'>              config : 'Debug'
+</span><span class='line'>            }
+</span><span class='line'>        }));
+</span><span class='line'>});
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Where - Selects the category which needs to be run</li>
+<li>Work - Create a folder with specified path/name for output files</li>
+<li>result - create test results in xml</li>
+<li>config - select the config which needs to be run</li>
+</ul>
+
+
+<p>If we run <code>gulp unit-test</code> now, it will execute only the test cases having category <code>test</code>. It will create a folder named <code>TestResultsFolder</code> and will have an xml report of the test run inside it .  The folder will be created in root where we have gulpfile.js.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Extracting Metrics From TeamCity]]></title>
@@ -1768,251 +1897,6 @@ Below commands can be run on cmd.exe</li>
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/"/>
-    <updated>2017-04-06T20:24:20+00:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2</id>
-    <content type="html"><![CDATA[<p>This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it <a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>.  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with <a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Part1 </a>of the excercise. If you need to know more about mountebank and how to use mountebank , please read through <a href="http://www.abygeorgea.com/blog/2017/02/13/service-virtualisation-using-mountebank/">how to install mountebank </a> and <a href="http://www.abygeorgea.com/blog/2017/03/03/mountebank-your-first-service-virtualisation/">service virtualisation using mountebank</a>.</p>
-
-<p>As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below</p>
-
-<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> "imposters": [
-</span><span class='line'>
-</span><span class='line'> &lt;% include 4547.json %&gt;
-</span><span class='line'>
-</span><span class='line'> ]
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Contents of 4547.json is as below</p>
-
-<p><strong>4547.json</strong></p>
-
-<figure class='code'><figcaption><span>4547.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> "port": 4547,
-</span><span class='line'> "protocol": "http",
-</span><span class='line'> "stubs": [
-</span><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> &lt;% include  CustomerNotFound.json %&gt;
-</span><span class='line'> },
-</span><span class='line'> {
-</span><span class='line'>  &lt;% include  CustomerFound.json %&gt;
-</span><span class='line'> }
-</span><span class='line'> ]
-</span><span class='line'> }
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now create CustomerFound.json</p>
-
-<figure class='code'><figcaption><span>CustomerFound.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'> "responses": [
-</span><span class='line'> {
-</span><span class='line'> "inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;"
-</span><span class='line'> }
-</span><span class='line'>
-</span><span class='line'> ],
-</span><span class='line'> "predicates": [
-</span><span class='line'> {
-</span><span class='line'> "matches": {
-</span><span class='line'> "method" : "GET",
-</span><span class='line'> "path" : "/Blog.Api/[0-9]+/CustomerView"
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ]
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As we can see from above, if there is request which matches the predicates , then response will be dictated by the GetCustomerFound javascript file kept inside directory ResponseInjection. Predicate used here is a GET request which have a matching path of /Blog.Api/[0-9]+/CustomerView.</p>
-
-<p>Contents of GetCustomerFound.js is</p>
-
-<figure class='code'><figcaption><span>GetCustomerFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
-</span><span class='line'>
-</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerFoundView.json') %&gt;");
-</span><span class='line'> var ext =require('../../../StubResponse/ResponseInjection/extractrequest');
-</span><span class='line'>
-</span><span class='line'>var reqdata = ext.extractor(request);
-</span><span class='line'>
-</span><span class='line'> response.data.customerID=reqdata.CustomerID;
-</span><span class='line'>
-</span><span class='line'> return {
-</span><span class='line'> statusCode : 200,
-</span><span class='line'> headers: {
-</span><span class='line'> 'Content-Type': 'application/json; charset=utf-8'
-</span><span class='line'> },
-</span><span class='line'> body: response
-</span><span class='line'>
-</span><span class='line'> };
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The javascript file have a single function , which reads the stubbed response kept in template file . Then it calls another Javascript function to called &ldquo;extractrequest&rdquo;. We will see the details of it soon. For now, it actually returns the customer number from the request . For eg, if request is &ldquo;<a href="http://localhost:4547/Blog.Api/3123/CustomerView">http://localhost:4547/Blog.Api/3123/CustomerView</a> &rdquo; then it return 3123 as customer ID. Once we extract the customer ID, then it will replace the customer ID in our template response with the value coming from request and return the response.</p>
-
-<p>Let us take a close look at the extractrequest function.</p>
-
-<figure class='code'><figcaption><span>extractrequest.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>module.exports = {extractor:function extractCIFAndPackageID (request) {
-</span><span class='line'>
-</span><span class='line'>if(request && request.path) {
-</span><span class='line'>var req = request.path.split('/');
-</span><span class='line'>if(req.length &gt;2 && req[1]) {
-</span><span class='line'>return { CustomerID: req[2] }
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>return null;
-</span><span class='line'>}}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This method will take the input parameter as the request and split it at &ldquo;/&rdquo; to get a an array . Then we will return the array[2] which is the customer ID from the request</p>
-
-<p>Finally , the template response</p>
-
-<p><strong>CustomerFoundView.json</strong></p>
-
-<figure class='code'><figcaption><span>CustomerFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>"status": "success",
-</span><span class='line'>"code": 0,
-</span><span class='line'>"message": "",
-</span><span class='line'>"data":
-</span><span class='line'>{
-</span><span class='line'>
-</span><span class='line'>"customerID": "123",
-</span><span class='line'>"firstName": "John",
-</span><span class='line'>"lastName": "Citizen",
-</span><span class='line'>"email": "John.Citizen@abcabacas.com"
-</span><span class='line'>
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now let us fire up mountebank</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
-
-<p>Make few request using postman, which have different request parameter</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png" alt="customerFound1" /></p>
-
-<p>Another request</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png" alt="CustomerFound2" /></p>
-
-<p>In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.</p>
-
-<p>Now let us try another example , where request is <a href="http://localhost:4547/Blog.Api/1234542323/CustomerView">http://localhost:4547/Blog.Api/1234542323/CustomerView</a></p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png" alt="CustomerNotFound2" /></p>
-
-<p>As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.</p>
-
-<ol>
-<li><p> Customer Not found which has a predicate of &ldquo;/Blog.Api/1[0-9]+/CustomerView&rdquo;</p></li>
-<li><p>Customer found which has a predicate of &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo;</p></li>
-</ol>
-
-
-<p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p>
-
-<p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p>
 ]]></content>
   </entry>
   

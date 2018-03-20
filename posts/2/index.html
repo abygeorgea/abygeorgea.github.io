@@ -131,6 +131,182 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-08-05T07:09:48+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Aug, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/08/05/postman-tutorial/" itemprop="url">Postman Tutorial</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Recently one of my colleagues has asked me to train him on using postman and Newman for API testing. Below is a cut down version of training session which I took for him.</p>
+
+<h3>What is Postman</h3>
+
+<p>Postman is an Http client for testing web services. It has a friendly GUI for constructing request and analyzing the response. There is a command line tool called Newman for running the postman collections from command line. This will help to integrate postman to other testing tools.</p>
+
+<h3>How to Install</h3>
+
+<p>Postman is available as both chrome extension and also as a native install. Native install files can be found <a href="https://www.getpostman.com/apps">here</a>.</p>
+
+<h3>Example - GET Request</h3>
+
+<p>In order to trigger a get request, we need to identify below information</p>
+
+<ul>
+<li>URL of API</li>
+<li>Authentication details</li>
+<li>Header details</li>
+</ul>
+
+
+<p>For this example, let us look at a google finance API.  API URL(including parameters) is <a href="http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL">http://www.google.com/finance/info?infotype=infoquoteall&amp;q=NSE:BHEL</a>
+There is no authentication details and header details that need to be passed with this. The <code>params</code> button will list down various parameters passed in a tabular format , which makes it easy to edit.</p>
+
+<p>In postman, Select drop down as <code>GET</code> and enter the API Url. Screen will look like below
+<img src="/images/2017/08/05/Postman%20Tutorial%201.png" alt="Request" /></p>
+
+<p>Now hit <code>Send</code> button. This will trigger a call to API and get the response which will then displayed in UI. Screen will look like below</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%202.png" alt="Body" /></p>
+
+<p>Headers returned are</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%203.png" alt="Headers" /></p>
+
+<h3>Writing Tests</h3>
+
+<p>Above is an example of calling an API and analyzing its response. Postman also has a facility to write test cases to verify the response. Test cases are written in javascript. Tests are run after the request is sent and it will allow access to response objects. The editor also provides commonly used code snippets which make it easier to write test.</p>
+
+<p>The Below example is written for calling one of free API mentioned <a href="https://jsonplaceholder.typicode.com">here</a>.
+In this example, we have test scripts for checking status code, values in the header, values in response, response time. We can even expand the test cases to complex verifications by writing javascript tests.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%204.png" alt="Tests" /></p>
+
+<p>We notice following from above screenshot,</p>
+
+<ul>
+<li>6 test cases written on the top part to check for the status code, response time, header and response.</li>
+<li>The response received on the bottom part.</li>
+<li>Test tab shows that 6/6 test cases are passed ( in Green).</li>
+</ul>
+
+
+<p> Now let us dive into details of the test results. Below screenshot shows details of test cases and their status.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%205.png" alt="Test Result" /></p>
+
+<h3>Collections</h3>
+
+<p>We can save the current request and it associated tests ( if any) for future use in postman. It can also be exported and shared with others. Select option as <code>Save As</code> from drop down next to <code>Save</code>. We can specify request name, provide a description and select a folder and sub folder to save the response.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%206.png" alt="Collections" /></p>
+
+<p> Once saved, it will be available for use in collections.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%207.png" alt="Collections" /></p>
+
+<h3>Environments</h3>
+
+<p>Very frequently, we will have to run API test in different environments. Most of the time, there will be few differences in the requests, like different URL. In such cases, we can use environments in Postman.</p>
+
+<p>Click on the Settings button on top right corner and select <code>Manage environments</code>. This is open up a new pop up where we can add Environment or import an existing environment file. For this tutorial, we will use Add option.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%208.png" alt="Environment" /></p>
+
+<p> Now we can specify all unique parameter for each environment. In this case, I have given a key called &ldquo;URL&rdquo; and entered corresponding values and saved it as an environment named <code>Test</code>.</p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%209.png" alt="Environment" /></p>
+
+<p> <img src="/images/2017/08/05/Postman%20Tutorial%2010.png" alt="Environment" /></p>
+
+<p> Now let us run the request using environments. First step is to replace <code>https://jsonplaceholder.typicode.com</code> with <code>url</code> in double curly braces. Then select <code>Test</code> in the Environment drop down at the top. Now click send. This will execute the request and run all associated test cases. Postman will dynamically replace  with corresponding URL value specified in selected environment file. So assuming we have different environment files, each time the request will be sent to different URL based on environment selected. We can have any number of keys and values in one environment file.</p>
+
+<p>  <img src="/images/2017/08/05/Postman%20Tutorial%2011.png" alt="Environment" /></p>
+
+<p>  From above, we can see that one test case is failed. Let us have a look into failed test case.</p>
+
+<p>   <img src="/images/2017/08/05/Postman%20Tutorial%2012.png" alt="Environment" /></p>
+
+<p>  Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.</p>
+
+<h3>Exporting Collections and environment files</h3>
+
+<p>Postman provides facility to export collections and environment files as JSON. This helps to share the details with other team members and also to use Newman for running postman collections. Let us have a look into how to export them.</p>
+
+<p><strong>Exporting Collections</strong></p>
+
+<ul>
+<li>Click on Collections Tab.</li>
+<li>Click on <code>...</code> next to Collections Name.</li>
+<li>Click on Export.</li>
+<li><p>Select V2 option and save the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2013.png" alt="Collection" /></p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2014.png" alt="Collection" /></p></li>
+</ul>
+
+
+<p><strong>Exporting Environment File</strong></p>
+
+<ul>
+<li>Click on Settings button on top right corner.</li>
+<li>Click on Manage environment.</li>
+<li><p>Download the file.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2015.png" alt="Export" /></p></li>
+</ul>
+
+
+<h3>Running Collections Using Postman Collection Runner</h3>
+
+<p>Postman provides a feature to run collections using collection Runner.</p>
+
+<ul>
+<li>Click on Runner button on Top left to open collection runner</li>
+<li><p>Select Collection name in drop down and select environment and then hit <code>Start Run</code>.</p>
+
+<p><img src="/images/2017/08/05/Postman%20Tutorial%2016.png" alt="Collection Runner" /></p></li>
+</ul>
+
+
+<p>This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .</p>
+
+<p>Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
+  <img src="/images/2017/08/05/Postman%20Tutorial%2017.png" alt="Collection Runner" /></p>
+
+<h3>What Next ?</h3>
+
+<p>In this post, I have explain basic usage of postman for API testing . However the functionalities provided by postman is much more than above. We can also use Newman , which is command line collection runner , to execute collections. I will write another post about it sometime soon.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-07-21T06:09:53+10:00"  data-updated="true" itemprop="datePublished dateCreated">21 Jul, 2017</time>
         
       </p>
@@ -1434,279 +1610,6 @@ Below commands can be run on cmd.exe</li>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-04-06T20:24:20+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Apr, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/" itemprop="url">Mountebank - Creating a Response Based on a File Template and Modifying It Based on Request - PART 2</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>.  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">Part1 </a>of the excercise. If you need to know more about mountebank and how to use mountebank , please read through <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">how to install mountebank </a> and <a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/">service virtualisation using mountebank</a>.</p>
-
-<p>As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below</p>
-
-<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> "imposters": [
-</span><span class='line'>
-</span><span class='line'> &lt;% include 4547.json %&gt;
-</span><span class='line'>
-</span><span class='line'> ]
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Contents of 4547.json is as below</p>
-
-<p><strong>4547.json</strong></p>
-
-<figure class='code'><figcaption><span>4547.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> "port": 4547,
-</span><span class='line'> "protocol": "http",
-</span><span class='line'> "stubs": [
-</span><span class='line'>
-</span><span class='line'>{
-</span><span class='line'> &lt;% include  CustomerNotFound.json %&gt;
-</span><span class='line'> },
-</span><span class='line'> {
-</span><span class='line'>  &lt;% include  CustomerFound.json %&gt;
-</span><span class='line'> }
-</span><span class='line'> ]
-</span><span class='line'> }
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now create CustomerFound.json</p>
-
-<figure class='code'><figcaption><span>CustomerFound.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'> "responses": [
-</span><span class='line'> {
-</span><span class='line'> "inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;"
-</span><span class='line'> }
-</span><span class='line'>
-</span><span class='line'> ],
-</span><span class='line'> "predicates": [
-</span><span class='line'> {
-</span><span class='line'> "matches": {
-</span><span class='line'> "method" : "GET",
-</span><span class='line'> "path" : "/Blog.Api/[0-9]+/CustomerView"
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ]
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As we can see from above, if there is request which matches the predicates , then response will be dictated by the GetCustomerFound javascript file kept inside directory ResponseInjection. Predicate used here is a GET request which have a matching path of /Blog.Api/[0-9]+/CustomerView.</p>
-
-<p>Contents of GetCustomerFound.js is</p>
-
-<figure class='code'><figcaption><span>GetCustomerFound.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
-</span><span class='line'>
-</span><span class='line'>response = JSON.parse("&lt;%- stringify(filename, 'StubTemplate\\CustomerFoundView.json') %&gt;");
-</span><span class='line'> var ext =require('../../../StubResponse/ResponseInjection/extractrequest');
-</span><span class='line'>
-</span><span class='line'>var reqdata = ext.extractor(request);
-</span><span class='line'>
-</span><span class='line'> response.data.customerID=reqdata.CustomerID;
-</span><span class='line'>
-</span><span class='line'> return {
-</span><span class='line'> statusCode : 200,
-</span><span class='line'> headers: {
-</span><span class='line'> 'Content-Type': 'application/json; charset=utf-8'
-</span><span class='line'> },
-</span><span class='line'> body: response
-</span><span class='line'>
-</span><span class='line'> };
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The javascript file have a single function , which reads the stubbed response kept in template file . Then it calls another Javascript function to called &ldquo;extractrequest&rdquo;. We will see the details of it soon. For now, it actually returns the customer number from the request . For eg, if request is &ldquo;<a href="http://localhost:4547/Blog.Api/3123/CustomerView">http://localhost:4547/Blog.Api/3123/CustomerView</a> &rdquo; then it return 3123 as customer ID. Once we extract the customer ID, then it will replace the customer ID in our template response with the value coming from request and return the response.</p>
-
-<p>Let us take a close look at the extractrequest function.</p>
-
-<figure class='code'><figcaption><span>extractrequest.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>module.exports = {extractor:function extractCIFAndPackageID (request) {
-</span><span class='line'>
-</span><span class='line'>if(request && request.path) {
-</span><span class='line'>var req = request.path.split('/');
-</span><span class='line'>if(req.length &gt;2 && req[1]) {
-</span><span class='line'>return { CustomerID: req[2] }
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>return null;
-</span><span class='line'>}}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This method will take the input parameter as the request and split it at &ldquo;/&rdquo; to get a an array . Then we will return the array[2] which is the customer ID from the request</p>
-
-<p>Finally , the template response</p>
-
-<p><strong>CustomerFoundView.json</strong></p>
-
-<figure class='code'><figcaption><span>CustomerFoundView.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>"status": "success",
-</span><span class='line'>"code": 0,
-</span><span class='line'>"message": "",
-</span><span class='line'>"data":
-</span><span class='line'>{
-</span><span class='line'>
-</span><span class='line'>"customerID": "123",
-</span><span class='line'>"firstName": "John",
-</span><span class='line'>"lastName": "Citizen",
-</span><span class='line'>"email": "John.Citizen@abcabacas.com"
-</span><span class='line'>
-</span><span class='line'>}
-</span><span class='line'>
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now let us fire up mountebank</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png" alt="mountebank" /></p>
-
-<p>Make few request using postman, which have different request parameter</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png" alt="customerFound1" /></p>
-
-<p>Another request</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png" alt="CustomerFound2" /></p>
-
-<p>In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.</p>
-
-<p>Now let us try another example , where request is <a href="http://localhost:4547/Blog.Api/1234542323/CustomerView">http://localhost:4547/Blog.Api/1234542323/CustomerView</a></p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png" alt="CustomerNotFound2" /></p>
-
-<p>As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.</p>
-
-<ol>
-<li><p> Customer Not found which has a predicate of &ldquo;/Blog.Api/1[0-9]+/CustomerView&rdquo;</p></li>
-<li><p>Customer found which has a predicate of &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo;</p></li>
-</ol>
-
-
-<p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p>
-
-<p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1921,6 +1824,12 @@ Below commands can be run on cmd.exe</li>
         metrics
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/gulp/index.html">
+        <span class="badge">1</span>
+        gulp
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1929,6 +1838,8 @@ Below commands can be run on cmd.exe</li>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
+    
     <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
     
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
@@ -1936,8 +1847,6 @@ Below commands can be run on cmd.exe</li>
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
     
     <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
-    
-    <a class="list-group-item " href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/">Taking Emotions Out of Sprint Retrospective</a>
     
   </div>
 </section>
