@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-03-20T15:12:43+11:00</updated>
+  <updated>2018-04-29T08:31:54+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Postman BDD]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/04/28/postman-bdd/"/>
+    <updated>2018-04-28T07:46:43+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/04/28/postman-bdd</id>
+    <content type="html"><![CDATA[<p>In Previous blog post,we discussed about <a href="http://www.abygeorgea.com/blog/2017/08/05/postman-tutorial/">how to use postman</a> and how to use <a href="http://www.abygeorgea.com/blog/2017/08/07/running-postman-collection-using-newman/">collections using newman </a>and <a href="http://www.abygeorgea.com/blog/2017/08/13/postman-using-data-file">data file</a>. If you haven&rsquo;t read that , please have a read through first .</p>
+
+<p>In previous examples, we discussed about writing tests/assertions in postman. We followed normal Javascript syntax for writing test cases including asserting various factors of response ( like content , status code etc). Eventhough this is a straightforward way of writing, many people would like to use existing javascript test library like Mocha. They can use <a href="https://github.com/BigstickCarpet/postman-bdd/#installation">postman - bdd</a> libraries.</p>
+
+<p>Let us take a deep dive into how to use setup postman bdd.</p>
+
+<p>Note: It is assumed that user already have postman and newman installed on their machine along with their dependencies.</p>
+
+<h2>Installing Postman BDD</h2>
+
+<p>Installation is done triggering a Get request and setting the response as Global environment variable.</p>
+
+<ul>
+<li>Create a GET request to <code>http://bigstickcarpet.com/postman-bdd/dist/postman-bdd.js</code></li>
+<li>Set Global environment variable by using below command in test tab. <code>postman.setGlobalVariable('postmanBDD', responseBody);</code></li>
+</ul>
+
+
+<p><img src="http://www.abygeorgea.com/images/2018/04/28/Installing%20Postman%20BDD.png" alt="PostManRequest" /></p>
+
+<p>Once we trigger above get request, postman bdd will be available for use.  We can make use of postman BDD features by below command
+<code>eval(globals.postmanBDD);</code></p>
+
+<h2>Writing Tests</h2>
+
+<p>Postman bdd library provide us with flexibility to write tests and assertions using fluent asserts and have best features of Chai and Mocha. Inorder to demonstrate this, I am using sample Tutorial given with postman client.</p>
+
+<p>Open up the sample Request in Postman Tutorial folder under collections. It will already have some test predefined in Test tab. Remove them and add below test to it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>eval(globals.postmanBDD)
+</span><span class='line'>//eval(postman.getGlobalVariable('postmanBDD'));
+</span><span class='line'>var jsonData = JSON.parse(responseBody);
+</span><span class='line'>describe('Testing Sample Request in Postman Tutorial', function () {
+</span><span class='line'>  it('CASE 1: Should respond with statusCode = 200', function () {
+</span><span class='line'>      response.should.have.status(200);
+</span><span class='line'>  });
+</span><span class='line'>  it('CASE 2: Should response time less than 500 ms', function () {
+</span><span class='line'>      pm.response.responseTime.should.be.below(500);
+</span><span class='line'>  });
+</span><span class='line'>  it('CASE 3: User ID should be 1', function () {
+</span><span class='line'>      jsonData.userId === 1;
+</span><span class='line'>  });
+</span><span class='line'>
+</span><span class='line'>});
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: You can find more details of various type of asserts in <a href="http://www.chaijs.com/api/bdd/">http://www.chaijs.com/api/bdd/</a></p>
+
+<p>Once it is done, trigger the request</p>
+
+<p><img src="http://www.abygeorgea.com/images/2018/04/28/Postman%20BDD%20example.png" alt="PostManRequest" />.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Gulp Task for Running Automated Test]]></title>
@@ -1829,74 +1904,6 @@ Below commands can be run on cmd.exe</li>
 <p>In Nut shell, creating a XML response is similar to creating json response. There are only minor differences in the js file which creates the response. The main difference is the omission of Json.Parse and also changing the response headers.</p>
 
 <p>Above examples can be cloned from my GitHub repository <a href="https://github.com/abygeorgea/MountebankExamples">here</a>. After cloning the repository to local, just run RunMounteBankStubsWithSOAPXMLStubExampleData.bat file. Postman scripts can also be found inside PostmanCollections Folder to testing this</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Zip and Extract Zip Files Using Csharp]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/"/>
-    <updated>2017-04-20T21:59:02+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp</id>
-    <content type="html"><![CDATA[<p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
-
-<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
-
-<h3>Pre-Requisite</h3>
-
-<ul>
-<li>.Net 4.5 is needed</li>
-<li>Add reference to below dll to solution
-
-<ul>
-<li>System.IO.Compression.dll</li>
-<li>System.IO.Compression.FileSystem.dll</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Example</h3>
-
-<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='c#'><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">ZipFile</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">CreateFromDirectory</span><span class="p">(</span><span class="n">startPath</span><span class="p">,</span> <span class="n">zipPath</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Public</span> <span class="k">void</span> <span class="nf">UnZipFile</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">startPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\start&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">zipPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\result.zip&quot;</span><span class="p">;</span>
-</span><span class='line'>        <span class="kt">string</span> <span class="n">extractPath</span> <span class="p">=</span> <span class="s">@&quot;c:\example\extract&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">ZipFile</span><span class="p">.</span><span class="n">ExtractToDirectory</span><span class="p">(</span><span class="n">zipPath</span><span class="p">,</span> <span class="n">extractPath</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   

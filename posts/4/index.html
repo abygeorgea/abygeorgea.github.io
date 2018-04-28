@@ -131,6 +131,121 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-07T20:54:13+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 7 Sep, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/07/element-location-using-xpath-axis-part-2/" itemprop="url">Element Location Using XPath Axis Part 2</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In previous post, I have mentioned different ways of identifying web elements using XPath . Very often , we will have to identify child elements while automating using selenium. Let us consider below example . This is an HTML layout of table</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;table</span> <span class="na">id=</span><span class="s">table1</span> <span class="na">style=</span><span class="s">&quot;width:100%&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>John<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>50<span class="nt">&lt;/th&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>Jill<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>Smith<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>50<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;tr&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>Eve<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>Jackson<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;td&gt;</span>94<span class="nt">&lt;/td&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/tr&gt;</span>
+</span><span class='line'><span class="nt">&lt;/table&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Assuming we need to iterate across all the rows to identify which row have the name &ldquo;Eve&rdquo; and then do some action on that row . This can be achieved by below</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'> <span class="c1">// Identify the table header using ID</span>
+</span><span class='line'> <span class="n">IWebElement</span> <span class="n">e</span> <span class="p">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">FindElement</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">Id</span><span class="p">(</span><span class="s">&quot;table1&quot;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="cm">/* Identify all child nodes for the webelement e (table) . Note the &quot;.&quot; in XPath which means to search within current node. */</span>
+</span><span class='line'>
+</span><span class='line'> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IWebElement</span><span class="p">&gt;</span> <span class="n">rowlist</span> <span class="p">=</span> <span class="n">e</span><span class="p">.</span><span class="n">FindElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">XPath</span><span class="p">(</span><span class="s">&quot;.\\tr&quot;</span><span class="p">));</span>
+</span><span class='line'> <span class="k">foreach</span><span class="p">(</span><span class="kt">var</span> <span class="n">row</span> <span class="k">in</span> <span class="n">rowlist</span><span class="p">){</span>
+</span><span class='line'> <span class="n">IList</span><span class="p">&lt;</span><span class="n">IWebElement</span><span class="p">&gt;</span> <span class="n">collist</span> <span class="p">=</span> <span class="n">row</span><span class="p">.</span><span class="n">FindElements</span><span class="p">(</span><span class="n">By</span><span class="p">.</span><span class="n">XPath</span><span class="p">(</span><span class="s">&quot;.\\td&quot;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'> <span class="c1">// Now iterate over each value in collist to check whether it have &quot;Eve&quot;.</span>
+</span><span class='line'> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Important step here is to use &ldquo;.&rdquo; in XPath so that selenium limit its search for current node rather than everywhere on document. This will help to identify elements with respective to another element.</p>
+
+<p>Further details of how to use XPath can be found in <a href="https://www.w3schools.com/xml/xpath_syntax.asp">https://www.w3schools.com/xml/xpath_syntax.asp</a></p>
+
+<p>Main ones are</p>
+
+<ul>
+<li>/    - Search from root</li>
+<li>//   - Search anywhere in document which match selection</li>
+<li>.    - select current node</li>
+<li>..   - select parent of current node</li>
+</ul>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-06T12:00:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 6 Sep, 2016</time>
         
       </p>
@@ -1138,45 +1253,6 @@ In package.json add below</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-10-16T20:40:35+10:00"  data-updated="true" itemprop="datePublished dateCreated">16 Oct, 2015</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/10/16/volunteering-experience/" itemprop="url">Volunteering Experience</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>A couple of months back , I helped out to organize clinical examination for RACP. I created a tool ( Excel Macro)  for finalizing exam schedules for all attendees. The roster should consider employee preference, examiner availability, timeslot, venue and other parameters. Below is what I got in return ( even though they misspelled my name).</p>
-
-<p><img src="/images/2015/10/16/volunteer%20certificate.png" alt="" /></p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1327,7 +1403,7 @@ In package.json add below</p>
     
     
     <a class="list-group-item " href="/blog/categories/postman/index.html">
-        <span class="badge">3</span>
+        <span class="badge">4</span>
         postman
       </a>
     
@@ -1405,6 +1481,8 @@ In package.json add below</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
+    
     <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
     <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
@@ -1412,8 +1490,6 @@ In package.json add below</p>
     <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
     
     <a class="list-group-item " href="/blog/2017/11/16/mountebank-adding-delay-to-response/">Mountebank - Adding Delay to Response</a>
-    
-    <a class="list-group-item " href="/blog/2017/10/24/blog-traffic/">Highlights of Past One Month</a>
     
   </div>
 </section>
