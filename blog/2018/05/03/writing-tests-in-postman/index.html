@@ -2,11 +2,11 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Selenium - Aby George A</title>
+  <title>Writing Tests in Postman - Aby George A</title>
   <meta name="author" content="Aby George A">
 
-  <meta name="description" content="Selenium WebDriver Notes">
-  
+  <meta name="description" content="How to use Chai for writing postman tests">
+  <meta name="keywords" content="How to use Chai for writing postman tests">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -14,16 +14,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.abygeorgea.com/blog/2015/06/22/selenium/">
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="Aby George A" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.abygeorgea.com/blog/2015/06/22/selenium/">
-  <meta property="og:title" content="Selenium - Aby George A">
-  <meta property="og:description" content="Selenium WebDriver Notes">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/">
+  <meta property="og:title" content="Writing Tests in Postman - Aby George A">
+  <meta property="og:description" content="How to use Chai for writing postman tests">
 
   <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
 
@@ -127,43 +127,202 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-22T21:27:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Jun, 2015</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-05-03T21:05:00+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 May, 2018</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Selenium
+        Writing Tests in Postman
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h3>Difference between / and // in XPath</h3>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>In previous blog <a href="/blog/2018/04/28/postman-bdd/">post</a>, we saw how to use BDD format for writing test cases in postman. Most important part of writing tests in postman is understanding various features available. Let us explore various options available . The examples specified in postman <a href="https://documenter.getpostman.com/view/220187/postman-bdd-examples/6Z3uY71#30dfc9d2-5de4-b932-db3e-641c29fb0459">documentation</a>, have lot of information about how to setup postman bdd, use chai http assertions, create custom assertions and use before and after hooks. Please import them into postman and try that by yourself to familiarise with postman BDD. Below is only few examples from them.</p>
 
-<p>/ is used to create absolute XPath which starts from root. This is highly brittle since any changes to UI will change element locator.</p>
+<p>Postman BDD makes use of Chai Assertion Library and Chai-Http. We have access to both libray and postman scripting environment for writing test cases. Chai has two types of assertion styles.</p>
 
-<p>// is used to create relative XPath . The XPath is created relative to another element in UI</p>
+<ul>
+<li><code>Expect/should</code> for BDD</li>
+<li><code>Assert</code> for TDD</li>
+</ul>
 
-<h3>Difference between driver.get() and driver.navigate().to()</h3>
 
-<p>Both <code>driver.get()</code> and <code>driver.navigate().to()</code> will try to open a webpage and wait for the page to load. It means, it will wait till <code>Onload</code> event has fired. But it will not wait for all AJAX calls to trigger and process. Both of them are essentially the same. How ever Navigate() interface exposes the ability to move backward and forward  in browser history.</p>
+<p>Both styles support chainable language to construct assertions. We can use both of them to write postman test assertions. If you need details of all chainable constructs, please refer to their <a href="http://www.chaijs.com/api/bdd/">documentation</a>. Major ones which we may use in postman tests are</p>
+
+<ul>
+<li><p>Chains</p>
+
+<pre><code>  to
+  be
+  been
+  is
+  that
+  which
+  and
+  has
+  have
+  with
+  at
+  of
+  same
+  but
+  does
+</code></pre></li>
+<li><p>Not - Negates all conditions</p></li>
+<li>any -</li>
+<li>all -</li>
+<li>inlcude</li>
+<li>OK</li>
+<li>true</li>
+<li>false</li>
+<li>null</li>
+<li>undefined</li>
+<li>exist</li>
+<li>empty</li>
+<li>match(re[, msg])</li>
+</ul>
+
+
+<p>Chai-Http module provide various assertions. Read through their documentation <a href="https://github.com/chaijs/chai-http#assertions">here</a> to know details. Below are main commands at our disposal for validation .</p>
+
+<ul>
+<li>.status(code)</li>
+<li>.header (key[, value])</li>
+<li>.headers</li>
+<li>.ip</li>
+<li>.json / .text / .html</li>
+<li>.redirect</li>
+<li>.param</li>
+<li>.cookie</li>
+</ul>
+
+
+<p>Postman bdd provide <code>response</code> object on which we do most of assertions. It will have all information like response.text, response.body, response.status, response.ok , response.error. Postman BDD will automatically parse JSON and XML responses and hence there is no need to call JSON.parse() or xml2json(). response.text will have unparsed content. It also have automatic error handling , which will allow to continue with other test even if something fails.</p>
+
+<p>Examples for various assertions done on response object are below</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>driver.get("http://www.google.com");
-</span><span class='line'>driver.navigate().to("http://www.yahoo.com");
-</span><span class='line'>driver.navigate().forward();
-</span><span class='line'>driver.navigate().back();</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>\\Verifying Header information
+</span><span class='line'>expect(response).to.have.status(500);
+</span><span class='line'>expect(response).to.have.header('x-api-key');
+</span><span class='line'>expect(response).to.have.header('content-type', 'text/plain');
+</span><span class='line'>expect(request).to.have.header('content-type', /^text/);
+</span><span class='line'>expect(response).to.have.headers;
+</span><span class='line'>expect('127.0.0.1').to.be.an.ip;
+</span><span class='line'>
+</span><span class='line'>\\Verifying Response body
+</span><span class='line'>expect(response).to.be.json;
+</span><span class='line'>expect(response).to.be.html;
+</span><span class='line'>expect(response).to.be.text;
+</span><span class='line'>
+</span><span class='line'>response.should.have.status(200); 
+</span><span class='line'>response.body.should.not.be.empty;
+</span><span class='line'>response.ok.should.be.true;            // sucess with code 2XX
+</span><span class='line'>response.error.should.be.true; //failures
+</span><span class='line'>
+</span><span class='line'>\\Verifying request
+</span><span class='line'>expect(req).to.have.param('orderby', 'date');
+</span><span class='line'>expect(req).to.not.have.param('orderby');
+</span><span class='line'>expect(req).to.have.cookie('session_id', '1234');
+</span><span class='line'>expect(req).to.not.have.cookie('PHPSESSID');
+</span><span class='line'>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Difference between driver.close() and driver.quit()</h3>
+<p>If we use above assertions in proper BDD format, it will look like below</p>
 
-<p>driver.close() will close the window which is currently accessed by webdriver.
-driver.quit() will close all windows that are opened by the webdriver during current execution.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>eval(globals.postmanBDD);
+</span><span class='line'>describe('Example for Blog using SHOULD', function(){
+</span><span class='line'>   it("Tests using SHOULD", function() {
+</span><span class='line'>      response.should.have.status(200); 
+</span><span class='line'>      response.should.not.be.empty;
+</span><span class='line'>      response.should.have.header('content-type', 'application/json; charset=utf-8');
+</span><span class='line'>      response.type.should.equal('application/json');
+</span><span class='line'>      
+</span><span class='line'>      var user = response.body.results[0];
+</span><span class='line'>      user.name.should.be.an('object');
+</span><span class='line'>      user.name.should.have.property('first').and.not.empty;
+</span><span class='line'>      //user.name.should.have.property('first','david');
+</span><span class='line'>      user.should.have.property('gender','male');
+</span><span class='line'>   
+</span><span class='line'>   
+</span><span class='line'>   }) 
+</span><span class='line'>})
+</span><span class='line'>describe('Example for Blog using Expect', function(){
+</span><span class='line'>   it("Tests using EXPECT", function() {
+</span><span class='line'>      expect(response).to.have.status(200);
+</span><span class='line'>      expect(response).not.empty;
+</span><span class='line'>      expect(response).to.be.json;
+</span><span class='line'>      expect(response).to.have.header('content-type', 'application/json; charset=utf-8');
+</span><span class='line'>   }) 
+</span><span class='line'>})
+</span><span class='line'>
+</span><span class='line'>it('should contain the un-parsed JSON text', () =&gt; {
+</span><span class='line'>    response.text.should.be.a('string').with.length.above(50);
+</span><span class='line'>    response.text.should.contain('"results":[');
+</span><span class='line'>});
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="/images/2018/05/03/postman%20bdd.png" alt="Postman" /></p>
 </div>
 
 
@@ -187,13 +346,13 @@ driver.quit() will close all windows that are opened by the webdriver during cur
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-22T21:27:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Jun, 2015</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-05-03T21:05:00+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 May, 2018</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/selenium/'>selenium</a>
+    <a class='category' href='/blog/categories/newman/'>newman</a>, <a class='category' href='/blog/categories/postman/'>postman</a>
   
 </span>
 
@@ -202,7 +361,7 @@ driver.quit() will close all windows that are opened by the webdriver during cur
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2015/06/22/selenium/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2015/06/22/selenium/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/" >Tweet</a>
   
   
   
@@ -212,10 +371,8 @@ driver.quit() will close all windows that are opened by the webdriver during cur
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2014/06/10/java-writing-into-specific-cell-in-excel/" title="Previous Post: Java - Writing Into specific cell in Excel">&laquo; Java - Writing Into specific cell in Excel</a></li>
+            <li class="previous"><a href="/blog/2018/04/28/postman-bdd/" title="Previous Post: Postman BDD">&laquo; Postman BDD</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/10/16/volunteering-experience/" title="Next Post: Volunteering Experience">Volunteering Experience &raquo;</a></li>
             
           </ul>
         
@@ -445,7 +602,7 @@ driver.quit() will close all windows that are opened by the webdriver during cur
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
+    <a class="list-group-item active" href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
     
     <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
     
@@ -518,8 +675,8 @@ driver.quit() will close all windows that are opened by the webdriver during cur
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.abygeorgea.com/blog/2015/06/22/selenium/';
-        var disqus_url = 'http://www.abygeorgea.com/blog/2015/06/22/selenium/';
+        var disqus_identifier = 'http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/';
+        var disqus_url = 'http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/';
         var disqus_script = 'embed.js';
       
     (function () {

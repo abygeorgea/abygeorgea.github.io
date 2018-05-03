@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-04-29T08:31:54+10:00</updated>
+  <updated>2018-05-03T23:51:02+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,197 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Writing Tests in Postman]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman/"/>
+    <updated>2018-05-03T21:05:00+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/05/03/writing-tests-in-postman</id>
+    <content type="html"><![CDATA[<p>In previous blog <a href="http://www.abygeorgea.com/blog/2018/04/28/postman-bdd/">post</a>, we saw how to use BDD format for writing test cases in postman. Most important part of writing tests in postman is understanding various features available. Let us explore various options available . The examples specified in postman <a href="https://documenter.getpostman.com/view/220187/postman-bdd-examples/6Z3uY71#30dfc9d2-5de4-b932-db3e-641c29fb0459">documentation</a>, have lot of information about how to setup postman bdd, use chai http assertions, create custom assertions and use before and after hooks. Please import them into postman and try that by yourself to familiarise with postman BDD. Below is only few examples from them.</p>
+
+<p>Postman BDD makes use of Chai Assertion Library and Chai-Http. We have access to both libray and postman scripting environment for writing test cases. Chai has two types of assertion styles.</p>
+
+<ul>
+<li><code>Expect/should</code> for BDD</li>
+<li><code>Assert</code> for TDD</li>
+</ul>
+
+
+<p>Both styles support chainable language to construct assertions. We can use both of them to write postman test assertions. If you need details of all chainable constructs, please refer to their <a href="http://www.chaijs.com/api/bdd/">documentation</a>. Major ones which we may use in postman tests are</p>
+
+<ul>
+<li><p>Chains</p>
+
+<pre><code>  to
+  be
+  been
+  is
+  that
+  which
+  and
+  has
+  have
+  with
+  at
+  of
+  same
+  but
+  does
+</code></pre></li>
+<li><p>Not - Negates all conditions</p></li>
+<li>any -</li>
+<li>all -</li>
+<li>inlcude</li>
+<li>OK</li>
+<li>true</li>
+<li>false</li>
+<li>null</li>
+<li>undefined</li>
+<li>exist</li>
+<li>empty</li>
+<li>match(re[, msg])</li>
+</ul>
+
+
+<p>Chai-Http module provide various assertions. Read through their documentation <a href="https://github.com/chaijs/chai-http#assertions">here</a> to know details. Below are main commands at our disposal for validation .</p>
+
+<ul>
+<li>.status(code)</li>
+<li>.header (key[, value])</li>
+<li>.headers</li>
+<li>.ip</li>
+<li>.json / .text / .html</li>
+<li>.redirect</li>
+<li>.param</li>
+<li>.cookie</li>
+</ul>
+
+
+<p>Postman bdd provide <code>response</code> object on which we do most of assertions. It will have all information like response.text, response.body, response.status, response.ok , response.error. Postman BDD will automatically parse JSON and XML responses and hence there is no need to call JSON.parse() or xml2json(). response.text will have unparsed content. It also have automatic error handling , which will allow to continue with other test even if something fails.</p>
+
+<p>Examples for various assertions done on response object are below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>\\Verifying Header information
+</span><span class='line'>expect(response).to.have.status(500);
+</span><span class='line'>expect(response).to.have.header('x-api-key');
+</span><span class='line'>expect(response).to.have.header('content-type', 'text/plain');
+</span><span class='line'>expect(request).to.have.header('content-type', /^text/);
+</span><span class='line'>expect(response).to.have.headers;
+</span><span class='line'>expect('127.0.0.1').to.be.an.ip;
+</span><span class='line'>
+</span><span class='line'>\\Verifying Response body
+</span><span class='line'>expect(response).to.be.json;
+</span><span class='line'>expect(response).to.be.html;
+</span><span class='line'>expect(response).to.be.text;
+</span><span class='line'>
+</span><span class='line'>response.should.have.status(200); 
+</span><span class='line'>response.body.should.not.be.empty;
+</span><span class='line'>response.ok.should.be.true;            // sucess with code 2XX
+</span><span class='line'>response.error.should.be.true; //failures
+</span><span class='line'>
+</span><span class='line'>\\Verifying request
+</span><span class='line'>expect(req).to.have.param('orderby', 'date');
+</span><span class='line'>expect(req).to.not.have.param('orderby');
+</span><span class='line'>expect(req).to.have.cookie('session_id', '1234');
+</span><span class='line'>expect(req).to.not.have.cookie('PHPSESSID');
+</span><span class='line'>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If we use above assertions in proper BDD format, it will look like below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>eval(globals.postmanBDD);
+</span><span class='line'>describe('Example for Blog using SHOULD', function(){
+</span><span class='line'>   it("Tests using SHOULD", function() {
+</span><span class='line'>      response.should.have.status(200); 
+</span><span class='line'>      response.should.not.be.empty;
+</span><span class='line'>      response.should.have.header('content-type', 'application/json; charset=utf-8');
+</span><span class='line'>      response.type.should.equal('application/json');
+</span><span class='line'>      
+</span><span class='line'>      var user = response.body.results[0];
+</span><span class='line'>      user.name.should.be.an('object');
+</span><span class='line'>      user.name.should.have.property('first').and.not.empty;
+</span><span class='line'>      //user.name.should.have.property('first','david');
+</span><span class='line'>      user.should.have.property('gender','male');
+</span><span class='line'>   
+</span><span class='line'>   
+</span><span class='line'>   }) 
+</span><span class='line'>})
+</span><span class='line'>describe('Example for Blog using Expect', function(){
+</span><span class='line'>   it("Tests using EXPECT", function() {
+</span><span class='line'>      expect(response).to.have.status(200);
+</span><span class='line'>      expect(response).not.empty;
+</span><span class='line'>      expect(response).to.be.json;
+</span><span class='line'>      expect(response).to.have.header('content-type', 'application/json; charset=utf-8');
+</span><span class='line'>   }) 
+</span><span class='line'>})
+</span><span class='line'>
+</span><span class='line'>it('should contain the un-parsed JSON text', () =&gt; {
+</span><span class='line'>    response.text.should.be.a('string').with.length.above(50);
+</span><span class='line'>    response.text.should.contain('"results":[');
+</span><span class='line'>});
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="http://www.abygeorgea.com/images/2018/05/03/postman%20bdd.png" alt="Postman" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Postman BDD]]></title>
@@ -1679,231 +1870,6 @@ Below commands can be run on cmd.exe</li>
 <p>R flag denotes to run “rm” command recursively . “f” flag denotes to run in forcefully. We can even replace “f” with “v” for verbose mode and “i” for interactive mode.</p>
 
 <p>Note: Above command can also be used to delete files which have long path ( more than 260 characters)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Stubbing XML Responses Using Mountebank]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/27/stubbing-xml-responses-using-mountebank/"/>
-    <updated>2017-04-27T05:55:51+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/27/stubbing-xml-responses-using-mountebank</id>
-    <content type="html"><![CDATA[<p>Previous two blog post talked about how we can use mountebank for stubbing where responses are in json format . They can be accessed (<a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a>) and (<a href="http://www.abygeorgea.com/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>). We can use same approach for stubbing SOAP services using XML as well. In this post, I will explain how we can provide XML response using Mountebank .</p>
-
-<p>Let us have a quick look into the files created. Before we begin, folder structure of various file as below</p>
-
-<p><img src="http://www.abygeorgea.com/images/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg" alt="folderstructure" /></p>
-
-<h4>Imposter.ejs</h4>
-
-<p>The main Imposter file is</p>
-
-<figure class='code'><figcaption><span>Imposter.ejs</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>"imposters": [
-</span><span class='line'>&lt;% include Port4547.json %&gt;
-</span><span class='line'>]
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>Port4547.json</h4>
-
-<p>This file specifies which port number to use and what all stubs needs to be created is as below</p>
-
-<figure class='code'><figcaption><span>Port4547.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{
-</span><span class='line'>"port": 4547,
-</span><span class='line'>"protocol": "http",
-</span><span class='line'>"stubs": [
-</span><span class='line'>{
-</span><span class='line'>&lt;% include XMLStubGET.json %&gt;
-</span><span class='line'>},
-</span><span class='line'>{
-</span><span class='line'>&lt;% include XMLStubPOST.json %&gt;
-</span><span class='line'>}
-</span><span class='line'>]
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>XMLStubGET.json</h4>
-
-<p>This is the first stub for this example and it looks for any request coming with the method &ldquo;GET&rdquo; and path &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo; , where [0-9]+ is regular expression of any numeric</p>
-
-<figure class='code'><figcaption><span>XMLStubGET.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
-</span><span class='line'>{
-</span><span class='line'>"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetXMLStub.js') %&gt;"
-</span><span class='line'>}
-</span><span class='line'>],
-</span><span class='line'>"predicates": [
-</span><span class='line'>{
-</span><span class='line'>"matches": {
-</span><span class='line'>"method" : "GET",
-</span><span class='line'>"path" : "/Blog.Api/[0-9]+/CustomerView"
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>XMLStubPOST.json</h4>
-
-<p>This is the second stub for this example and it looks for any request coming with method &ldquo;POST&rdquo; and path &ldquo;/Blog.Api/XMLexamplePOST/[0-9]+&rdquo; , where [0-9]+ is regular expression of any numeric .It also needs a body as <Action>Insert</Action><Record>Customer1</Record></p>
-
-<p>Note: If you have body in multi-line, then make sure to enter &ldquo;\n&rdquo; for new line</p>
-
-<figure class='code'><figcaption><span>XMLStubPOST.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>"responses": [
-</span><span class='line'>{
-</span><span class='line'>"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetXMLStub-POST.js') %&gt;"
-</span><span class='line'>}
-</span><span class='line'>],
-</span><span class='line'>"predicates": [
-</span><span class='line'>{
-</span><span class='line'>"matches": {
-</span><span class='line'>"body" : "&lt;Action&gt;Insert&lt;/Action&gt;&lt;Record&gt;Customer1&lt;/Record&gt;",
-</span><span class='line'>"method" : "POST",
-</span><span class='line'>"path" : "/Blog.Api/XMLexamplePOST/[0-9]+"
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>]</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>GetXMLStub.js</h4>
-
-<p>Below js file create a response based on template mentioned and return the response with proper status. Please note that, we are not using &ldquo;Json.Parse&rdquo; here as we did for previous examples involving json.</p>
-
-<figure class='code'><figcaption><span>GetXMLStub.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
-</span><span class='line'>response = "&lt;%- stringify(filename, 'StubTemplate\\CustomerDetails.xml') %&gt;"
-</span><span class='line'>return {
-</span><span class='line'>statusCode : 200,
-</span><span class='line'>headers: {
-</span><span class='line'>'Content-Type': 'application/xml; charset=utf-8'
-</span><span class='line'>},
-</span><span class='line'>body: response
-</span><span class='line'>};
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>GetXMLStub-POST.js</h4>
-
-<figure class='code'><figcaption><span>GetXMLStub-POST.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>function GetTemplateResponse (request, state, logger) {
-</span><span class='line'>response = "&lt;%- stringify(filename, 'StubTemplate\\RecordAdded.xml') %&gt;"
-</span><span class='line'>return {
-</span><span class='line'>statusCode : 200,
-</span><span class='line'>headers: {
-</span><span class='line'>'Content-Type': 'application/xml; charset=utf-8'
-</span><span class='line'>},
-</span><span class='line'>body: response
-</span><span class='line'>};
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>CustomerDetails.XML</h4>
-
-<p>This is the template for the first stub - GET example</p>
-
-<figure class='code'><figcaption><span>XML</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;customer&gt;
-</span><span class='line'>  &lt;FirstName&gt;John&lt;/FirstName&gt;
-</span><span class='line'>  &lt;LastName&gt;Citizen&lt;/LastName&gt;
-</span><span class='line'>  &lt;Address&gt;Some St, Some State, Some Country&lt;/Address&gt;
-</span><span class='line'>  &lt;Email&gt;Test@test.com&lt;/Email&gt;
-</span><span class='line'>&lt;/customer&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>RecordAdded.xml</h4>
-
-<p>This is the template for the second stub - POST example</p>
-
-<figure class='code'><figcaption><span>XML</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;Status&gt;Added&lt;/Status&gt;
-</span><span class='line'>&lt;Record&gt;Customer1&lt;/Record&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After creating above files and keeping them as per directory structure is shown above, it is time to start mountebank</p>
-
-<blockquote><p>mb &ndash;configfile SOAP-XMLStubExample/Imposter.ejs &ndash;allowInjection</p></blockquote>
-
-<p>Note: Give the right path to Imposter.ejs . If you need to debug Mountebank, you can use below command at the end &ldquo; &ndash;loglevel debug&rdquo;</p>
-
-<p>Now trigger a get request to <a href="http://localhost:4547/Blog.Api/3123/CustomerView.">http://localhost:4547/Blog.Api/3123/CustomerView.</a></p>
-
-<p>This should match with our first predicate and should return the response mentioned</p>
-
-<p>Mountebank_XML_Response_</p>
-
-<p>Now trigger a POST request with a body . If predicates are matched, then it will respond with expected response as below</p>
-
-<p><img src="http://www.abygeorgea.com/images/2017/04/27/Mountebank_XML_Response_PostmanRequest1.png" alt="PostManRequest" /></p>
-
-<p>In Nut shell, creating a XML response is similar to creating json response. There are only minor differences in the js file which creates the response. The main difference is the omission of Json.Parse and also changing the response headers.</p>
-
-<p>Above examples can be cloned from my GitHub repository <a href="https://github.com/abygeorgea/MountebankExamples">here</a>. After cloning the repository to local, just run RunMounteBankStubsWithSOAPXMLStubExampleData.bat file. Postman scripts can also be found inside PostmanCollections Folder to testing this</p>
 ]]></content>
   </entry>
   
