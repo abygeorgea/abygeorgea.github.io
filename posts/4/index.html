@@ -131,6 +131,101 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-10-10T06:47:54+10:00"  data-updated="true" itemprop="datePublished dateCreated">10 Oct, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/10/10/powershell-copying-folders-and-files/" itemprop="url">Powershell - Copying Folders and Files</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Two options for copying files are below.</p>
+
+<ul>
+<li>Robocopy - More details can be found at <a href="https://technet.microsoft.com/en-us/library/cc733145.aspx">Robocopy</a></li>
+<li>Copy_Item cmdlet - More details can be found at <a href="https://msdn.microsoft.com/en-us/powershell/reference/5.1/microsoft.powershell.management/copy-item">Copy-Item</a></li>
+</ul>
+
+
+<h3>Copying Folder structure Only</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>Copy-Item $source $dest -Filter {PSIsContainer} -Recurse -Force
+</span><span class='line'>
+</span><span class='line'>#OR
+</span><span class='line'>robocopy $source $dest /e /xf *.*
+</span><span class='line'>
+</span><span class='line'># /e denotes all folder including empty folders. /xf denotes all files except one of format *.*
+</span><span class='line'># /e can be replaced with /s for ignoring empty folders</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Flattening Folder structure - Copy all files from nested folders to a single folder</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'># Below is required only if we need to create destination folder. Uncomment below line if folder needs to be created
+</span><span class='line'>#New-Item $dest -type directory 
+</span><span class='line'>
+</span><span class='line'>Get-ChildItem $source -Recurse | `
+</span><span class='line'>    Where-Object { $_.PSIsContainer -eq $False } | `
+</span><span class='line'>    ForEach-Object {Copy-Item -Path $_.Fullname -Destination $dest -Force} </span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Copy same folder structure</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$source = "C:\tools\DevKit2\octopress-blog\source"
+</span><span class='line'>$dest = "D:\delete"
+</span><span class='line'>robocopy $source $dest /e</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-23T06:31:03+10:00"  data-updated="true" itemprop="datePublished dateCreated">23 Sep, 2016</time>
         
       </p>
@@ -952,108 +1047,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-07-30T05:49:22+10:00"  data-updated="true" itemprop="datePublished dateCreated">30 Jul, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/07/30/data-driven-framework-excel/" itemprop="url">Data Driven Framework - Excel</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found <a href="/blog/2016/07/29/data-driven-framework-xml/">here</a>. I have also written about how to use jxl library for <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">reading from excel</a> and <a href="/blog/2014/06/01/java-writing-into-specific-cell-in-excel/">writing into Excel</a>.</p>
-
-<p>Below is another code snippet to read all values of a row and save it into a hash map for accessing later during automation test.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span>  <span class="n">HashMap</span> <span class="nf">GetAllDataForARow</span>  <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">){</span>
-</span><span class='line'>        <span class="n">HashMap</span> <span class="n">DataMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HashMap</span><span class="o">();</span>
-</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
-</span><span class='line'>            <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">,</span> <span class="n">colArow2</span><span class="o">;</span>
-</span><span class='line'>            <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
-</span><span class='line'>                <span class="n">colArow2</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">Row</span><span class="o">);</span>
-</span><span class='line'>                <span class="n">DataMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">(),</span> <span class="n">colArow2</span><span class="o">.</span><span class="na">getContents</span><span class="o">());</span>
-</span><span class='line'>                <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IndexOutOfBoundsException</span> <span class="n">e</span><span class="o">){</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">DataMap</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1274,6 +1267,12 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
         gulp
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/cypress/index.html">
+        <span class="badge">1</span>
+        cypress
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1282,6 +1281,8 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/05/11/ui-automation-with-cypress/">UI Automation With Cypress</a>
+    
     <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
     
     <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
@@ -1289,8 +1290,6 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
     <a class="list-group-item " href="/blog/2018/03/01/extracting-metrics-from-teamcity/">Extracting Metrics From TeamCity</a>
-    
-    <a class="list-group-item " href="/blog/2018/03/01/automating-accessibility-testing/">Automate Accessibility Testing Using aXe</a>
     
   </div>
 </section>

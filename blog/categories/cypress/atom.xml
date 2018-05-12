@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Cypress | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/cypress/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2018-05-13T08:23:57+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[UI Automation With Cypress]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/05/11/ui-automation-with-cypress/"/>
+    <updated>2018-05-11T07:31:39+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/05/11/ui-automation-with-cypress</id>
+    <content type="html"><![CDATA[<p>When we talk about UI automation for browsers, the default tool which comes to mind is Selenium. There are different wrappers around selenium like protractor, Nightwatch , selenium webdriver etc. All of them are build on top of selenium and have all advantages /disadvantages of selenium. All of the control browser by executing remote commands through Network. We will most probably need additional libraries, framework etc to make full use of selenium.</p>
+
+<p>Cypress.io is an open source UI automation tool which can be used for UI testing . Unlike others, this is not build on top of selenium . Instead is a complete new architecture and run in same run loop as browser. So it is running inside browser and have access to almost everything happening inside and outside browser. It is a complete set of tools that you will require to create and run E2E UI automation test cases. Team who developed cypress has made few design trade off which causes some disadvantages to cypress. There is no right tool for automation . It will depend on multiple factors.</p>
+
+<h2>Installing Cypress</h2>
+
+<p>We can install cypress using npm. Run below command inside project folder to install cypress and all dependencies.</p>
+
+<pre><code>npm install cypress --save-dev
+</code></pre>
+
+<p>Another way of using cypress is to download zip file from <a href="https://www.cypress.io/features/">here</a> . Just extract the file and start using it.</p>
+
+<h2>Opening Cypress</h2>
+
+<p>Cypress can be opened by running <code>node_modules/.bin/cypress open</code> command in terminal under /cypress.</p>
+
+<p>If you have downloaded the zip file, you can open cypress by double clicking on the cypress executable.</p>
+
+<h2>Write your first test</h2>
+
+<p>Cypress already come with predefined example of KitchenSink application which will help you to identify various commands which can be used. It can be found under <code>cypress\integration\example_spec.js</code>.</p>
+
+<p>Let us look at how to write a new test .</p>
+
+<p>Create a new test script file called <code>demotest.js</code> under <code>{project_location}\cypress\integration</code>. Open up the file and write below code into it.</p>
+
+<p>This code will open browser, load google and search for cypress.io and open up the first link.</p>
+
+<pre><code>describe('My first test for cypress', function() {
+    it('Visits google home page ', function() {
+      cy.visit('https://google.com');
+    })
+    it('should load the Google Homepage', () =&gt; {
+        cy.title().should('eql', 'Google');
+    })
+    it('should search and open cypress home page', () =&gt; {
+        cy.get('#lst-ib').type('cypress.io');
+        cy.get('[value="I\'m Feeling Lucky"]').focus().click();
+    })
+
+
+  })
+</code></pre>
+
+<p>Note: If cross origin policy error is shown, flow the workarounds mentioned.</p>
+
+<h2>How does cypress.io compare with Selenium</h2>
+
+<p>As mentioned earlier, there is no right or wrong tool for automation. It all depends on suitability for the task on hand. Let us compare few features where cypress.io and selenium have differences.</p>
+
+<ul>
+<li>Cross browser support - At this point selenium have more cross browser support that cypress. Cypress supports only chrome variants. You can read about them <a href="https://github.com/cypress-io/cypress/issues/310">here</a></li>
+<li>Debugging capability - This is high in cypress. I found that error message are more details and infact provide some more details about how to fix it. Also you have full access to chrome dev tools.</li>
+<li>Keypress - As of now , cypress doesnt support pressing Tab key . You can read about it <a href="https://github.com/cypress-io/cypress/issues/299">here</a>.</li>
+<li>Since cypress is build on node.js, we can chain commands together</li>
+<li>Cypress.io have built in support for test framework and assertion libraries like mocha, chai etc</li>
+<li>Cypress.io test cases can be written in Javascript</li>
+<li>Cypress.io handles wait times better than selenium</li>
+<li>Cypress.io have hot reloading of test cases. When we make changes to test cases and save it , the test rerun by itself. This is very effective to reduce time spend on building and rerunning selenium based test cases.</li>
+<li>Cypress.io have built in time travel and screenshots which will help us to go back to failure points and debug. It also capture before and after state for all actions</li>
+</ul>
+
+
+<p>I will keep adding to this when I play more with cypress.</p>
+]]></content>
+  </entry>
+  
+</feed>
