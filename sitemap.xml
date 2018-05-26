@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress/</loc>
+<lastmod>2018-05-27T08:03:28+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2018/05/11/ui-automation-with-cypress/</loc>
 <lastmod>2018-05-11T07:31:39+10:00</lastmod>
 </url>
@@ -306,15 +310,6 @@
 <loc>http://www.abygeorgea.com/blog/categories/cypress/</loc>
 </url>
 <url>
-<loc>http://www.abygeorgea.com/posts/2/</loc>
-</url>
-<url>
-<loc>http://www.abygeorgea.com/posts/3/</loc>
-</url>
-<url>
-<loc>http://www.abygeorgea.com/posts/4/</loc>
-</url>
-<url>
-<loc>http://www.abygeorgea.com/posts/5/</loc>
+<loc>http://www.abygeorgea.com/blog/categories/api-testing/</loc>
 </url>
 </urlset>

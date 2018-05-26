@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cypress | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/cypress/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-05-13T08:23:57+10:00</updated>
+  <updated>2018-05-27T09:26:50+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Running API Test Using Cypress]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress/"/>
+    <updated>2018-05-27T08:03:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress</id>
+    <content type="html"><![CDATA[<p>Cypress is not just UI automation tool . It can be used for testing APIs as well . Even though we have other tools like Postman, Newman, Rest Assured, SOAP UI etc for testing APIs, I believe cypress is a good alternative for testing API. It will help to use same tool for both UI and API test automation.</p>
+
+<h2>Demo</h2>
+
+<p>Let us look at a sample API test case. In below example, we trigger a API call to <code>http://services.groupkt.com/country/get/iso2code/AU</code> and validate below in the response.</p>
+
+<ul>
+<li>Status code of response is 200.</li>
+<li>Header include &lsquo;application/json&rsquo;.</li>
+<li>Body contain &ldquo;Country found matching code [AU].&rdquo;</li>
+</ul>
+
+
+<p>We can then extend this to do any further checks if needed.</p>
+
+<p>Create a new file inside <code>Integration</code> folder of cypress and copy below code into that.</p>
+
+<pre><code>describe('API Testing with Cypress', () =&gt; {
+    var result
+
+    it('Validate the header', () =&gt; {
+       result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+
+       result.its('headers')
+             .its('content-type')
+             .should('include', 'application/json')
+
+    })
+
+    it('Validate the status', () =&gt; {
+        result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+
+        result.its('status')
+              .should('equal',200);
+     })
+
+     it('Validate the body ', () =&gt; {
+        result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+
+        result.its('body')
+              .its('RestResponse.messages')
+              .should('include', 'Country found matching code [AU].');
+
+     })
+}) 
+</code></pre>
+
+<p>Open Cypress by running <code>node_modules/.bin/cypress open</code> inside cypress root folder. This will open up Cypress.</p>
+
+<p>Run newly created test.</p>
+
+<p><img src="/images/2018/05/27/01%20Run%20Test%20Case.png" alt="APITestingWithCypress" /></p>
+
+<p>Results of test execution will look like below.</p>
+
+<p><img src="/images/2018/05/27/02%20Check%20Result.png" alt="[APITestingWithCypress]" /></p>
+
+<p>Expand each of them and right click on the asserts and inspect the element. This will open up chrome developer tool. Select the console tab , which will list down details of calls made, request received and assertions performed.  It will help to write additional assertions, investigate any failure etc.</p>
+
+<p><img src="/images/2018/05/27/03%20Expand%20and%20Analyse%20result.png" alt="[APITestingWithCypress]" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[UI Automation With Cypress]]></title>

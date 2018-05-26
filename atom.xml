@@ -4,7 +4,7 @@
   <title><![CDATA[Aby George A]]></title>
   <link href="http://www.abygeorgea.com/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-05-13T08:23:57+10:00</updated>
+  <updated>2018-05-27T09:26:50+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,103 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Running API Test Using Cypress]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress/"/>
+    <updated>2018-05-27T08:03:28+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress</id>
+    <content type="html"><![CDATA[<p>Cypress is not just UI automation tool . It can be used for testing APIs as well . Even though we have other tools like Postman, Newman, Rest Assured, SOAP UI etc for testing APIs, I believe cypress is a good alternative for testing API. It will help to use same tool for both UI and API test automation.</p>
+
+<h2>Demo</h2>
+
+<p>Let us look at a sample API test case. In below example, we trigger a API call to <code>http://services.groupkt.com/country/get/iso2code/AU</code> and validate below in the response.</p>
+
+<ul>
+<li>Status code of response is 200.</li>
+<li>Header include &lsquo;application/json&rsquo;.</li>
+<li>Body contain &ldquo;Country found matching code [AU].&rdquo;</li>
+</ul>
+
+
+<p>We can then extend this to do any further checks if needed.</p>
+
+<p>Create a new file inside <code>Integration</code> folder of cypress and copy below code into that.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>describe('API Testing with Cypress', () =&gt; {
+</span><span class='line'>    var result
+</span><span class='line'>    
+</span><span class='line'>    it('Validate the header', () =&gt; {
+</span><span class='line'>       result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+</span><span class='line'>      
+</span><span class='line'>       result.its('headers')
+</span><span class='line'>             .its('content-type')
+</span><span class='line'>             .should('include', 'application/json')
+</span><span class='line'>        
+</span><span class='line'>    })
+</span><span class='line'>
+</span><span class='line'>    it('Validate the status', () =&gt; {
+</span><span class='line'>        result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+</span><span class='line'>       
+</span><span class='line'>        result.its('status')
+</span><span class='line'>              .should('equal',200);
+</span><span class='line'>     })
+</span><span class='line'>
+</span><span class='line'>     it('Validate the body ', () =&gt; {
+</span><span class='line'>        result = cy.request('http://services.groupkt.com/country/get/iso2code/AU')
+</span><span class='line'>       
+</span><span class='line'>        result.its('body')
+</span><span class='line'>              .its('RestResponse.messages')
+</span><span class='line'>              .should('include', 'Country found matching code [AU].');
+</span><span class='line'>      
+</span><span class='line'>     })
+</span><span class='line'>}) 
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Open Cypress by running <code>node_modules/.bin/cypress open</code> inside cypress root folder. This will open up Cypress.</p>
+
+<p>Run newly created test.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2018/05/27/01%20Run%20Test%20Case.png" alt="APITestingWithCypress" /></p>
+
+<p>Results of test execution will look like below.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2018/05/27/02%20Check%20Result.png" alt="[APITestingWithCypress]" /></p>
+
+<p>Expand each of them and right click on the asserts and inspect the element. This will open up chrome developer tool. Select the console tab , which will list down details of calls made, request received and assertions performed.  It will help to write additional assertions, investigate any failure etc.</p>
+
+<p><img src="http://www.abygeorgea.com/images/2018/05/27/03%20Expand%20and%20Analyse%20result.png" alt="[APITestingWithCypress]" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[UI Automation With Cypress]]></title>
@@ -1638,309 +1735,6 @@ Galen framework can be used for automation of CSS testing easier. It has evolved
 <p>If we look at commit history, we can see that commits are now squashed to single commit.</p>
 
 <p><img src="http://www.abygeorgea.com/images/2017/06/15/HowToSquashCommits_image5.png" alt="Squashed Result" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Migrating to Octopress]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress/"/>
-    <updated>2017-05-20T05:57:24+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/05/20/migrating-to-octopress</id>
-    <content type="html"><![CDATA[<p>Over the past weekend, I noticed that my blog is not available since azure has disabled hosting of my WordPress blog. It happened because I ran out of my free credits for the current month. I started looking for alternate options for hosting WordPress. That&rsquo;s when I came across (<a href="http://www.rahulpnath.com/blog/static-generator-is-all-a-blog-needs-moving-to-octopress/">Static Generator is All a Blog Needs - Moving to Octopress</a>). I decided to give it a try.</p>
-
-<p>Below are the main steps which I followed for migrating to Octopress</p>
-
-<h1>Documentation</h1>
-
-<ul>
-<li>Read documentation of Octopress <a href="http://octopress.org/docs/">here</a> and Jekyll <a href="https://jekyllrb.com/docs/home/">here</a></li>
-</ul>
-
-
-<h1>Setup</h1>
-
-<ul>
-<li>Install Chocolatey as mentioned in documentation <a href="https://chocolatey.org/install">here</a>
-Below command can be run on cmd.exe open as administrator</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>As mentioned in octopress documentation, ensure Git, ruby and devkit are installed. Cholocatey way of installation can be found in <a href="https://chocolatey.org/packages/git.install">git</a>, <a href="https://chocolatey.org/packages/ruby">ruby</a> , <a href="https://chocolatey.org/packages/ruby2.devkit">devkit</a>.
-Below commands can be run on cmd.exe</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>choco install git.install
-</span><span class='line'>choco install ruby
-</span><span class='line'>choco install ruby2.devkit</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>By default, devkit is installed in <code>C:\tools\</code>. Move in <code>devkit</code> folder and run below commands</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ruby dk.rb init
-</span><span class='line'>ruby dk.rb install
-</span><span class='line'>gem install bundler</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Install Octopress</h1>
-
-<ul>
-<li>Now install Octopress as per <a href="http://octopress.org/docs/setup/">documentation</a></li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone git://github.com/imathis/octopress.git octopress
-</span><span class='line'>cd octopress
-</span><span class='line'>bundle install
-</span><span class='line'>rake install // Install default Octopress theme</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Install Octostrap3 theme &amp; Customize</h1>
-
-<ul>
-<li>Since I didn&rsquo;t like the default theme much, I installed Octostrap3 theme as mentioned <a href="http://kaworu.github.io/octostrap3/setup/install/">here</a></li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git clone https://github.com/kAworu/octostrap3.git .themes/octostrap3
-</span><span class='line'>rake "install[octostrap3]"</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Fix up all issues. The date displayed as &ldquo;Ordinal&rdquo; can be fixed by updating <code>_config.yml</code> file as mentioned in their blog. Below is the config which I used</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>_config.yml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>date_format: "%e %b, %Y"</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>I made few more changes for changing the navigation header color, color of code blocks and also to include a side bar with categories. The changes are as below</li>
-</ul>
-
-
-<p>Changing color of code blocks is done by commenting below line in <code>octopress\sass\custom\_colors.scss</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>\\$solarized: light;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Navigation header color is changed by adding below to <code>octopress\sass\custom\_styles.scss</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>.navbar-default {
-</span><span class='line'>    background-image: -webkit-gradient(linear,left top,left bottom,from(#263347),to(#263347));
-</span><span class='line'>}
-</span><span class='line'>.navbar-default .navbar-brand {
-</span><span class='line'>    color: #fff;
-</span><span class='line'>}
-</span><span class='line'>.navbar-default .navbar-nav&gt;li&gt;a {
-</span><span class='line'>    color: #fff;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Adding category side bar is done by following steps mentioned in <a href="https://kaworu.github.io/octostrap3/blog/2013/10/03/category-list-aside/">Category List Aside</a></p>
-
-<h1>Google Analytics Integration</h1>
-
-<p>Next step was google analytics integration. Detailed steps for this is available on various blogs. Below is what I followed</p>
-
-<ul>
-<li>Sign up for google analytics ID in <a href="https://analytics.google.com/analytics/web/provision?authuser=0#provision/SignUp/">here</a></li>
-<li>Update _config.yml with google analytics ID</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># Google Analytics
-</span><span class='line'>google_analytics_tracking_id: UA-XXXXXXXX-1</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Update <code>google_analytics.html</code> file with below</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>   &lt;script&gt;
-</span><span class='line'>    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-</span><span class='line'>    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-</span><span class='line'>    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-</span><span class='line'>    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-</span><span class='line'>
-</span><span class='line'>    ga('create', 'UA-XXXXXXXX-1', 'auto');
-</span><span class='line'>    ga('send', 'pageview');
-</span><span class='line'>
-</span><span class='line'>  &lt;/script&gt;</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>UA-XXXXXXXX-1 can be replaced with <code>site.google_analytics_tracking_id</code> enclosed in double braces/curly brackets</li>
-<li>Log in to Google Analytics site and navigate to Admin >> View >> Filters</li>
-<li>Add a new filter to exclude all traffice to hostname &ldquo;localhost&rdquo;. This will help to exclude all site visit done for development/ preview purpose.</li>
-</ul>
-
-
-<h1>Sample Post</h1>
-
-<ul>
-<li>Now create a Hello World post and check how it look</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["Hello World"]
-</span><span class='line'>rake generate
-</span><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure>
-
-
-<p>rake preview mounts a webserver at <a href="http://localhost:4000" title="http://localhost:4000">http://localhost:4000</a>. By opening a browser window and navigating to <a href="http://localhost:4000" title="http://localhost:4000">http://localhost:4000</a> will preview the Hello World Post</p>
-
-<h1>Deploying to GitHub Pages</h1>
-
-<p>Detailed instructions can be found in <a href="http://octopress.org/docs/deploying/github/">Deploying to Github Pages</a>. Below are high-level steps copied from there
-- Create a GitHub repository with name <code>yourusername.github.io</code>
-- Run below command. It will prompt for GitHub URL, which needs to be filled in</p>
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages // This does all configurations
-</span><span class='line'>rake generate
-</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Now we can commit the source</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>git add .
-</span><span class='line'>git commit -m 'your message'
-</span><span class='line'>git push origin source</span></code></pre></td></tr></table></div></figure>
-
-
-<h1>Custom Domain</h1>
-
-<ul>
-<li>Create a file named <code>CNAME</code> in blog source</li>
-<li>Update it with custom domain name. It has to be a sub domain (www.examplesubdomain.com)</li>
-<li>Update the CNAME dns setting in your domain provider to point to <code>https://username.github.io</code></li>
-<li>If top-level domains (exampletopdomain.com) are needed, then configure A record to point to IP address <code>192.30.252.153</code> or <code>192.30.252.154</code>.</li>
-</ul>
-
-
-<h1>Migrating Old blog Post from word press</h1>
-
-<p>After completing above steps,  a new octopress blog is ready to go . Below are the steps which I followed to migrate old blog posts from word press.</p>
-
-<ul>
-<li>Clone <a href="https://github.com/thomasf/exitwp">Exitwp</a></li>
-<li><p>Follow the steps mentioned in readme.md.</p>
-
-<ul>
-<li>Export old wordpress blog using WordPress exporter in tools/export in WordPress admin</li>
-<li>Copy xml file to wordpress-xml directory</li>
-<li>Run  python exitwp.py in the console from the same directory of unzipped archive</li>
-<li>All blogs will be created as separate directory under <code>build</code> directory</li>
-<li>Copy relevant folders to source folder of the blog</li>
-</ul>
-</li>
-<li><p>Find broken redirection links and fix</p>
-
-<ul>
-<li>The redirection links are now changed to something like <code>{site.root}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/</code></li>
-</ul>
-</li>
-<li>Find broken image links and fix
-
-<ul>
-<li>Inorder to make it easier for migrating to another platform later, I created a new config value in <code>_config.yml</code> as below .
-<code>
-  images_dir: /images
-</code></li>
-<li>The image links are not pointing to <code>{site.images_dir}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg</code></li>
-</ul>
-</li>
-</ul>
-
-
-<h1>SEO Optimisation in Octopress</h1>
-
-<ul>
-<li>In rake file, add below two lines   <code>post.puts "keywords: "</code> and <code>post.puts "description: "</code></li>
-<li>Final content will look like below</li>
-</ul>
-
-
-<figure class='code'><figcaption><span>cmd.exe</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>post.puts "---"
-</span><span class='line'>post.puts "layout: post"
-</span><span class='line'>post.puts "title: \"#{title.gsub(/&/,'&amp;')}\""
-</span><span class='line'>post.puts "date: #{Time.now.strftime('%Y-%m-%d %H:%M:%S %z')}"
-</span><span class='line'>post.puts "comments: true"
-</span><span class='line'>post.puts "categories: "
-</span><span class='line'>post.puts "keywords: "
-</span><span class='line'>post.puts "description: "
-</span><span class='line'>post.puts "---"</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Add relevant Keyword and description to all pages</li>
-</ul>
-
 ]]></content>
   </entry>
   
