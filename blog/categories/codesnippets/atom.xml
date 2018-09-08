@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codesnippets | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/codesnippets/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-05-27T09:26:50+10:00</updated>
+  <updated>2018-09-08T23:18:07+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,327 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Running Command Line in Remote Machine Using WMI]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/"/>
+    <updated>2018-09-08T21:47:52+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi</id>
+    <content type="html"><![CDATA[<p>Recently I had to find a way for running a command line process in server. I had to spend fair bit of time googling for various approaches of doing it. Most of them are by using PSExec.  However there is another approach of using WMI (Windows Management Instrumentation) . Below is one of the approach , which I found at <a href="https://blogs.msdn.microsoft.com/padmanr/2010/05/08/execute-a-process-on-remote-machine-wait-for-it-to-exit-and-retrieve-its-exit-code-using-wmi/">msdn blog</a>.</p>
+
+<p>Below method can be accessed anywhere by</p>
+
+<pre><code>ProcessWMI p = new ProcessWMI();
+p.ExecuteRemoteProcessWMI(remoteMachine, sBatFile, timeout);
+</code></pre>
+
+<p>The solution has multiple parts as follows</p>
+
+<ol>
+<li>Connect to remote machine using remote machine Name, user name and password</li>
+<li>Start the remote process. Win32 process and pass the command to be run</li>
+<li>Find if the remote process is running and if it does, start an event monitor to wait for it to exit</li>
+<li>Once the process exits, retrieve its exit code</li>
+</ol>
+
+
+<pre><code class="Csharp">public class ProcessWMI
+{
+    public uint ProcessId;
+    public int ExitCode;
+    public bool EventArrived;
+    public ManualResetEvent mre = new ManualResetEvent(false);
+    public void ProcessStoptEventArrived(object sender, EventArrivedEventArgs e)
+    {
+        if ((uint)e.NewEvent.Properties["ProcessId"].Value == ProcessId)
+        {
+            Console.WriteLine("Process: {0}, Stopped with Code: {1}", (int)(uint)e.NewEvent.Properties["ProcessId"].Value, (int)(uint)e.NewEvent.Properties["ExitStatus"].Value);
+            ExitCode = (int)(uint)e.NewEvent.Properties["ExitStatus"].Value;
+            EventArrived = true;
+            mre.Set();
+        }
+    }
+    public ProcessWMI()
+    {
+        this.ProcessId = 0;
+        ExitCode = -1;
+        EventArrived = false;
+    }
+    public void ExecuteRemoteProcessWMI(string remoteComputerName, string arguments, int WaitTimePerCommand)
+    {
+        string strUserName = string.Empty;
+        try
+        {
+            ConnectionOptions connOptions = new ConnectionOptions();
+            //Note: This will connect  using below credentials. If not provided, it will be based on logged in user
+             connOptions.Username = ConfigurationManager.AppSettings["RemoteMachineLogonUser"];
+             connOptions.Password = ConfigurationManager.AppSettings["RemoteMachineUserPassword"];
+
+            connOptions.Impersonation = ImpersonationLevel.Impersonate;
+            connOptions.EnablePrivileges = true;
+            ManagementScope manScope = new ManagementScope(String.Format(@"\\{0}\ROOT\CIMV2", remoteComputerName), connOptions);
+
+            try
+            {
+                manScope.Connect();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Management Connect to remote machine " + remoteComputerName + " as user " + strUserName + " failed with the following error " + e.Message);
+            }
+            ObjectGetOptions objectGetOptions = new ObjectGetOptions();
+            ManagementPath managementPath = new ManagementPath("Win32_Process");
+            using (ManagementClass processClass = new ManagementClass(manScope, managementPath, objectGetOptions))
+            {
+                using (ManagementBaseObject inParams = processClass.GetMethodParameters("Create"))
+                {
+                    inParams["CommandLine"] = arguments;
+                    using (ManagementBaseObject outParams = processClass.InvokeMethod("Create", inParams, null))
+                    {
+
+                        if ((uint)outParams["returnValue"] != 0)
+                        {
+                            throw new Exception("Error while starting process " + arguments + " creation returned an exit code of " + outParams["returnValue"] + ". It was launched as " + strUserName + " on " + remoteComputerName);
+                        }
+                        this.ProcessId = (uint)outParams["processId"];
+                    }
+                }
+            }
+
+            SelectQuery CheckProcess = new SelectQuery("Select * from Win32_Process Where ProcessId = " + ProcessId);
+            using (ManagementObjectSearcher ProcessSearcher = new ManagementObjectSearcher(manScope, CheckProcess))
+            {
+                using (ManagementObjectCollection MoC = ProcessSearcher.Get())
+                {
+                    if (MoC.Count == 0)
+                    {
+                        throw new Exception("ERROR AS WARNING: Process " + arguments + " terminated before it could be tracked on " + remoteComputerName);
+                    }
+                }
+            }
+
+            WqlEventQuery q = new WqlEventQuery("Win32_ProcessStopTrace");
+            using (ManagementEventWatcher w = new ManagementEventWatcher(manScope, q))
+            {
+                w.EventArrived += new EventArrivedEventHandler(this.ProcessStoptEventArrived);
+                w.Start();
+                if (!mre.WaitOne(WaitTimePerCommand,false))
+                {
+                    w.Stop();
+                    this.EventArrived = false;
+                }
+                else
+                    w.Stop();
+            }
+            if (!this.EventArrived)
+            {
+                SelectQuery sq = new SelectQuery("Select * from Win32_Process Where ProcessId = " + ProcessId);
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher(manScope, sq))
+                {
+                    foreach (ManagementObject queryObj in searcher.Get())
+                    {
+                        queryObj.InvokeMethod("Terminate", null);
+                        queryObj.Dispose();
+                        throw new Exception("Process " + arguments + " timed out and was killed on " + remoteComputerName);
+                    }
+                }
+            }
+            else
+            {
+                if (this.ExitCode != 0)
+                    throw new Exception("Process " + arguments + "exited with exit code " + this.ExitCode + " on " + remoteComputerName + " run as " + strUserName);
+                else
+                    Console.WriteLine("process exited with Exit code 0");
+            }
+
+        }
+        catch (Exception e)
+        {
+            throw new Exception(string.Format("Execute process failed Machinename {0}, ProcessName {1}, RunAs {2}, Error is {3}, Stack trace {4}", remoteComputerName, arguments, strUserName, e.Message, e.StackTrace), e);
+        }
+    }
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Running Powershell Remotely]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/05/running-powershell-remotely/"/>
+    <updated>2018-09-05T22:46:14+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/05/running-powershell-remotely</id>
+    <content type="html"><![CDATA[<p>Code snippet for running power shell on a remote machine. Loosely based on blog post <a href="https://com2kid.wordpress.com/2011/09/22/remotely-executing-commands-in-powershell-using-c/">here</a> and <a href="https://www.codeproject.com/Articles/773685/Enable-Remote-PowerShell-Execution-in-Csharp">here</a></p>
+
+<p>Add reference to System.Management.Automation</p>
+
+<pre><code class="csharp">
+using System.Management.Automation; 
+using System.Management.Automation.Runspaces;    
+
+
+  internal void runPowershellRemotely(string location, string scriptToBeRun)
+        {
+            string userName = ConfigurationManager.AppSettings["RemoteMachineLogonUser"];
+            string password = ConfigurationManager.AppSettings["RemoteMachineUserPassword"]; 
+           var securestring = new SecureString();
+            foreach (Char c in password){
+                securestring.AppendChar(c);
+            }
+
+            PSCredential creds = new PSCredential(userName, securestring);
+            // Remove logging if not needed
+            log.Info(String.Format("\tPOWERSHEL : Running Powershell {0} at location {1}", scriptToBeRun, location));
+            WSManConnectionInfo connectionInfo = new WSManConnectionInfo();
+
+           connectionInfo.ComputerName = ConfigurationManager.AppSettings["RemoteMachine"];
+            connectionInfo.Credential = creds;
+            Runspace runspace = RunspaceFactory.CreateRunspace(connectionInfo);
+            runspace.Open();
+            using (PowerShell ps = PowerShell.Create())
+            {
+                ps.Runspace = runspace;
+                ps.AddScript(@"cd "+ location);
+                ps.AddScript(scriptToBeRun);
+                try
+                {
+                    var results = ps.Invoke();
+                    log.Info("\tPOWERSHEL : Results from Powershell Script is ---------------------------");
+                    foreach(var x in results)
+                    {
+                        log.Info(x.ToString());
+                    }
+                    log.Info("\tPOWERSHEL : End of results--------------------------------- ---------------------------");
+                }
+                catch (Exception e)
+                {
+                    log.Error("\tPOWERSHEL : Exception from running Powershell Script is" + e.ToString());
+                }
+
+            }
+            runspace.Close();
+        }
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Working With Windows Services]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/03/working-with-windows-services/"/>
+    <updated>2018-09-03T22:59:54+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/03/working-with-windows-services</id>
+    <content type="html"><![CDATA[<p>Below is code snippet for working with windows service. It helps to find status of service, start , stop and restart as required.</p>
+
+<p>We need to pass in details of windows services name ( as shown i services.msc ) and machine name(should be in same network).</p>
+
+<pre><code class="csharp">
+using System.ServiceProcess;
+
+
+            internal string FindStatus(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            log.Info(String.Format("\tStatus of {0} service in {1} is {2}", service, server, myService.Status.ToString()));
+            return myService.Status.ToString();
+        }
+
+        internal string StopService(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            if (myService.Status == ServiceControllerStatus.Running)
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                log.Info(String.Format("\t{0} service Stopped in {1}. Current Status is {2}", service, server, myService.Status.ToString()));
+            }
+            return myService.Status.ToString();
+        }
+
+        internal string StartService(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            if (myService.Status == ServiceControllerStatus.Stopped)
+            {
+                myService.Start();
+                myService.WaitForStatus(ServiceControllerStatus.Running);
+                log.Info(String.Format("\t{0} service Started in {1}. Current Status is {2}", service, server, myService.Status.ToString()));
+            }
+            return myService.Status.ToString();
+        }
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Comparing XML File Structure Without XSD]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/01/comparing-xml-file-structure-without-xsd/"/>
+    <updated>2018-09-01T22:05:42+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/01/comparing-xml-file-structure-without-xsd</id>
+    <content type="html"><![CDATA[<p>Code snippet for comparing two xml files without using xsd for validating their structure is same ( nodes and arguments should be same. Values of each node/argument can be different).</p>
+
+<pre><code class="csharp">
+internal void VerifyMessageHaveSimilarStructureOfTemplate(string inputXml, string templateXml)
+        {
+            var docA = new XmlDocument();
+            var docB = new XmlDocument();
+
+            docA.LoadXml(inputXml);
+            docB.LoadXml(templateXml);
+
+            var isDifferent = DoTheyHaveDiferentStructure(docA.ChildNodes, docB.ChildNodes);
+            log.Info("Result of Checking for difference of Input xml with template is : " + isDifferent.ToString());
+
+
+        }
+
+
+  private bool DoTheyHaveDiferentStructure(XmlNodeList xmlNodeListA, XmlNodeList xmlNodeListB)
+        {
+            if (xmlNodeListA.Count != xmlNodeListB.Count) return true;
+
+            for (var i = 0; i &lt; xmlNodeListA.Count; i++)
+            {
+                var nodeA = xmlNodeListA[i];
+                var nodeB = xmlNodeListB[i];
+
+                if (nodeA.Attributes == null)
+                {
+                    if (nodeB.Attributes != null)
+                        return true;
+                    else
+                        continue;
+                }
+
+                if (nodeA.Attributes.Count != nodeB.Attributes.Count || nodeA.Name != nodeB.Name) return true;
+                List&lt;string&gt; AttributeNameA = new List&lt;string&gt;();
+                List&lt;string&gt; AttributeNameB = new List&lt;string&gt;();
+                for (var j = 0; j &lt; nodeA.Attributes.Count; j++)
+                {
+                    AttributeNameA.Add(nodeA.Attributes[j].Name);
+                    AttributeNameB.Add(nodeB.Attributes[j].Name);
+                    // -- If attribute position should be same, then include below as well
+                    //var attrA = nodeA.Attributes[j];
+                    //var attrB = nodeB.Attributes[j];
+
+                    //if (attrA.Name != attrB.Name) return true;
+                }
+                AttributeNameA.Sort();
+                AttributeNameB.Sort();
+                if(! AttributeNameA.SequenceEqual(AttributeNameB)) return true;
+
+                if (nodeA.HasChildNodes &amp;&amp; nodeB.HasChildNodes)
+                {
+                    return HaveDiferentStructure(nodeA.ChildNodes, nodeB.ChildNodes);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Extracting Substring Using Javascript]]></title>
@@ -52,300 +373,6 @@ console.log(generatedId);
 //if we need to replace this with another value ( possibly coming from request parameter)
 var result = xmldata.replace(generatedId, "99999");
 console.log(result);
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Zip and Extract Zip Files Using Csharp]]></title>
-    <link href="http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/"/>
-    <updated>2017-04-20T21:59:02+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp</id>
-    <content type="html"><![CDATA[<p>On corporate world, most of the times, the access required for installing applications and connecting to internet will be limited. There can be scenarios where access to install Mountebank using npm will not be available. In those circumstances, we can just unzip the zip file downloaded from self contained archive links in <a href="http://www.mbtest.org/docs/install">mbtest.org</a></p>
-
-<p>Below code snippet can be used for extracting the zip files on the fly , so that it can be used for running test cases on any machine.</p>
-
-<h3>Pre-Requisite</h3>
-
-<ul>
-<li>.Net 4.5 is needed</li>
-<li>Add reference to below dll to solution
-
-<ul>
-<li>System.IO.Compression.dll</li>
-<li>System.IO.Compression.FileSystem.dll</li>
-</ul>
-</li>
-</ul>
-
-
-<h3>Example</h3>
-
-<p>Below example is based on (copied from) <a href="https://msdn.microsoft.com/en-us/library/hh485723(v=vs.110">msdn</a></p>
-
-<pre><code class="c#      ">        Public void ZipFile()
-        {
-            string startPath = @"c:\example\start";
-            string zipPath = @"c:\example\result.zip";
-            string extractPath = @"c:\example\extract";
-
-            ZipFile.CreateFromDirectory(startPath, zipPath);
-        }
-
-        Public void UnZipFile()
-        {
-            string startPath = @"c:\example\start";
-            string zipPath = @"c:\example\result.zip";
-            string extractPath = @"c:\example\extract";
-
-            ZipFile.ExtractToDirectory(zipPath, extractPath);
-        }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Data Driven Framework - Excel]]></title>
-    <link href="http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-excel/"/>
-    <updated>2016-07-30T05:49:22+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2016/07/30/data-driven-framework-excel</id>
-    <content type="html"><![CDATA[<p>In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found <a href="/blog/2016/07/29/data-driven-framework-xml/">here</a>. I have also written about how to use jxl library for <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">reading from excel</a> and <a href="/blog/2014/06/01/java-writing-into-specific-cell-in-excel/">writing into Excel</a>.</p>
-
-<p>Below is another code snippet to read all values of a row and save it into a hash map for accessing later during automation test.</p>
-
-<pre><code class="Java">public  HashMap GetAllDataForARow  (String sheet, int Row){
-        HashMap DataMap = new HashMap();
-        try {
-            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
-
-            //Obtain the reference to the first sheet in the workbook
-            Sheet sheet1 = wrk1.getSheet(sheet);
-            int x =0;
-
-
-            Cell colArow1 , colArow2;
-            do {
-                colArow1 = sheet1.getCell(x,0);
-                colArow2 = sheet1.getCell(x,Row);
-                DataMap.put(colArow1.getContents(), colArow2.getContents());
-                x=x+1;
-            }while (colArow1.getContents() != "");
-
-        }
-
-        catch (BiffException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (IndexOutOfBoundsException e){
-        }
-        return DataMap;
-
-    }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java - Writing Into Specific Cell in Excel]]></title>
-    <link href="http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel/"/>
-    <updated>2014-06-10T22:24:30+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2014/06/10/java-writing-into-specific-cell-in-excel</id>
-    <content type="html"><![CDATA[<p>In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">here</a></p>
-
-<p>In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.</p>
-
-<p>Below is the import section</p>
-
-<pre><code>import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.format.Colour;
-import jxl.read.biff.BiffException;
-import jxl.write.*;
-</code></pre>
-
-<p>Below is the function for writing into excel</p>
-
-<pre><code class="Java">    public  void WriteDataIntoExcelCell (String sheet, String field_name, int Row, String input){
-        try {
-
-            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
-
-            //Obtain the reference to the first sheet in the workbook
-            Sheet sheet1 = wrk1.getSheet(sheet);
-            int x =0;
-            int y =0;
-            int Col=0;
-            // Find Column number from excel by iteration first row and comparing the names
-            Cell colArow1 = sheet1.getCell(x,y);
-            do {
-
-                colArow1 = sheet1.getCell(x,y);
-                if (colArow1.getContents().equalsIgnoreCase(field_name) ){
-                    Col = colArow1.getColumn();
-                    break;
-                }
-                x=x+1;
-
-            }while (colArow1.getContents() != "");
-            // write to file
-            File exlFile = new File(dataPath);
-            WritableWorkbook writableWorkbook = Workbook.createWorkbook(exlFile,wrk1);
-            WritableSheet writableSheet = writableWorkbook.getSheet(sheet);
-            //WritableCellFormat writableCell = writableWorkbook.getSheet(sheet).
-            // Update cell content and format
-            String Varcolour ;
-            Label label;
-            if (input.equalsIgnoreCase("PASS")){
-                label = new Label(Col,Row,input,getCellFormat(Colour.GREEN));
-            }
-            else if (input.equalsIgnoreCase("FAIL"))
-            {
-                label = new Label(Col,Row,input,getCellFormat(Colour.RED));
-            }
-            else {
-                label = new Label(Col,Row,input);
-            }
-            //Label label = new Label(Col,Row,input);
-
-            writableSheet.addCell(label);
-
-            writableWorkbook.write();
-            writableWorkbook.close();
-
-
-        }
-
-        catch (BiffException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (WriteException e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
-
-
-    private static WritableCellFormat getCellFormat(Colour colour) throws WriteException {
-        WritableFont cellFont = new WritableFont(WritableFont.TAHOMA, 10);
-        WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
-        cellFormat.setBackground(colour);
-        return cellFormat;
-    }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Java - Reading a Specific Cell in Excel]]></title>
-    <link href="http://www.abygeorgea.com/blog/2014/06/01/java-reading-a-specific-cell-in-excel/"/>
-    <updated>2014-06-01T21:04:52+10:00</updated>
-    <id>http://www.abygeorgea.com/blog/2014/06/01/java-reading-a-specific-cell-in-excel</id>
-    <content type="html"><![CDATA[<p>Below is a code snippet for reading a specific cell from Excel using Java.</p>
-
-<p>It is done by using importing jxl jar files which can be found <a href="https://sourceforge.net/projects/jxl/">here</a>.</p>
-
-<p>Import below in class file
-<code>
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-import jxl.format.Colour;
-import jxl.read.biff.BiffException;
-import jxl.write.*;
-</code></p>
-
-<p>Below is function for reading value from specific cell in Excel</p>
-
-<pre><code class="Java Read From Excel based on Row and coulmn Number"> public  String readexcel(String sheet, int intRow, int intCol){
-        try {
-
-            //Create a workbook object from the file at specified location.
-            //Change the path of the file as per the location on your computer.
-
-            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
-
-            //Obtain the reference to the first sheet in the workbook
-            Sheet sheet1 = wrk1.getSheet(sheet);
-            //Obtain reference to the Cell using getCell(int col, int row) method of sheet
-            // Add " - 1" to both intRow , intCol depending how whether we consider excel start with row &amp; column number as 0 or 1
-            Cell colArow1 = sheet1.getCell(intRow , intCol );
-
-
-            //Read the contents of the Cell using getContents() method, which will return
-            //it as a String
-            String strReturn = colArow1.getContents();
-
-            return strReturn;
-
-         /*  //Display the cell contents
-           System.out.println("Contents of cell Col A Row 1: \""+str_colArow1 + "\"");
-           System.out.println("Contents of cell Col B Row 1: \""+str_colBrow1 + "\"");
-           System.out.println("Contents of cell Col A Row 2: \""+str_colArow2 + "\"");*/
-
-
-        } catch (BiffException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return sheet;
-    }
-</code></pre>
-
-<p>Below is an example of how to read from a cell based on row number and Column NAME</p>
-
-<pre><code class="Java Read From Excel Based On Column Name"> public  String GetDataBasedOnRowNumAndColName  (String sheet, String field_name, int Row){
-        try {
-            Workbook wrk1 =  Workbook.getWorkbook(new File(dataPath));
-
-            //Obtain the reference to the first sheet in the workbook
-            Sheet sheet1 = wrk1.getSheet(sheet);
-            int x =0;
-            int y =0;
-            int Col=0;
-            boolean FOUND = false;
-           // Find corresponding Column number based on Name
-            Cell colArow1 = sheet1.getCell(x,y);
-            do {
-
-                colArow1 = sheet1.getCell(x,y);
-                if (colArow1.getContents().equalsIgnoreCase(field_name) ){
-                    Col = colArow1.getColumn();
-                    // System.out.println(Col);
-                    FOUND = true;
-                    break;
-                }
-                x=x+1;
-
-            }while (colArow1.getContents() != "");
-            if (FOUND)
-            {
-                colArow1 = sheet1.getCell(Col,Row-1);
-                // System.out.println(colArow1.getContents());
-                return colArow1.getContents();
-            }
-            else
-            {
-                return " ";
-            }
-        }
-
-        catch (BiffException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (IndexOutOfBoundsException e){
-            return "";
-        }
-
-        return sheet;
-    }
 </code></pre>
 ]]></content>
   </entry>

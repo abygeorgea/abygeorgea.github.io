@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Windows Services | Aby George A]]></title>
+  <link href="http://www.abygeorgea.com/blog/categories/windows-services/atom.xml" rel="self"/>
+  <link href="http://www.abygeorgea.com/"/>
+  <updated>2018-09-08T23:18:07+10:00</updated>
+  <id>http://www.abygeorgea.com/</id>
+  <author>
+    <name><![CDATA[Aby George A]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Working With Windows Services]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/03/working-with-windows-services/"/>
+    <updated>2018-09-03T22:59:54+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/03/working-with-windows-services</id>
+    <content type="html"><![CDATA[<p>Below is code snippet for working with windows service. It helps to find status of service, start , stop and restart as required.</p>
+
+<p>We need to pass in details of windows services name ( as shown i services.msc ) and machine name(should be in same network).</p>
+
+<pre><code class="csharp">
+using System.ServiceProcess;
+
+
+            internal string FindStatus(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            log.Info(String.Format("\tStatus of {0} service in {1} is {2}", service, server, myService.Status.ToString()));
+            return myService.Status.ToString();
+        }
+
+        internal string StopService(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            if (myService.Status == ServiceControllerStatus.Running)
+            {
+                myService.Stop();
+                myService.WaitForStatus(ServiceControllerStatus.Stopped);
+                log.Info(String.Format("\t{0} service Stopped in {1}. Current Status is {2}", service, server, myService.Status.ToString()));
+            }
+            return myService.Status.ToString();
+        }
+
+        internal string StartService(string service, string server)
+        {
+            var myService = new ServiceController(service, server);
+            if (myService.Status == ServiceControllerStatus.Stopped)
+            {
+                myService.Start();
+                myService.WaitForStatus(ServiceControllerStatus.Running);
+                log.Info(String.Format("\t{0} service Started in {1}. Current Status is {2}", service, server, myService.Status.ToString()));
+            }
+            return myService.Status.ToString();
+        }
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

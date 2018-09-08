@@ -131,6 +131,706 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-08T21:47:52+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 8 Sep, 2018</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/" itemprop="url">Running Command Line in Remote Machine Using WMI</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Recently I had to find a way for running a command line process in server. I had to spend fair bit of time googling for various approaches of doing it. Most of them are by using PSExec.  However there is another approach of using WMI (Windows Management Instrumentation) . Below is one of the approach , which I found at <a href="https://blogs.msdn.microsoft.com/padmanr/2010/05/08/execute-a-process-on-remote-machine-wait-for-it-to-exit-and-retrieve-its-exit-code-using-wmi/">msdn blog</a>.</p>
+
+<p>Below method can be accessed anywhere by</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ProcessWMI p = new ProcessWMI();
+</span><span class='line'>p.ExecuteRemoteProcessWMI(remoteMachine, sBatFile, timeout);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The solution has multiple parts as follows</p>
+
+<ol>
+<li>Connect to remote machine using remote machine Name, user name and password</li>
+<li>Start the remote process. Win32 process and pass the command to be run</li>
+<li>Find if the remote process is running and if it does, start an event monitor to wait for it to exit</li>
+<li>Once the process exits, retrieve its exit code</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+</pre></td><td class='code'><pre><code class='Csharp'><span class='line'><span class="k">public</span> <span class="k">class</span> <span class="nc">ProcessWMI</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">uint</span> <span class="n">ProcessId</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">int</span> <span class="n">ExitCode</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">bool</span> <span class="n">EventArrived</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="n">ManualResetEvent</span> <span class="n">mre</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManualResetEvent</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">void</span> <span class="nf">ProcessStoptEventArrived</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArrivedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">].</span><span class="n">Value</span> <span class="p">==</span> <span class="n">ProcessId</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Process: {0}, Stopped with Code: {1}&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ExitStatus&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">ExitCode</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ExitStatus&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">EventArrived</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">mre</span><span class="p">.</span><span class="n">Set</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="nf">ProcessWMI</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="n">ProcessId</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">ExitCode</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">EventArrived</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">void</span> <span class="nf">ExecuteRemoteProcessWMI</span><span class="p">(</span><span class="kt">string</span> <span class="n">remoteComputerName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">arguments</span><span class="p">,</span> <span class="kt">int</span> <span class="n">WaitTimePerCommand</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">strUserName</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">try</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">ConnectionOptions</span> <span class="n">connOptions</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ConnectionOptions</span><span class="p">();</span>
+</span><span class='line'>            <span class="c1">//Note: This will connect  using below credentials. If not provided, it will be based on logged in user</span>
+</span><span class='line'>             <span class="n">connOptions</span><span class="p">.</span><span class="n">Username</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineLogonUser&quot;</span><span class="p">];</span>
+</span><span class='line'>             <span class="n">connOptions</span><span class="p">.</span><span class="n">Password</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineUserPassword&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">connOptions</span><span class="p">.</span><span class="n">Impersonation</span> <span class="p">=</span> <span class="n">ImpersonationLevel</span><span class="p">.</span><span class="n">Impersonate</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">connOptions</span><span class="p">.</span><span class="n">EnablePrivileges</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">ManagementScope</span> <span class="n">manScope</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementScope</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">@&quot;\\{0}\ROOT\CIMV2&quot;</span><span class="p">,</span> <span class="n">remoteComputerName</span><span class="p">),</span> <span class="n">connOptions</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">try</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">manScope</span><span class="p">.</span><span class="n">Connect</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Management Connect to remote machine &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span> <span class="p">+</span> <span class="s">&quot; as user &quot;</span> <span class="p">+</span> <span class="n">strUserName</span> <span class="p">+</span> <span class="s">&quot; failed with the following error &quot;</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">ObjectGetOptions</span> <span class="n">objectGetOptions</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectGetOptions</span><span class="p">();</span>
+</span><span class='line'>            <span class="n">ManagementPath</span> <span class="n">managementPath</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementPath</span><span class="p">(</span><span class="s">&quot;Win32_Process&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementClass</span> <span class="n">processClass</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementClass</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">managementPath</span><span class="p">,</span> <span class="n">objectGetOptions</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementBaseObject</span> <span class="n">inParams</span> <span class="p">=</span> <span class="n">processClass</span><span class="p">.</span><span class="n">GetMethodParameters</span><span class="p">(</span><span class="s">&quot;Create&quot;</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">inParams</span><span class="p">[</span><span class="s">&quot;CommandLine&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">;</span>
+</span><span class='line'>                    <span class="k">using</span> <span class="p">(</span><span class="n">ManagementBaseObject</span> <span class="n">outParams</span> <span class="p">=</span> <span class="n">processClass</span><span class="p">.</span><span class="n">InvokeMethod</span><span class="p">(</span><span class="s">&quot;Create&quot;</span><span class="p">,</span> <span class="n">inParams</span><span class="p">,</span> <span class="k">null</span><span class="p">))</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">outParams</span><span class="p">[</span><span class="s">&quot;returnValue&quot;</span><span class="p">]</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                        <span class="p">{</span>
+</span><span class='line'>                            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Error while starting process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; creation returned an exit code of &quot;</span> <span class="p">+</span> <span class="n">outParams</span><span class="p">[</span><span class="s">&quot;returnValue&quot;</span><span class="p">]</span> <span class="p">+</span> <span class="s">&quot;. It was launched as &quot;</span> <span class="p">+</span> <span class="n">strUserName</span> <span class="p">+</span> <span class="s">&quot; on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">this</span><span class="p">.</span><span class="n">ProcessId</span> <span class="p">=</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">outParams</span><span class="p">[</span><span class="s">&quot;processId&quot;</span><span class="p">];</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">SelectQuery</span> <span class="n">CheckProcess</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SelectQuery</span><span class="p">(</span><span class="s">&quot;Select * from Win32_Process Where ProcessId = &quot;</span> <span class="p">+</span> <span class="n">ProcessId</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectSearcher</span> <span class="n">ProcessSearcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementObjectSearcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">CheckProcess</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectCollection</span> <span class="n">MoC</span> <span class="p">=</span> <span class="n">ProcessSearcher</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="p">(</span><span class="n">MoC</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;ERROR AS WARNING: Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; terminated before it could be tracked on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">WqlEventQuery</span> <span class="n">q</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WqlEventQuery</span><span class="p">(</span><span class="s">&quot;Win32_ProcessStopTrace&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementEventWatcher</span> <span class="n">w</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementEventWatcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">w</span><span class="p">.</span><span class="n">EventArrived</span> <span class="p">+=</span> <span class="k">new</span> <span class="n">EventArrivedEventHandler</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">ProcessStoptEventArrived</span><span class="p">);</span>
+</span><span class='line'>                <span class="n">w</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(!</span><span class="n">mre</span><span class="p">.</span><span class="n">WaitOne</span><span class="p">(</span><span class="n">WaitTimePerCommand</span><span class="p">,</span><span class="k">false</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">w</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="n">EventArrived</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">else</span>
+</span><span class='line'>                    <span class="n">w</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(!</span><span class="k">this</span><span class="p">.</span><span class="n">EventArrived</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">SelectQuery</span> <span class="n">sq</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SelectQuery</span><span class="p">(</span><span class="s">&quot;Select * from Win32_Process Where ProcessId = &quot;</span> <span class="p">+</span> <span class="n">ProcessId</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectSearcher</span> <span class="n">searcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementObjectSearcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">sq</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">foreach</span> <span class="p">(</span><span class="n">ManagementObject</span> <span class="n">queryObj</span> <span class="k">in</span> <span class="n">searcher</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="n">queryObj</span><span class="p">.</span><span class="n">InvokeMethod</span><span class="p">(</span><span class="s">&quot;Terminate&quot;</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+</span><span class='line'>                        <span class="n">queryObj</span><span class="p">.</span><span class="n">Dispose</span><span class="p">();</span>
+</span><span class='line'>                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; timed out and was killed on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">ExitCode</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot;exited with exit code &quot;</span> <span class="p">+</span> <span class="k">this</span><span class="p">.</span><span class="n">ExitCode</span> <span class="p">+</span> <span class="s">&quot; on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span> <span class="p">+</span> <span class="s">&quot; run as &quot;</span> <span class="p">+</span> <span class="n">strUserName</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">else</span>
+</span><span class='line'>                    <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;process exited with Exit code 0&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Execute process failed Machinename {0}, ProcessName {1}, RunAs {2}, Error is {3}, Stack trace {4}&quot;</span><span class="p">,</span> <span class="n">remoteComputerName</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">strUserName</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">),</span> <span class="n">e</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-05T22:46:14+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Sep, 2018</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/09/05/running-powershell-remotely/" itemprop="url">Running Powershell Remotely</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Code snippet for running power shell on a remote machine. Loosely based on blog post <a href="https://com2kid.wordpress.com/2011/09/22/remotely-executing-commands-in-powershell-using-c/">here</a> and <a href="https://www.codeproject.com/Articles/773685/Enable-Remote-PowerShell-Execution-in-Csharp">here</a></p>
+
+<p>Add reference to System.Management.Automation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">using</span> <span class="nn">System.Management.Automation</span><span class="p">;</span>
+</span><span class='line'><span class="k">using</span> <span class="nn">System.Management.Automation.Runspaces</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">internal</span> <span class="k">void</span> <span class="nf">runPowershellRemotely</span><span class="p">(</span><span class="kt">string</span> <span class="n">location</span><span class="p">,</span> <span class="kt">string</span> <span class="n">scriptToBeRun</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">string</span> <span class="n">userName</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineLogonUser&quot;</span><span class="p">];</span>
+</span><span class='line'>            <span class="kt">string</span> <span class="n">password</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineUserPassword&quot;</span><span class="p">];</span>
+</span><span class='line'>           <span class="kt">var</span> <span class="n">securestring</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SecureString</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">foreach</span> <span class="p">(</span><span class="n">Char</span> <span class="n">c</span> <span class="k">in</span> <span class="n">password</span><span class="p">){</span>
+</span><span class='line'>                <span class="n">securestring</span><span class="p">.</span><span class="n">AppendChar</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">PSCredential</span> <span class="n">creds</span> <span class="p">=</span> <span class="k">new</span> <span class="n">PSCredential</span><span class="p">(</span><span class="n">userName</span><span class="p">,</span> <span class="n">securestring</span><span class="p">);</span>
+</span><span class='line'>            <span class="c1">// Remove logging if not needed</span>
+</span><span class='line'>            <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;\tPOWERSHEL : Running Powershell {0} at location {1}&quot;</span><span class="p">,</span> <span class="n">scriptToBeRun</span><span class="p">,</span> <span class="n">location</span><span class="p">));</span>
+</span><span class='line'>            <span class="n">WSManConnectionInfo</span> <span class="n">connectionInfo</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WSManConnectionInfo</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="n">connectionInfo</span><span class="p">.</span><span class="n">ComputerName</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachine&quot;</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">connectionInfo</span><span class="p">.</span><span class="n">Credential</span> <span class="p">=</span> <span class="n">creds</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">Runspace</span> <span class="n">runspace</span> <span class="p">=</span> <span class="n">RunspaceFactory</span><span class="p">.</span><span class="n">CreateRunspace</span><span class="p">(</span><span class="n">connectionInfo</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">runspace</span><span class="p">.</span><span class="n">Open</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">PowerShell</span> <span class="n">ps</span> <span class="p">=</span> <span class="n">PowerShell</span><span class="p">.</span><span class="n">Create</span><span class="p">())</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">ps</span><span class="p">.</span><span class="n">Runspace</span> <span class="p">=</span> <span class="n">runspace</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">ps</span><span class="p">.</span><span class="n">AddScript</span><span class="p">(</span><span class="s">@&quot;cd &quot;</span><span class="p">+</span> <span class="n">location</span><span class="p">);</span>
+</span><span class='line'>                <span class="n">ps</span><span class="p">.</span><span class="n">AddScript</span><span class="p">(</span><span class="n">scriptToBeRun</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">try</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="kt">var</span> <span class="n">results</span> <span class="p">=</span> <span class="n">ps</span><span class="p">.</span><span class="n">Invoke</span><span class="p">();</span>
+</span><span class='line'>                    <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&quot;\tPOWERSHEL : Results from Powershell Script is ---------------------------&quot;</span><span class="p">);</span>
+</span><span class='line'>                    <span class="k">foreach</span><span class="p">(</span><span class="kt">var</span> <span class="n">x</span> <span class="k">in</span> <span class="n">results</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                    <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&quot;\tPOWERSHEL : End of results--------------------------------- ---------------------------&quot;</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">&quot;\tPOWERSHEL : Exception from running Powershell Script is&quot;</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">runspace</span><span class="p">.</span><span class="n">Close</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-03T22:59:54+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Sep, 2018</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/09/03/working-with-windows-services/" itemprop="url">Working With Windows Services</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Below is code snippet for working with windows service. It helps to find status of service, start , stop and restart as required.</p>
+
+<p>We need to pass in details of windows services name ( as shown i services.msc ) and machine name(should be in same network).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">using</span> <span class="nn">System.ServiceProcess</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">internal</span> <span class="kt">string</span> <span class="nf">FindStatus</span><span class="p">(</span><span class="kt">string</span> <span class="n">service</span><span class="p">,</span> <span class="kt">string</span> <span class="n">server</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">myService</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ServiceController</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;\tStatus of {0} service in {1} is {2}&quot;</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">internal</span> <span class="kt">string</span> <span class="nf">StopService</span><span class="p">(</span><span class="kt">string</span> <span class="n">service</span><span class="p">,</span> <span class="kt">string</span> <span class="n">server</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">myService</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ServiceController</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">myService</span><span class="p">.</span><span class="n">Status</span> <span class="p">==</span> <span class="n">ServiceControllerStatus</span><span class="p">.</span><span class="n">Running</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">myService</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span><span class='line'>                <span class="n">myService</span><span class="p">.</span><span class="n">WaitForStatus</span><span class="p">(</span><span class="n">ServiceControllerStatus</span><span class="p">.</span><span class="n">Stopped</span><span class="p">);</span>
+</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;\t{0} service Stopped in {1}. Current Status is {2}&quot;</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">internal</span> <span class="kt">string</span> <span class="nf">StartService</span><span class="p">(</span><span class="kt">string</span> <span class="n">service</span><span class="p">,</span> <span class="kt">string</span> <span class="n">server</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">myService</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ServiceController</span><span class="p">(</span><span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">myService</span><span class="p">.</span><span class="n">Status</span> <span class="p">==</span> <span class="n">ServiceControllerStatus</span><span class="p">.</span><span class="n">Stopped</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">myService</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span><span class='line'>                <span class="n">myService</span><span class="p">.</span><span class="n">WaitForStatus</span><span class="p">(</span><span class="n">ServiceControllerStatus</span><span class="p">.</span><span class="n">Running</span><span class="p">);</span>
+</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;\t{0} service Started in {1}. Current Status is {2}&quot;</span><span class="p">,</span> <span class="n">service</span><span class="p">,</span> <span class="n">server</span><span class="p">,</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">()));</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">myService</span><span class="p">.</span><span class="n">Status</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-01T22:05:42+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Sep, 2018</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/" itemprop="url">Comparing XML File Structure Without XSD</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Code snippet for comparing two xml files without using xsd for validating their structure is same ( nodes and arguments should be same. Values of each node/argument can be different).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">internal</span> <span class="k">void</span> <span class="nf">VerifyMessageHaveSimilarStructureOfTemplate</span><span class="p">(</span><span class="kt">string</span> <span class="n">inputXml</span><span class="p">,</span> <span class="kt">string</span> <span class="n">templateXml</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">docA</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">docB</span> <span class="p">=</span> <span class="k">new</span> <span class="n">XmlDocument</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">docA</span><span class="p">.</span><span class="n">LoadXml</span><span class="p">(</span><span class="n">inputXml</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">docB</span><span class="p">.</span><span class="n">LoadXml</span><span class="p">(</span><span class="n">templateXml</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">isDifferent</span> <span class="p">=</span> <span class="n">DoTheyHaveDiferentStructure</span><span class="p">(</span><span class="n">docA</span><span class="p">.</span><span class="n">ChildNodes</span><span class="p">,</span> <span class="n">docB</span><span class="p">.</span><span class="n">ChildNodes</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="s">&quot;Result of Checking for difference of Input xml with template is : &quot;</span> <span class="p">+</span> <span class="n">isDifferent</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">private</span> <span class="kt">bool</span> <span class="nf">DoTheyHaveDiferentStructure</span><span class="p">(</span><span class="n">XmlNodeList</span> <span class="n">xmlNodeListA</span><span class="p">,</span> <span class="n">XmlNodeList</span> <span class="n">xmlNodeListB</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">xmlNodeListA</span><span class="p">.</span><span class="n">Count</span> <span class="p">!=</span> <span class="n">xmlNodeListB</span><span class="p">.</span><span class="n">Count</span><span class="p">)</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">xmlNodeListA</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="kt">var</span> <span class="n">nodeA</span> <span class="p">=</span> <span class="n">xmlNodeListA</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>                <span class="kt">var</span> <span class="n">nodeB</span> <span class="p">=</span> <span class="n">xmlNodeListB</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">nodeA</span><span class="p">.</span><span class="n">Attributes</span> <span class="p">==</span> <span class="k">null</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="p">(</span><span class="n">nodeB</span><span class="p">.</span><span class="n">Attributes</span> <span class="p">!=</span> <span class="k">null</span><span class="p">)</span>
+</span><span class='line'>                        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>                    <span class="k">else</span>
+</span><span class='line'>                        <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">nodeA</span><span class="p">.</span><span class="n">Attributes</span><span class="p">.</span><span class="n">Count</span> <span class="p">!=</span> <span class="n">nodeB</span><span class="p">.</span><span class="n">Attributes</span><span class="p">.</span><span class="n">Count</span> <span class="p">||</span> <span class="n">nodeA</span><span class="p">.</span><span class="n">Name</span> <span class="p">!=</span> <span class="n">nodeB</span><span class="p">.</span><span class="n">Name</span><span class="p">)</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">AttributeNameA</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
+</span><span class='line'>                <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">AttributeNameB</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
+</span><span class='line'>                <span class="k">for</span> <span class="p">(</span><span class="kt">var</span> <span class="n">j</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">j</span> <span class="p">&lt;</span> <span class="n">nodeA</span><span class="p">.</span><span class="n">Attributes</span><span class="p">.</span><span class="n">Count</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">AttributeNameA</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">nodeA</span><span class="p">.</span><span class="n">Attributes</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">Name</span><span class="p">);</span>
+</span><span class='line'>                    <span class="n">AttributeNameB</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">nodeB</span><span class="p">.</span><span class="n">Attributes</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">Name</span><span class="p">);</span>
+</span><span class='line'>                    <span class="c1">// -- If attribute position should be same, then include below as well</span>
+</span><span class='line'>                    <span class="c1">//var attrA = nodeA.Attributes[j];</span>
+</span><span class='line'>                    <span class="c1">//var attrB = nodeB.Attributes[j];</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="c1">//if (attrA.Name != attrB.Name) return true;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="n">AttributeNameA</span><span class="p">.</span><span class="n">Sort</span><span class="p">();</span>
+</span><span class='line'>                <span class="n">AttributeNameB</span><span class="p">.</span><span class="n">Sort</span><span class="p">();</span>
+</span><span class='line'>                <span class="k">if</span><span class="p">(!</span> <span class="n">AttributeNameA</span><span class="p">.</span><span class="n">SequenceEqual</span><span class="p">(</span><span class="n">AttributeNameB</span><span class="p">))</span> <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">nodeA</span><span class="p">.</span><span class="n">HasChildNodes</span> <span class="p">&amp;&amp;</span> <span class="n">nodeB</span><span class="p">.</span><span class="n">HasChildNodes</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="nf">HaveDiferentStructure</span><span class="p">(</span><span class="n">nodeA</span><span class="p">.</span><span class="n">ChildNodes</span><span class="p">,</span> <span class="n">nodeB</span><span class="p">.</span><span class="n">ChildNodes</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">else</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-05-27T08:03:28+10:00"  data-updated="true" itemprop="datePublished dateCreated">27 May, 2018</time>
         
       </p>
@@ -896,312 +1596,6 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-03-01T21:30:32+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Mar, 2018</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2018/03/01/automating-accessibility-testing/" itemprop="url">Automate Accessibility Testing Using aXe</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>What is Accessibility testing ?</h3>
-
-<p>It is a kind of testing performed to ensure application under test is usable by people with disabilities. One of the most common accessibility testing for web applications is to ensure it is easily usable by people with vision impairment. They normally use screen readers to read the screen and use key board to navigate.</p>
-
-<p>Web Content Accessibility Guideline (WCAG) list down guidelines and rules for creating accessible website. There are various browser extensions and developer tools available for scanning web pages to find out obvious accessibility issues. aXe is one of the widely used extension. Details of aXe can be found <a href="https://www.deque.com/products/axe/">here</a>.  Once browser extension is installed, you can analyze any web page to find out accessibility issues. They also have a javascript API for aXe core .</p>
-
-<p>I recently came across <a href="https://github.com/javnov/axe-selenium-csharp">axe-selenium-csharp</a> , which is a .NET wrapper around aXe. It is relatively very easy to setup and use.  Below are the steps</p>
-
-<ol>
-<li>Install Globant.Selenium.Axe nuget package for solution. This will add reference to dll</li>
-<li>Import namespace <em>using Globant.Selenium.Axe</em></li>
-<li>Call &ldquo;Analyze&rdquo; method to run accessibility check on the current page.</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='csharp'><span class='line'><span class="k">using</span> <span class="nn">Globant.Selenium.Axe</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">public</span> <span class="k">void</span> <span class="nf">PerformAccessbilityAudit</span><span class="p">(</span><span class="n">IWebDriver</span> <span class="n">_driver</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'> <span class="k">private</span> <span class="n">AxeResult</span> <span class="n">_results</span><span class="p">;</span>
-</span><span class='line'> <span class="n">_results</span> <span class="p">=</span> <span class="n">_driver</span><span class="p">.</span><span class="n">Analyze</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">xyz</span> <span class="k">in</span> <span class="n">_results</span><span class="p">.</span><span class="n">Violations</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">{</span>
-</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Impact</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
-</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Description</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
-</span><span class='line'>                <span class="n">log</span><span class="p">.</span><span class="n">Info</span><span class="p">(</span><span class="n">xyz</span><span class="p">.</span><span class="n">Id</span><span class="p">.</span><span class="n">ToString</span><span class="p">());</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>  <span class="n">Assert</span><span class="p">.</span><span class="n">True</span><span class="p">(</span><span class="n">_results</span><span class="p">.</span><span class="n">Violations</span><span class="p">.</span><span class="n">Length</span> <span class="p">==</span> <span class="m">0</span><span class="p">,</span> <span class="s">&quot;There are accessibility violations. Please check log file&quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Automated accessibility testing is NOT a completely foolproof solution. We will still require someone to scan the page using screen reader software later. But this will help to move accessibility testing to left and have more frequent runs and reduce the need for regression.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-11-16T09:59:17+11:00"  data-updated="true" itemprop="datePublished dateCreated">16 Nov, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/11/16/mountebank-adding-delay-to-response/" itemprop="url">Mountebank - Adding Delay to Response</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In previous blog post, I have explained about how to create a json response in mountebank. You can read about that <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>. Recently , I had to test a scenario about what will happen to application if downstream API response is delayed for some time . Let us have a look about how we can use mountebank to simulate this scenario.</p>
-
-<p>Mountebank supports adding latency to response by adding a behaviour. You can read about that <a href="http://www.mbtest.org/docs/api/behaviors">here</a> . Let us try to implement the wait behaviour in one of the previous examples . This is a slight modification of the files used as part of examples mentioned <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/">here</a> and <a href="/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/">here</a>.  You can clone my github repo and look at &ldquo;ExamplesForWaitBehaviour&rdquo; for the files.</p>
-
-<p>The only change which we need is to add a behavior to the response. This is added in &ldquo;CustomerFound.json&rdquo; file. After injecting file, we need to add behavior for waiting 5000 milliseconds.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>"responses": [
-</span><span class='line'>{
-</span><span class='line'>"inject": "&lt;%-stringify(filename, 'ResponseInjection\\GetCustomerFound.js') %&gt;",
-</span><span class='line'>"_behaviors": {
-</span><span class='line'>    "wait": 5000
-</span><span class='line'>  }
-</span><span class='line'>}
-</span><span class='line'>],
-</span><span class='line'>"predicates": [
-</span><span class='line'>{
-</span><span class='line'>"matches": {
-</span><span class='line'>"method" : "GET",
-</span><span class='line'>"path" : "/Blog.Api/[0-9]+/CustomerView"
-</span><span class='line'>}
-</span><span class='line'>}
-</span><span class='line'>]
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now run Mountebank. If you are using the GitHub repo, you can do this by running RunMounteBankStubsWithExampleForWait.bat file. Else run below command inside the directory where mountebank is available. If needed, modify the path to Imposter.ejs as required.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mb --configfile ExamplesForWaitBehaviour/Imposter.ejs --allowInjection</span></code></pre></td></tr></table></div></figure>
-
-
-<p>When we trigger a request via postman, we will get a response after specified delay + time for getting a response.  Have a look at response time in below screenshot. Response time is more than 5000 ms.</p>
-
-<p><img src="/images/2017/11/16/Mountebank_Adding_Delay_PostmanRequest1.png" alt="PostManRequest" /></p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-10-24T21:32:10+11:00"  data-updated="true" itemprop="datePublished dateCreated">24 Oct, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/10/24/blog-traffic/" itemprop="url">Highlights of Past One Month</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>I was not active in this blog over past one month due to multiple reasons - both personal and professional. Following are some highlights over past one month.</p>
-
-<h3>ISTQB Test Automation Engineer</h3>
-
-<p>As mentioned in previous <a href="/blog/2017/08/29/anztb-sigist-conference/">post</a>, I had a chance to attend ANZTB SIGiST conference in August 2017. There were some good talks about various certifications offered by ISTQB/ANZTB.  ISTQB <a href="http://www.anztb.org/advancedlevel.php">Test Automation Engineer</a> was one among them. I decided to give that a try . Spend some time over past one month to prepare based on the syllabus and I gave it a shot. Fortunately, I passed the exam with good marks</p>
-
-<h3>Traffic to  blog</h3>
-
-<p>I had an interesting observation when I looked into google analytics for the blog. The traffic to this blog has grown over ten times compared to previous months. I analyzed the data and found that my blog and <a href="https://github.com/abygeorgea/MountebankExamples">github repo</a> for mountebank examples are mentioned in <a href="http://www.mbtest.org/docs/examples">mountebank website</a>. This resulted in having more traffic to the blog. I hope others are also benefitted from my experience with mountebank and the tutorial which I have in this blog. Hopefully, this will give me the motivation to write more.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-09-22T21:14:25+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Sep, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/09/22/taking-emotions-out-of-sprint-retrospective/" itemprop="url">Taking Emotions Out of Sprint Retrospective</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>An agile retrospective is a meeting held at end of a sprint to analyse their ways of working over past sprint and identify how to become more effective and then adjust accordingly. This is a ritual which belongs to team and criticism is given for facts/output and not for people. Retrospective creates an environment where the team feels safe and comfortable, which will allow them to talk freely about their thoughts and let go their frustration.</p>
-
-<p>As an agile team, our team was pretty matured. Everyone knows what to do and what not to do. They come with solutions for most of the impediments faced during the sprint . Even then, there will be few issues which are still not resolved. Often retrospective meetings end up being a place for the team to let out their frustration rather than focusing on identifying what worked well and what could have been done better. Also action items coming out of discussion may be already tried out during sprint and was not working as expected.</p>
-
-<p>Last week, I had a chance to run retrospective for the team. I wanted to focus more on proactive actions taken by the team while dealing with impediments. I decided to run a different retro in which I tried to keep emotions out and focus more on facts.</p>
-
-<h3>Goals of this retrospective</h3>
-
-<p>Hope below exercise will help to achieve :</p>
-
-<ul>
-<li>Take emotions out of discussion and focus on facts</li>
-<li>Review the actions taken by team during sprint and asses its effectiveness</li>
-<li>Identify improvements which were not tried out during sprint</li>
-</ul>
-
-
-<h3>How to do it</h3>
-
-<h6>Sprint Goals</h6>
-
-<ul>
-<li>First step is to identify the sprint goals and write it down on board for everyone to see. This reminds the team about their every day work to achieve the goals.</li>
-</ul>
-
-
-<h6>Negatives</h6>
-
-<ul>
-<li>Next step is to identify the risk, issues and blockers which prevented the team from achieving it. It can be anything which team found as an impediment.</li>
-<li>Each team member has to write down a unique impediment on a card. Hence for a team of 10 members, you will have 10 unique impediments.</li>
-<li>Team will then rate the impediments on a scale of 1 - 10. Where 1 being least and 10 is a complete blocker.</li>
-<li>Once that is done, cards are exchanged with team members.</li>
-</ul>
-
-
-<h6>Positives</h6>
-
-<ul>
-<li>Next person will then have to think about what all good ideas happened for impediment on their card ( written by someone else). It can be anything which team has tried to overcome the blockers, any innovative ideas tried out, usage of extra time for learning and development etc. Team members are free to discuss this with others to find out all positives of that issue.</li>
-<li>Once it is written, team member will rate it on a scale of 1 - 10. On practical world, the rating for positives will be less than the rating for negatives.  Else, it will not be an impediment to start with.</li>
-</ul>
-
-
-<h6>Actions</h6>
-
-<ul>
-<li>Now facilitator has to collect back all cards and look for three cards having a maximum difference between negative and positive ratings.</li>
-<li>By end of this, team will have three pressing impediments which they could not overcome in the sprint. It takes into account of all pro-active actions taken by the team while dealing with that specific impediments. It is also based on facts and collective feedback .</li>
-<li>Now it is time to discuss and come up with action items. Obviously new action items coming out of discussion should be new and was not tried earlier.</li>
-</ul>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1226,7 +1620,7 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
     
     
     <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
-        <span class="badge">5</span>
+        <span class="badge">10</span>
         codesnippets
       </a>
     
@@ -1274,7 +1668,7 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
     
     
     <a class="list-group-item " href="/blog/categories/xml/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         xml
       </a>
     
@@ -1303,6 +1697,18 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/c#/index.html">
+        <span class="badge">1</span>
+        c#
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/command-line/index.html">
+        <span class="badge">2</span>
+        command line
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/git/index.html">
         <span class="badge">2</span>
         git
@@ -1310,7 +1716,7 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
     
     
     <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">2</span>
+        <span class="badge">3</span>
         powershell
       </a>
     
@@ -1434,6 +1840,18 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
         api testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/windows-services/index.html">
+        <span class="badge">1</span>
+        windows services
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wmi/index.html">
+        <span class="badge">1</span>
+        wmi
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1442,15 +1860,15 @@ Build locator can be &ldquo;id:BuildId&rdquo; or &ldquo;number:buildNumber&rdquo
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">Running Command Line in Remote Machine Using WMI</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/05/running-powershell-remotely/">Running Powershell Remotely</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/03/working-with-windows-services/">Working With Windows Services</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/">Comparing XML File Structure Without XSD</a>
+    
     <a class="list-group-item " href="/blog/2018/05/27/running-api-test-using-cypress/">Running API Test Using Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/11/ui-automation-with-cypress/">UI Automation With Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
-    
-    <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
-    
-    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
   </div>
 </section>

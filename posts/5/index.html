@@ -131,6 +131,462 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-03T22:33:04+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Sep, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/03/element-location-using-xpath-axis/" itemprop="url">Element Location Using XPath Axis</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
+
+<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
+If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
+
+<p>Below are major one&rsquo;s which we will frequently use</p>
+
+<h3>1. ancestor</h3>
+
+<p>This selects all ancestors of current node. That will include parent, grand parents etc
+Eg :</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Product Desc']/ancestor::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>2. descendant</h3>
+
+<p>This selects all children of current node. That will include child, grand child etc
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/table/descendant::td/input</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. followingis</h3>
+
+<p>Th selects everything after the closing tag of current node Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/following::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4. following-sibling</h3>
+
+<p>This selects all siblings after the closing tah of current node.
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/followingsibling::td</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>5. preceding</h3>
+
+<p>This selects everything prior to current node
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Add to cart']/preceding::tr</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>preceding-sibling</li>
+</ol>
+
+
+<p>This selects all siblings prior to current node
+Eg:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Add to cart']/precedingsibling::td</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>7. child</h3>
+
+<p>This selects all children of current node</p>
+
+<h3>8. parent</h3>
+
+<p>This select parent of current node</p>
+
+<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
+
+<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-30T10:58:16+00:00"  data-updated="true" itemprop="datePublished dateCreated">30 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/30/element-location-using-xpath/" itemprop="url">Element Location Using XPath</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
+
+<h4><strong>Absolute XPath</strong></h4>
+
+<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
+
+<p>Example of Xpath using absolute path is as below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath</strong></h4>
+
+<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
+
+<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input"));
+</span><span class='line'>// This retrieve first element with input tag.
+</span><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input[2]"));
+</span><span class='line'>// This retrieve second element with input tag.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath  - With Attributes</strong></h4>
+
+<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
+</span><span class='line'>// Above will identify first element with input tag which also has id as "password".
+</span><span class='line'>
+</span><span class='line'>WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
+</span><span class='line'>//Note you can use "or" as well.
+</span><span class='line'>WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
+</span><span class='line'>// Above will identify first element with input tag which also has any attribute as "password".</span></code></pre></td></tr></table></div></figure>
+
+
+<h4><strong>Relative XPath - Partial Match</strong></h4>
+
+<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
+remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
+
+<ul>
+<li><p>starts-with()</p></li>
+<li><p>ends-with()</p></li>
+<li><p>contains()</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id starting with "password".
+</span><span class='line'>WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id ending with "password".
+</span><span class='line'>
+</span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
+</span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-22T20:55:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/22/nunit-assert/" itemprop="url">Nunit Assert</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h2>Assert.AreEqual vs Assert.AreSame</h2>
+
+<p>Very frequently I use Assert.AreEqual and Assert.AreSame for doing assertions in the code. Below is high level difference between both.</p>
+
+<h3>Assert.AreSame</h3>
+
+<p>Assert.AreSame checks whether both comparing objects are exactly the same ( reference indicate same object in memory) .It is normally known as Reference Equality</p>
+
+<h3>Assert.AreEqual</h3>
+
+<p>Assert.AreEqual checks whether both objects contain same value. It is normally known as Value Equality. For primitive value types ( like int, bool) this is straight forward. But for other types ( especially user defined objects) , it is depends on how the type defines equality.</p>
+
+<p>Hence Assert.AreEqual will fail ( most of the time) when we compare two objects. This <a href="https://github.com/nunit/nunit/issues/730">link</a> have some discussion point about the same.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-17T20:30:54+00:00"  data-updated="true" itemprop="datePublished dateCreated">17 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/" itemprop="url">Identifying Elements Using Locators in Selenium</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
+
+<p>Selenium Web Driver provides two different methods for identifying html elements .</p>
+
+<ul>
+<li><p><em><strong>FindElement  </strong></em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return the first matching element. If there are no matching element, it will throw NoSuchElementFoundException</p></li>
+<li><p><em><strong>FindElements</strong> </em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return a list of all matching element. If there are no matching elements, then it will return an empty list .</p></li>
+</ul>
+
+
+<p>Note: Both of them doesn&rsquo;t support regular expression for finding element. Simple way to do that will be to get list of all elements and then iterate to find a matching regular expression</p>
+
+<p>There are multiple criteria which we can use for looking for an element. FindElement and FindElements work exactly same way except for above difference. Different critieria are</p>
+
+<ul>
+<li><p>driver.FindElement(By.Id(<elementID>))</p></li>
+<li><p>driver.FindElement(By.Name(<element name>))</p></li>
+<li><p>driver.FindElement(By.ClassName(<element class>))</p></li>
+<li><p>driver.FindElement(By.TagName(<htmltagname>))</p></li>
+<li><p>driver.FindElement(By.LinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.PartialLinkText(<linktext >))</p></li>
+<li><p>driver.FindElement(By.CssSelector(<css selector >))</p></li>
+<li><p>driver.FindElement(By.XPath(<xpath query expression>))</p></li>
+</ul>
+
+
+<p>Example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>WebElement _firstElement = driver.findElement(By.id("div1"));
+</span><span class='line'>WebElement _secondElementInsideFirstOne =_firstElement .findElement(By.linkText("username"));
+</span><span class='line'>
+</span><span class='line'>IList&lt;IWebElement&gt; elements = driverOne.FindElements(By.ClassName(&lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;“&lt;/span&gt;green&lt;span class="pl-pds"&gt;“&lt;/span&gt;&lt;/span&gt;));
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Using any attributes other than XPath and CssSelector are straight forward. More about using XPath and CssSelector in next blog.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-01T02:12:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Aug, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/01/specflow-sharing-data-between-steps/" itemprop="url">Specflow - Sharing Data Between Steps</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
+
+<p>There are multiple ways to do it</p>
+
+<ol>
+<li><p>Context Injection</p></li>
+<li><p>Feature Context</p></li>
+<li><p>Scenario Context</p></li>
+</ol>
+
+
+<p>Let us look into more details about how to store and retrieve data using Scenario Context .</p>
+
+<p><strong>ScenarioContext.Current</strong></p>
+
+<p>How do we add a key value pair to Scenario Context ? It is as simple as below</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>[Given(@"I have entered (.*) and (.*) into the Login Page")]
+</span><span class='line'>public void GivenIHaveEnteredAndIntoTheLoginPage(string p0, string p1)
+</span><span class='line'> {
+</span><span class='line'> ScenarioContext.Current.Add("username", p0);
+</span><span class='line'> ScenarioContext.Current.Add("password", p1);
+</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>How do we retrieve the value from ScenarioContext ?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>When(@"I press retrieve data")]
+</span><span class='line'>public void WhenIRetrieveData()
+</span><span class='line'>{
+</span><span class='line'>string username = (string)ScenarioContext.Current["username"];
+</span><span class='line'>string password = (string)ScenarioContext.Current["password"];
+</span><span class='line'>
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: While retrieving , scenarioContext.Current always return an object . Hence we need use explicit casting while retrieving data from scenario context.</p>
+
+<p>In Nut Shell,</p>
+
+<blockquote>**Set a value for a key ( Store data ) **
+ScenarioContext.Current.Add(string key, object value);
+
+**Get a value of the key ( Retrieve data) **
+var value =(Type) ScenarioContext.Current.[string Key];
+
+var value = ScenarioContext.Current.Get(string Key);</blockquote>
+
+
+<p>We can use this for storing and passing objects as well</p>
+
+<blockquote>Example of storing webdriver object is as below.(where "browser" is current webdriver object )
+
+ScenarioContext.Current.Add("driver1", browser);
+
+IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-07-29T22:10:02+00:00"  data-updated="true" itemprop="datePublished dateCreated">29 Jul, 2016</time>
         
       </p>
@@ -720,475 +1176,11 @@ driver.quit() will close all windows that are opened by the webdriver during cur
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-06-10T22:24:30+10:00"  data-updated="true" itemprop="datePublished dateCreated">10 Jun, 2014</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/06/10/java-writing-into-specific-cell-in-excel/" itemprop="url">Java - Writing Into Specific Cell in Excel</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found <a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/">here</a></p>
-
-<p>In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.</p>
-
-<p>Below is the import section</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import jxl.Cell;
-</span><span class='line'>import jxl.Sheet;
-</span><span class='line'>import jxl.Workbook;
-</span><span class='line'>import jxl.format.Colour;
-</span><span class='line'>import jxl.read.biff.BiffException;
-</span><span class='line'>import jxl.write.*;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Below is the function for writing into excel</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span>  <span class="kt">void</span> <span class="nf">WriteDataIntoExcelCell</span> <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="n">String</span> <span class="n">field_name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">,</span> <span class="n">String</span> <span class="n">input</span><span class="o">){</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
-</span><span class='line'>        <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">Col</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>      <span class="c1">// Find Column number from excel by iteration first row and comparing the names</span>
-</span><span class='line'>        <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field_name</span><span class="o">)</span> <span class="o">){</span>
-</span><span class='line'>                <span class="n">Col</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getColumn</span><span class="o">();</span>
-</span><span class='line'>                <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="c1">// write to file</span>
-</span><span class='line'>        <span class="n">File</span> <span class="n">exlFile</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">WritableWorkbook</span> <span class="n">writableWorkbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="o">.</span><span class="na">createWorkbook</span><span class="o">(</span><span class="n">exlFile</span><span class="o">,</span><span class="n">wrk1</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">WritableSheet</span> <span class="n">writableSheet</span> <span class="o">=</span> <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>        <span class="c1">//WritableCellFormat writableCell = writableWorkbook.getSheet(sheet).</span>
-</span><span class='line'>      <span class="c1">// Update cell content and format</span>
-</span><span class='line'>        <span class="n">String</span> <span class="n">Varcolour</span> <span class="o">;</span>
-</span><span class='line'>        <span class="n">Label</span> <span class="n">label</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;PASS&quot;</span><span class="o">)){</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">GREEN</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="s">&quot;FAIL&quot;</span><span class="o">))</span>
-</span><span class='line'>        <span class="o">{</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">,</span><span class="n">getCellFormat</span><span class="o">(</span><span class="n">Colour</span><span class="o">.</span><span class="na">RED</span><span class="o">));</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Label</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">,</span><span class="n">input</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="c1">//Label label = new Label(Col,Row,input);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">writableSheet</span><span class="o">.</span><span class="na">addCell</span><span class="o">(</span><span class="n">label</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">write</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">writableWorkbook</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">WriteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="n">WritableCellFormat</span> <span class="nf">getCellFormat</span><span class="o">(</span><span class="n">Colour</span> <span class="n">colour</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">WriteException</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">WritableFont</span> <span class="n">cellFont</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableFont</span><span class="o">(</span><span class="n">WritableFont</span><span class="o">.</span><span class="na">TAHOMA</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">WritableCellFormat</span> <span class="n">cellFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">WritableCellFormat</span><span class="o">(</span><span class="n">cellFont</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">cellFormat</span><span class="o">.</span><span class="na">setBackground</span><span class="o">(</span><span class="n">colour</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">cellFormat</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-06-01T21:04:52+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Jun, 2014</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/06/01/java-reading-a-specific-cell-in-excel/" itemprop="url">Java - Reading a Specific Cell in Excel</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Below is a code snippet for reading a specific cell from Excel using Java.</p>
-
-<p>It is done by using importing jxl jar files which can be found <a href="https://sourceforge.net/projects/jxl/">here</a>.</p>
-
-<p>Import below in class file</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>import jxl.Cell;
-</span><span class='line'>import jxl.Sheet;
-</span><span class='line'>import jxl.Workbook;
-</span><span class='line'>import jxl.format.Colour;
-</span><span class='line'>import jxl.read.biff.BiffException;
-</span><span class='line'>import jxl.write.*;</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Below is function for reading value from specific cell in Excel</p>
-
-<figure class='code'><figcaption><span>Read From Excel based on Row and coulmn Number</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'> <span class="kd">public</span>  <span class="n">String</span> <span class="nf">readexcel</span><span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="kt">int</span> <span class="n">intRow</span><span class="o">,</span> <span class="kt">int</span> <span class="n">intCol</span><span class="o">){</span>
-</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">//Create a workbook object from the file at specified location.</span>
-</span><span class='line'>            <span class="c1">//Change the path of the file as per the location on your computer.</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
-</span><span class='line'>            <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>            <span class="c1">//Obtain reference to the Cell using getCell(int col, int row) method of sheet</span>
-</span><span class='line'>          <span class="c1">// Add &quot; - 1&quot; to both intRow , intCol depending how whether we consider excel start with row &amp; column number as 0 or 1</span>
-</span><span class='line'>            <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">intRow</span> <span class="o">,</span> <span class="n">intCol</span> <span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">//Read the contents of the Cell using getContents() method, which will return</span>
-</span><span class='line'>            <span class="c1">//it as a String</span>
-</span><span class='line'>            <span class="n">String</span> <span class="n">strReturn</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">return</span> <span class="n">strReturn</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="cm">/*  //Display the cell contents</span>
-</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col A Row 1: \&quot;&quot;+str_colArow1 + &quot;\&quot;&quot;);</span>
-</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col B Row 1: \&quot;&quot;+str_colBrow1 + &quot;\&quot;&quot;);</span>
-</span><span class='line'><span class="cm">           System.out.println(&quot;Contents of cell Col A Row 2: \&quot;&quot;+str_colArow2 + &quot;\&quot;&quot;);*/</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">return</span> <span class="n">sheet</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Below is an example of how to read from a cell based on row number and Column NAME</p>
-
-<figure class='code'><figcaption><span>Read From Excel Based On Column Name</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'> <span class="kd">public</span>  <span class="n">String</span> <span class="nf">GetDataBasedOnRowNumAndColName</span>  <span class="o">(</span><span class="n">String</span> <span class="n">sheet</span><span class="o">,</span> <span class="n">String</span> <span class="n">field_name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Row</span><span class="o">){</span>
-</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Workbook</span> <span class="n">wrk1</span> <span class="o">=</span>  <span class="n">Workbook</span><span class="o">.</span><span class="na">getWorkbook</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">dataPath</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="c1">//Obtain the reference to the first sheet in the workbook</span>
-</span><span class='line'>            <span class="n">Sheet</span> <span class="n">sheet1</span> <span class="o">=</span> <span class="n">wrk1</span><span class="o">.</span><span class="na">getSheet</span><span class="o">(</span><span class="n">sheet</span><span class="o">);</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">x</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">y</span> <span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">Col</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>            <span class="kt">boolean</span> <span class="n">FOUND</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'>           <span class="c1">// Find corresponding Column number based on Name</span>
-</span><span class='line'>            <span class="n">Cell</span> <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">do</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>                <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">().</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field_name</span><span class="o">)</span> <span class="o">){</span>
-</span><span class='line'>                    <span class="n">Col</span> <span class="o">=</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getColumn</span><span class="o">();</span>
-</span><span class='line'>                    <span class="c1">// System.out.println(Col);</span>
-</span><span class='line'>                    <span class="n">FOUND</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>                    <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>                <span class="o">}</span>
-</span><span class='line'>                <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="o">}</span><span class="k">while</span> <span class="o">(</span><span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">()</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">FOUND</span><span class="o">)</span>
-</span><span class='line'>            <span class="o">{</span>
-</span><span class='line'>                <span class="n">colArow1</span> <span class="o">=</span> <span class="n">sheet1</span><span class="o">.</span><span class="na">getCell</span><span class="o">(</span><span class="n">Col</span><span class="o">,</span><span class="n">Row</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>                <span class="c1">// System.out.println(colArow1.getContents());</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">colArow1</span><span class="o">.</span><span class="na">getContents</span><span class="o">();</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>            <span class="o">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="s">&quot; &quot;</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">catch</span> <span class="o">(</span><span class="n">BiffException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-</span><span class='line'>        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IndexOutOfBoundsException</span> <span class="n">e</span><span class="o">){</span>
-</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">return</span> <span class="n">sheet</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-05-21T07:41:32+10:00"  data-updated="true" itemprop="datePublished dateCreated">21 May, 2014</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/05/21/hello-world/" itemprop="url">Hello World</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="/blog/2016/09/04/element-location-using-xpath-axis/">Redirect</a></p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
       
-        <li class="previous disabled"><a href="#">&larr;&nbsp;Older</a></li>
+        <li class="previous"><a href="/posts/6">&larr;&nbsp;Older</a></li>
       
       <li><a href="/blog/archives">Blog Archives</a></li>
       
@@ -1208,7 +1200,7 @@ driver.quit() will close all windows that are opened by the webdriver during cur
     
     
     <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
-        <span class="badge">5</span>
+        <span class="badge">10</span>
         codesnippets
       </a>
     
@@ -1256,7 +1248,7 @@ driver.quit() will close all windows that are opened by the webdriver during cur
     
     
     <a class="list-group-item " href="/blog/categories/xml/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         xml
       </a>
     
@@ -1285,6 +1277,18 @@ driver.quit() will close all windows that are opened by the webdriver during cur
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/c#/index.html">
+        <span class="badge">1</span>
+        c#
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/command-line/index.html">
+        <span class="badge">2</span>
+        command line
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/git/index.html">
         <span class="badge">2</span>
         git
@@ -1292,7 +1296,7 @@ driver.quit() will close all windows that are opened by the webdriver during cur
     
     
     <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">2</span>
+        <span class="badge">3</span>
         powershell
       </a>
     
@@ -1416,6 +1420,18 @@ driver.quit() will close all windows that are opened by the webdriver during cur
         api testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/windows-services/index.html">
+        <span class="badge">1</span>
+        windows services
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wmi/index.html">
+        <span class="badge">1</span>
+        wmi
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1424,15 +1440,15 @@ driver.quit() will close all windows that are opened by the webdriver during cur
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">Running Command Line in Remote Machine Using WMI</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/05/running-powershell-remotely/">Running Powershell Remotely</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/03/working-with-windows-services/">Working With Windows Services</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/">Comparing XML File Structure Without XSD</a>
+    
     <a class="list-group-item " href="/blog/2018/05/27/running-api-test-using-cypress/">Running API Test Using Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/11/ui-automation-with-cypress/">UI Automation With Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
-    
-    <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
-    
-    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
   </div>
 </section>

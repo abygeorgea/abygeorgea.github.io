@@ -131,6 +131,466 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-05T20:58:13+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Mar, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/05/creating-html-report-for-test-execution%20result/" itemprop="url">Creating HTML Report for Test Execution Result</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>How to create HTML report with details of test execution</h3>
+
+<p>Very often , we will be required to create a report with details of test execution , so that it can be presented to various stakeholders. Specflow provides a feature to create HTML reports. Let us look into more details about how is this done</p>
+
+<ul>
+<li>Read through and understand details of reporting from <a href="https://github.com/techtalk/SpecFlow/wiki/Reporting">specflow</a>.</li>
+<li>Ensure packages for Specflow, Nunit, Nunit console runner are already installed.</li>
+<li>If you are using Nunit 3, install NUnit.Extension.NUnitV2ResultWriter package via nuget package manager. If this is not installed, we will get an error &ldquo;Unknown result format: nunit2&rdquo;.</li>
+<li>Follow setups required for running specflow test cases from command line. Details can be found <a href="/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit">here</a>.</li>
+<li>Modify the bat file to create nunit2 reports.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PathToNunitConsolerunner\nunit3-console.exe --labels=All --out=TestResult.txt "--result=TestResult.xml;format=nunit2" PathTo\AcceptanceTests.dll</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Add below command into Bat file. This will create HTML Report called &ldquo;MyResult.html&rdquo;</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PathToSpecfloPackage\specflow.exe nunitexecutionreport PathTo\AcceptanceTests.csproj /out:MyResult.html</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Final bat file will look like below.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>REM bat file to run test cases from console and create xml result file
+</span><span class='line'>.\..\..\..\packages\NUnit.ConsoleRunner.3.8.0\tools\nunit3-console.exe  --labels=All --out=TestResult.txt "--result=TestResult.xml;format=nunit2" .\AcceptanceTest.dll
+</span><span class='line'>
+</span><span class='line'>REM Generate html report from test output
+</span><span class='line'>.\..\..\..\packages\SpecFlow.2.1.0\tools\specflow.exe nunitexecutionreport .\..\..\AcceptanceTest.csproj /out:MyResult.html
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>EDITED: If it throws below error in newer version of Visual Studio  then ensure MS Build tool 2013 is installed. It can be downloaded from <a href="https://www.microsoft.com/en-US/download/details.aspx?id=40760">https://www.microsoft.com/en-US/download/details.aspx?id=40760</a></p>
+
+<p>Error : &ldquo;The tools version "12.0&rdquo; is unrecognized. Available tools versions are &ldquo;2.0&rdquo;, &ldquo;3.5&rdquo;, &ldquo;4.0&rdquo;. &ldquo;,</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-04T20:39:59+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 4 Mar, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit/" itemprop="url">Running Specflow Test From Command Line Using Nunit</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>How to run specflow test cases from command line</h3>
+
+<p>We can use nunit console runner for running specflow test cases from command line. Running specflow test cases through nunit console runner will help to create test results in xml file, which can then be used for creating html reports.</p>
+
+<p>Procedure for command line test execution are</p>
+
+<ol>
+<li>Define Nunit as the test runner.  This is done in config file</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;specFlow&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;unitTestProvider</span> <span class="na">name=</span><span class="s">&quot;NUnit&quot;</span><span class="nt">/&gt;</span>
+</span><span class='line'><span class="nt">&lt;/specFlow&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Include Nunit.Console.Runner package to solution via nuget package manager</li>
+<li>Run specflow test cases using below command. We can create a bat file with below command and execute them as required.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='xml'><span class='line'>pathToNunitConsoleRunner\nunit3-console.exe  PathToProject.dll
+</span><span class='line'>
+</span><span class='line'> example will be
+</span><span class='line'> .\..\..\..\packages\NUnit.ConsoleRunner.3.8.0\tools\nunit3-console.exe   .\BDDFramework.dll
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-03T11:46:48+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Mar, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/" itemprop="url">Mountebank - Your First Service Virtualisation</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here (Install Mountebank)</a>, we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response</p>
+
+<h2>How to Create a Stub</h2>
+
+<ol>
+<li><p>Navigate to mountebank installation path</p></li>
+<li><p>Create a folder and name it as &ldquo;StubResponse&rdquo;. ( You can name it whatever you want)</p></li>
+<li><p>Create two json file using notepad and save it as &ldquo;MockResponeForApiOne.json&rdquo; and &ldquo;MockResponeForApiTwo.json&rdquo;( Or what ever you want).</p></li>
+<li><p>Copy paste below code to &ldquo;MockResponeForApiOne.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</p></li>
+</ol>
+
+
+<figure class='code'><figcaption><span>MockResponseForApiOne.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>"responses": [
+</span><span class='line'> {
+</span><span class='line'> "is": {
+</span><span class='line'> "statusCode": 200,
+</span><span class='line'> "body": {
+</span><span class='line'> "Text":"Response ONE ","token":"username","expires_in":90
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> ],
+</span><span class='line'> "predicates": [
+</span><span class='line'> {
+</span><span class='line'> "exists": {
+</span><span class='line'> "body" :
+</span><span class='line'> {
+</span><span class='line'> "username": true,"password" : true
+</span><span class='line'> },
+</span><span class='line'> "method" : "POST",
+</span><span class='line'> "path" : "/Apitesting/v1/test?type=ResponseOne"
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> ]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>-</p>
+
+<ol>
+<li>Copy paste below code to &ldquo;MockResponeForApiTwo.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>MockResponseForApiTwo.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> "responses": [
+</span><span class='line'> {
+</span><span class='line'> "is": {
+</span><span class='line'> "statusCode": 200,
+</span><span class='line'> "body": {
+</span><span class='line'> "Text":"Response TWO ","token":"emailAddress","expires_in":90
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> ],
+</span><span class='line'> "predicates": [
+</span><span class='line'> {
+</span><span class='line'> "exists": {
+</span><span class='line'> "body" :
+</span><span class='line'> {
+</span><span class='line'> "email": true,"password" : true
+</span><span class='line'> },
+</span><span class='line'> "method" : "POST",
+</span><span class='line'> "path" : "/Apitesting/v1/test?type=ResponseTwo"
+</span><span class='line'> }
+</span><span class='line'> }
+</span><span class='line'> ]</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>How to create an Imposter</h2>
+
+<ol>
+<li><p>Create another file called test.json in same path as above</p></li>
+<li><p>copy and paste below contents to it</p></li>
+</ol>
+
+
+<figure class='code'><figcaption><span>test.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>{
+</span><span class='line'>"imposters": [
+</span><span class='line'>{
+</span><span class='line'>"port": 4547,
+</span><span class='line'>"protocol": "http",
+</span><span class='line'>"stubs": [
+</span><span class='line'>{
+</span><span class='line'>&lt;% include MockResponseForApiOne.json %&gt;
+</span><span class='line'>},
+</span><span class='line'>{
+</span><span class='line'>&lt;% include MockResponseForApiTwo.json %&gt;
+</span><span class='line'>}
+</span><span class='line'>]
+</span><span class='line'>}
+</span><span class='line'>]
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Let us have a close look into Imposter and stubs</h2>
+
+<p>Responses – Contains an array of responses expected to return for the defined stub. In the above scenario the response will include status code as 200 and response body. For more info, <a href="http://www.mbtest.org/docs/api/contracts">http://www.mbtest.org/docs/api/contracts</a>
+Predicates – is an array of predicates which will be used during matching process. Predicate object can be quite complex, it supports lots of different matching techniques.
+For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mbtest.org/docs/api/predicates</a></p>
+
+<h2>Let&rsquo;s Mock it</h2>
+
+<p>Once all required files are created and saved, mountebank can be started by following command in command prompt , after navigating to installation folder of mountebank</p>
+
+<figure class='code'><figcaption><span>test.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>mb --configfile StubResponse/test.json
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/cmd.jpg" alt="cmd.jpg" /></p>
+
+<p>Once mountebank is started, we can verify it by navigating to path <a href="http://localhost:2525/imposters">http://localhost:2525/imposters</a></p>
+
+<p>It will list out all active ports and a list of stubs available</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/imposter.jpg" alt="imposter" /></p>
+
+<h2>Test It</h2>
+
+<p>Once we complete above steps, mountebank is ready with stubs. Now comes the part to test it and use. You can use any api testing tool ( Postman, soapUi etc ) for testing this. Just send the request matching the predicates and look for the responses</p>
+
+<p>Below are the screenshot of Postman request</p>
+
+<p><strong>Requesting for First API.</strong></p>
+
+<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;username&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=ResponseOne"</p>
+
+<p>Now construct a postman request matching above and fire it</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgone.jpg" alt="bgone" /></p>
+
+<p><strong>Request for second API</strong></p>
+
+<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;<strong>email</strong>&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=Response<strong>Two</strong>"</p>
+
+<p>Now construct a postman request matching above and fire it</p>
+
+<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg" alt="bgtwo" /></p>
+
+<p>As you can see, both request has succesfully received expected response message</p>
+
+<p>For actual development usage, just point your application to this localhost URL and start consuming virtualised API</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-13T11:13:58+00:00"  data-updated="true" itemprop="datePublished dateCreated">13 Feb, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/02/13/service-virtualisation-using-mountebank/" itemprop="url">Service Virtualisation Using Mountebank</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>What is Mountebank?</h1>
+
+<blockquote>As per mbtest.org "_mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire. Simply point your application under test to mountebank instead of the real dependency, and test like you would with traditional stubs and mocks_"</blockquote>
+
+
+<p>In short mountebank is a open source service virtualisation tool . Mountebank uses imposters to act as on demand test doubles. Hence our test cases communicate to Mountebank and mountebank responds back with relevant stubs as defined.</p>
+
+<h1>How to Setup Mountebank ?</h1>
+
+<p>Installation can be done via two methods</p>
+
+<h3>npm</h3>
+
+<p>Mountebank can be installed as a npm package. Node.js should be installed for this option to work</p>
+
+<pre><code>&lt;code&gt;npm install -g mountebank&lt;/code&gt;
+</code></pre>
+
+<h3>Self contained Installation file</h3>
+
+<p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
+
+<p>Note: Please read through the windows path limitation mentioned in above link</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-12T07:41:43+10:00"  data-updated="true" itemprop="datePublished dateCreated">12 Feb, 2017</time>
         
       </p>
@@ -326,6 +786,172 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-08T23:07:03+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 8 Sep, 2016</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/08/running-command-line-from-csharp/" itemprop="url">Running Command Line From C#</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Code Snippet</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+</pre></td><td class='code'><pre><code class='csharp'><span class='line'>   <span class="k">private</span> <span class="k">void</span> <span class="nf">RunCLIjobsOnLocal</span><span class="p">(</span><span class="kt">string</span> <span class="n">arguments</span><span class="p">,</span> <span class="kt">int</span> <span class="n">WaitTimePerCommand</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">psi</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ProcessStartInfo</span><span class="p">();</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span> <span class="c1">//This hides the dos-style black window that the command prompt usually shows</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">@&quot;cmd.exe&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="s">&quot;/C &quot;</span> <span class="p">+</span> <span class="n">arguments</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">RedirectStandardInput</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">RedirectStandardError</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>            <span class="kt">var</span> <span class="n">sspw</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SecureString</span><span class="p">();</span>
+</span><span class='line'>            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">c</span> <span class="k">in</span> <span class="n">password</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">sspw</span><span class="p">.</span><span class="n">AppendChar</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">Domain</span> <span class="p">=</span> <span class="n">domain</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">UserName</span> <span class="p">=</span> <span class="n">userName</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">Password</span> <span class="p">=</span> <span class="n">sspw</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">psi</span><span class="p">.</span><span class="n">WorkingDirectory</span> <span class="p">=</span> <span class="s">@&quot;C:\&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">Process</span> <span class="n">process</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Process</span><span class="p">())</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">try</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">process</span><span class="p">.</span><span class="n">StartInfo</span> <span class="p">=</span> <span class="n">psi</span><span class="p">;</span>
+</span><span class='line'>                    <span class="n">process</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span><span class='line'>                    <span class="kt">var</span> <span class="n">procId</span> <span class="p">=</span> <span class="n">process</span><span class="p">.</span><span class="n">Id</span><span class="p">;</span>
+</span><span class='line'>                    <span class="kt">string</span> <span class="n">owner</span> <span class="p">=</span> <span class="n">GetProcessOwner</span><span class="p">(</span><span class="n">procId</span><span class="p">);</span>
+</span><span class='line'>                    <span class="c1">// Synchronously read the standard output of the spawned process. </span>
+</span><span class='line'>                    <span class="n">StreamReader</span> <span class="n">reader</span> <span class="p">=</span> <span class="n">process</span><span class="p">.</span><span class="n">StandardOutput</span><span class="p">;</span>
+</span><span class='line'>                    <span class="kt">string</span> <span class="n">output</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+</span><span class='line'>                    <span class="n">reader</span> <span class="p">=</span> <span class="n">process</span><span class="p">.</span><span class="n">StandardError</span><span class="p">;</span>
+</span><span class='line'>                    <span class="kt">string</span> <span class="n">error</span> <span class="p">=</span> <span class="n">reader</span><span class="p">.</span><span class="n">ReadToEnd</span><span class="p">();</span>
+</span><span class='line'>                    <span class="k">if</span><span class="p">(</span><span class="n">error</span><span class="p">.</span><span class="n">Length</span> <span class="p">&gt;</span><span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                       <span class="n">process</span><span class="p">.</span><span class="n">WaitForExit</span><span class="p">();</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">log</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">Message</span> <span class="p">+</span> <span class="s">&quot;\n&quot;</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">);</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">private</span> <span class="kt">string</span> <span class="nf">GetProcessOwner</span><span class="p">(</span><span class="kt">int</span> <span class="n">processId</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="kt">string</span> <span class="n">query</span> <span class="p">=</span> <span class="s">&quot;Select * From Win32_Process Where ProcessID = &quot;</span> <span class="p">+</span> <span class="n">processId</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">ManagementObjectSearcher</span> <span class="n">searcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementObjectSearcher</span><span class="p">(</span><span class="n">query</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">ManagementObjectCollection</span> <span class="n">processList</span> <span class="p">=</span> <span class="n">searcher</span><span class="p">.</span><span class="n">Get</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">foreach</span> <span class="p">(</span><span class="n">ManagementObject</span> <span class="n">obj</span> <span class="k">in</span> <span class="n">processList</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="kt">string</span><span class="p">[]</span> <span class="n">argList</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">[]</span> <span class="p">{</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">,</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span> <span class="p">};</span>
+</span><span class='line'>                <span class="kt">int</span> <span class="n">returnVal</span> <span class="p">=</span> <span class="n">Convert</span><span class="p">.</span><span class="n">ToInt32</span><span class="p">(</span><span class="n">obj</span><span class="p">.</span><span class="n">InvokeMethod</span><span class="p">(</span><span class="s">&quot;GetOwner&quot;</span><span class="p">,</span> <span class="n">argList</span><span class="p">));</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="n">returnVal</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>                    <span class="k">return</span> <span class="n">argList</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="p">+</span> <span class="s">&quot;\\&quot;</span> <span class="p">+</span> <span class="n">argList</span><span class="p">[</span><span class="m">0</span><span class="p">];</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;NO OWNER&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-07T20:54:13+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 7 Sep, 2016</time>
         
       </p>
@@ -483,462 +1109,6 @@
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-09-03T22:33:04+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Sep, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/09/03/element-location-using-xpath-axis/" itemprop="url">Element Location Using XPath Axis</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>During testing we will sometimes come up to situations where developers are not following best practises for testability . We will frequently come up situations where elements doesn&rsquo;t have any unique identifiable property. XPath axis comes to help in those situations. We can identify elements using various XPath Properties</p>
-
-<p>List of various XPath Axis are available in <a href="https://developer.mozilla.org/en-US/docs/Web/XPath/Axes">https://developer.mozilla.org/en-US/docs/Web/XPath/Axes</a>
-If you have well-defined properties to identify the element, use them as your locator. Please read  locator strategy  <a href="/blog/2016/08/30/element-location-using-xpath/">Using XPath</a> and <a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/">Other Parameters</a></p>
-
-<p>Below are major one&rsquo;s which we will frequently use</p>
-
-<h3>1. ancestor</h3>
-
-<p>This selects all ancestors of current node. That will include parent, grand parents etc
-Eg :</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Product Desc']/ancestor::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2. descendant</h3>
-
-<p>This selects all children of current node. That will include child, grand child etc
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/table/descendant::td/input</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3. followingis</h3>
-
-<p>Th selects everything after the closing tag of current node Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/following::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>4. following-sibling</h3>
-
-<p>This selects all siblings after the closing tah of current node.
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Product Desc']/followingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>5. preceding</h3>
-
-<p>This selects everything prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> //td[text()='Add to cart']/preceding::tr</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>preceding-sibling</li>
-</ol>
-
-
-<p>This selects all siblings prior to current node
-Eg:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>//td[text()='Add to cart']/precedingsibling::td</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>7. child</h3>
-
-<p>This selects all children of current node</p>
-
-<h3>8. parent</h3>
-
-<p>This select parent of current node</p>
-
-<p>As usual , you can always use combinations of above in your test. Statements can be constructed in the same way as we traverse the XPath axis</p>
-
-<p>Last , but not least&hellip; we can also use regular expression in XPath.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-30T10:58:16+00:00"  data-updated="true" itemprop="datePublished dateCreated">30 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/30/element-location-using-xpath/" itemprop="url">Element Location Using XPath</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>XPath is XML query language which can be used for selecting nodes in XML. Hence it can be used to identify elements from DOM since they are represented as XHTML documents. Selenium WebDriver also supports XPath for locating elements. They also help to look for elements in both direction and hence it is generally slow compared to all other locator strategy. We can use XPath with both absolute path and relative path.</p>
-
-<h4><strong>Absolute XPath</strong></h4>
-
-<p>Absolute Path refers to specific location in DOM, by considering it&rsquo;s complete hierarchy. However this is not an ideal locator strategy since it makes your test very brittle. The absolute path will change if there is any change/realignment etc in UI.</p>
-
-<p>Example of Xpath using absolute path is as below</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath(html/body/div[2]/div/form/input[2]));
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath</strong></h4>
-
-<p>With relative Path , we can find element directly without entire structure. It helps to look out for any elements which matches with specified relative path . Example for a relative path based locator strategy is as below.</p>
-
-<p>Note: Relative XPath starts with &ldquo;//&rdquo;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input"));
-</span><span class='line'>// This retrieve first element with input tag.
-</span><span class='line'>WebElement userId = driver.FindElement(By.XPath("//input[2]"));
-</span><span class='line'>// This retrieve second element with input tag.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath  - With Attributes</strong></h4>
-
-<p>If we need to further narrow down our location strategy, we can use Attributes along with relative XPath. There may be situations where we need to multiple attributes to uniquely identify an element. We can also specify locators to identify for ANY attribute</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField = driver.FindElement(By.XPath("//input[@id='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has id as "password".
-</span><span class='line'>
-</span><span class='line'>WebElement LoginButton = driver.FindElement(By.XPath("//input[@type='submit'and @value='Login']"));
-</span><span class='line'>//Note you can use "or" as well.
-</span><span class='line'>WebElement someField = driver.FindElement(By.XPath("//input[@*='password']"));
-</span><span class='line'>// Above will identify first element with input tag which also has any attribute as "password".</span></code></pre></td></tr></table></div></figure>
-
-
-<h4><strong>Relative XPath - Partial Match</strong></h4>
-
-<p>Sometimes there may be situations where element attributes like ID are dynamically generated. Those will generally have some unique part in attributes likeID and
-remaining will be generated dynamically , which will keep on changing. This will need a locator strategy which will help us to identify elements using partial match. Main types are</p>
-
-<ul>
-<li><p>starts-with()</p></li>
-<li><p>ends-with()</p></li>
-<li><p>contains()</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>WebElement passwordField1 = driver.FindElement(By.XPath("//input[starts-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id starting with "password".
-</span><span class='line'>WebElement passwordField2 = driver.FindElement(By.XPath("//input[ends-with(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id ending with "password".
-</span><span class='line'>
-</span><span class='line'>WebElement passwordField3 = driver.FindElement(By.XPath("//input[contains(@id,'password')]"));
-</span><span class='line'>// Above will identify first element with input tag which also has id containing with "password".</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-22T20:55:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">22 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/22/nunit-assert/" itemprop="url">Nunit Assert</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h2>Assert.AreEqual vs Assert.AreSame</h2>
-
-<p>Very frequently I use Assert.AreEqual and Assert.AreSame for doing assertions in the code. Below is high level difference between both.</p>
-
-<h3>Assert.AreSame</h3>
-
-<p>Assert.AreSame checks whether both comparing objects are exactly the same ( reference indicate same object in memory) .It is normally known as Reference Equality</p>
-
-<h3>Assert.AreEqual</h3>
-
-<p>Assert.AreEqual checks whether both objects contain same value. It is normally known as Value Equality. For primitive value types ( like int, bool) this is straight forward. But for other types ( especially user defined objects) , it is depends on how the type defines equality.</p>
-
-<p>Hence Assert.AreEqual will fail ( most of the time) when we compare two objects. This <a href="https://github.com/nunit/nunit/issues/730">link</a> have some discussion point about the same.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-17T20:30:54+00:00"  data-updated="true" itemprop="datePublished dateCreated">17 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/17/identifying-elements-using-locators-in-selenium/" itemprop="url">Identifying Elements Using Locators in Selenium</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Locators are html properties of a web element , which can be considered as an address of the element. An element will have various html properties. We can use Firebug extension or Chrome dev tools to identify different locators of an element.</p>
-
-<p>Selenium Web Driver provides two different methods for identifying html elements .</p>
-
-<ul>
-<li><p><em><strong>FindElement  </strong></em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return the first matching element. If there are no matching element, it will throw NoSuchElementFoundException</p></li>
-<li><p><em><strong>FindElements</strong> </em>for WebDriver and WebElement Class. When locating element matching specified criteria, it looks through DOM( Document Object Model) for matching element and return a list of all matching element. If there are no matching elements, then it will return an empty list .</p></li>
-</ul>
-
-
-<p>Note: Both of them doesn&rsquo;t support regular expression for finding element. Simple way to do that will be to get list of all elements and then iterate to find a matching regular expression</p>
-
-<p>There are multiple criteria which we can use for looking for an element. FindElement and FindElements work exactly same way except for above difference. Different critieria are</p>
-
-<ul>
-<li><p>driver.FindElement(By.Id(<elementID>))</p></li>
-<li><p>driver.FindElement(By.Name(<element name>))</p></li>
-<li><p>driver.FindElement(By.ClassName(<element class>))</p></li>
-<li><p>driver.FindElement(By.TagName(<htmltagname>))</p></li>
-<li><p>driver.FindElement(By.LinkText(<linktext >))</p></li>
-<li><p>driver.FindElement(By.PartialLinkText(<linktext >))</p></li>
-<li><p>driver.FindElement(By.CssSelector(<css selector >))</p></li>
-<li><p>driver.FindElement(By.XPath(<xpath query expression>))</p></li>
-</ul>
-
-
-<p>Example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>WebElement _firstElement = driver.findElement(By.id("div1"));
-</span><span class='line'>WebElement _secondElementInsideFirstOne =_firstElement .findElement(By.linkText("username"));
-</span><span class='line'>
-</span><span class='line'>IList&lt;IWebElement&gt; elements = driverOne.FindElements(By.ClassName(&lt;span class="pl-s"&gt;&lt;span class="pl-pds"&gt;“&lt;/span&gt;green&lt;span class="pl-pds"&gt;“&lt;/span&gt;&lt;/span&gt;));
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Using any attributes other than XPath and CssSelector are straight forward. More about using XPath and CssSelector in next blog.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2016-08-01T02:12:23+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 1 Aug, 2016</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2016/08/01/specflow-sharing-data-between-steps/" itemprop="url">Specflow - Sharing Data Between Steps</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Specflow, Step definitions are global. So a scenario can have multiple step definitions which can be present in different classes.  Sometimes, there arise a need to share the data between steps residing in different classes. How do we do it??</p>
-
-<p>There are multiple ways to do it</p>
-
-<ol>
-<li><p>Context Injection</p></li>
-<li><p>Feature Context</p></li>
-<li><p>Scenario Context</p></li>
-</ol>
-
-
-<p>Let us look into more details about how to store and retrieve data using Scenario Context .</p>
-
-<p><strong>ScenarioContext.Current</strong></p>
-
-<p>How do we add a key value pair to Scenario Context ? It is as simple as below</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>[Given(@"I have entered (.*) and (.*) into the Login Page")]
-</span><span class='line'>public void GivenIHaveEnteredAndIntoTheLoginPage(string p0, string p1)
-</span><span class='line'> {
-</span><span class='line'> ScenarioContext.Current.Add("username", p0);
-</span><span class='line'> ScenarioContext.Current.Add("password", p1);
-</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
-
-
-<p>How do we retrieve the value from ScenarioContext ?</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>When(@"I press retrieve data")]
-</span><span class='line'>public void WhenIRetrieveData()
-</span><span class='line'>{
-</span><span class='line'>string username = (string)ScenarioContext.Current["username"];
-</span><span class='line'>string password = (string)ScenarioContext.Current["password"];
-</span><span class='line'>
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Note: While retrieving , scenarioContext.Current always return an object . Hence we need use explicit casting while retrieving data from scenario context.</p>
-
-<p>In Nut Shell,</p>
-
-<blockquote>**Set a value for a key ( Store data ) **
-ScenarioContext.Current.Add(string key, object value);
-
-**Get a value of the key ( Retrieve data) **
-var value =(Type) ScenarioContext.Current.[string Key];
-
-var value = ScenarioContext.Current.Get(string Key);</blockquote>
-
-
-<p>We can use this for storing and passing objects as well</p>
-
-<blockquote>Example of storing webdriver object is as below.(where "browser" is current webdriver object )
-
-ScenarioContext.Current.Add("driver1", browser);
-
-IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -963,7 +1133,7 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     
     
     <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
-        <span class="badge">5</span>
+        <span class="badge">10</span>
         codesnippets
       </a>
     
@@ -1011,7 +1181,7 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     
     
     <a class="list-group-item " href="/blog/categories/xml/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         xml
       </a>
     
@@ -1040,6 +1210,18 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/c#/index.html">
+        <span class="badge">1</span>
+        c#
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/command-line/index.html">
+        <span class="badge">2</span>
+        command line
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/git/index.html">
         <span class="badge">2</span>
         git
@@ -1047,7 +1229,7 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
     
     
     <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">2</span>
+        <span class="badge">3</span>
         powershell
       </a>
     
@@ -1171,6 +1353,18 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
         api testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/windows-services/index.html">
+        <span class="badge">1</span>
+        windows services
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wmi/index.html">
+        <span class="badge">1</span>
+        wmi
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -1179,15 +1373,15 @@ IWebDriver driver2 = (IWebDriver)ScenarioContext.Current["driver1"];</blockquote
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">Running Command Line in Remote Machine Using WMI</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/05/running-powershell-remotely/">Running Powershell Remotely</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/03/working-with-windows-services/">Working With Windows Services</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/">Comparing XML File Structure Without XSD</a>
+    
     <a class="list-group-item " href="/blog/2018/05/27/running-api-test-using-cypress/">Running API Test Using Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/11/ui-automation-with-cypress/">UI Automation With Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
-    
-    <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
-    
-    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
   </div>
 </section>

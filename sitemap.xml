@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/</loc>
+<lastmod>2018-09-08T21:47:52+10:00</lastmod>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/2018/09/05/running-powershell-remotely/</loc>
+<lastmod>2018-09-05T22:46:14+10:00</lastmod>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/2018/09/03/working-with-windows-services/</loc>
+<lastmod>2018-09-03T22:59:54+10:00</lastmod>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/2018/09/01/comparing-xml-file-structure-without-xsd/</loc>
+<lastmod>2018-09-01T22:05:42+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2018/05/27/running-api-test-using-cypress/</loc>
 <lastmod>2018-05-27T08:03:28+10:00</lastmod>
 </url>
@@ -133,6 +149,10 @@
 <lastmod>2016-09-23T06:31:03+10:00</lastmod>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/2016/09/08/running-command-line-from-csharp/</loc>
+<lastmod>2016-09-08T23:07:03+10:00</lastmod>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/2016/09/07/element-location-using-xpath-axis-part-2/</loc>
 <lastmod>2016-09-07T20:54:13+11:00</lastmod>
 </url>
@@ -247,6 +267,12 @@
 <loc>http://www.abygeorgea.com/blog/categories/nunit/</loc>
 </url>
 <url>
+<loc>http://www.abygeorgea.com/blog/categories/c-number/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/command-line/</loc>
+</url>
+<url>
 <loc>http://www.abygeorgea.com/blog/categories/git/</loc>
 </url>
 <url>
@@ -311,5 +337,11 @@
 </url>
 <url>
 <loc>http://www.abygeorgea.com/blog/categories/api-testing/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/windows-services/</loc>
+</url>
+<url>
+<loc>http://www.abygeorgea.com/blog/categories/wmi/</loc>
 </url>
 </urlset>

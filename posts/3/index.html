@@ -131,6 +131,507 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-07-15T21:07:40+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jul, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/07/15/predicates-in-mountebank/" itemprop="url">Predicates in Mountebank</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Predicates in Mountebank imposter files is a pretty powerful way to configure stubs. It helps us to return different responses based on the request parameters like type, query string , headers, body etc. Let us have some quick look at extracting values from request</p>
+
+<h3>Based on Query String</h3>
+
+<p>Below is an example of extracting the records based on query string.
+If the request is like <code>path?customerId=123&amp;customerId=456&amp;email=abc.com</code>
+Note: This is slightly modified version of code in mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4547,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { "customerId": ["123", "456"] }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is either 123 or 456"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    },
+</span><span class='line'>    {
+</span><span class='line'>      "predicates": [{
+</span><span class='line'>        "equals": {
+</span><span class='line'>          "query": { 
+</span><span class='line'>              "customerId": "123",
+</span><span class='line'>              "email" :"abc.com"
+</span><span class='line'>               }
+</span><span class='line'>        }
+</span><span class='line'>      }],
+</span><span class='line'>      "responses": [{
+</span><span class='line'>        "is": {
+</span><span class='line'>          "body": "Customer ID is 123 and email is abc.com"
+</span><span class='line'>        }
+</span><span class='line'>      }]
+</span><span class='line'>    }
+</span><span class='line'>  ]
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Based on Header Content</h3>
+
+<p>If input data is shared through values in header, that can be extracted. Below snippet is directly from mbtest.org</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>  "port": 4545,
+</span><span class='line'>  "protocol": "http",
+</span><span class='line'>  "stubs": [
+</span><span class='line'>    {
+</span><span class='line'>      "responses": [{ "is": { "statusCode": 400 } }],
+</span><span class='line'>      "predicates": [
+</span><span class='line'>        {
+</span><span class='line'>          "equals": {
+</span><span class='line'>            "method": "POST",
+</span><span class='line'>            "path": "/test",
+</span><span class='line'>            "query": {
+</span><span class='line'>              "first": "1",
+</span><span class='line'>              "second": "2"
+</span><span class='line'>            },
+</span><span class='line'>            "headers": {
+</span><span class='line'>              "Accept": "text/plain"
+</span><span class='line'>            }
+</span><span class='line'>          }
+</span><span class='line'>        },
+</span><span class='line'>        {
+</span><span class='line'>          "equals": { "body": "hello, world" },
+</span><span class='line'>          "caseSensitive": true,
+</span><span class='line'>          "except": "!$"
+</span><span class='line'>        }
+</span><span class='line'>      ]
+</span><span class='line'>    }
+</span><span class='line'>   ]
+</span><span class='line'> }</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-25T05:39:02+10:00"  data-updated="true" itemprop="datePublished dateCreated">25 Jun, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/25/galen-framework-getting-started/" itemprop="url">Galen Framework - Getting Started</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In previous <a href="{site.root}}blog/2017/06/21/automated-testing-of-responsive-web-design">post</a>, I mentioned that we can use Galen for automated lay out testing. Galen offers a simple solution to test location of objects relative to each other on the page. Galen is implemented using Selenium Web driver. Hence we can use it for normal functional automation testing as well.</p>
+
+<h3>Documentation of Galen</h3>
+
+<ul>
+<li>Galen has its own domain specific language to define Specs. Detailed documentation can be found <a href="http://galenframework.com/docs/reference-galen-spec-language-guide/">here</a>.</li>
+<li>Galen has its own javascript API which provides a list of functions which make writing test cases easier. Detailed documentation can be found <a href="http://galenframework.com/docs/reference-galen-javascript-api/">here</a>.</li>
+<li>Galen pages javascript API is light weight javascript test framework. Details are available <a href="http://galenframework.com/docs/reference-galenpages-javascript-api/">here</a>.</li>
+<li>Details of galen test suite syntax are <a href="http://galenframework.com/docs/reference-galen-test-suite-syntax/">here</a>.</li>
+<li>Galen framework has a detailed documentation of its usage and functions <a href="http://galenframework.com/docs/all/">here</a>.</li>
+</ul>
+
+
+<h3>Installation</h3>
+
+<p>Below are high-level steps to help you get started.</p>
+
+<ol>
+<li>Ensure Java is installed. Galen needs Java version above 1.8</li>
+<li>Download binary from <a href="http://galenframework.com/download/">http://galenframework.com/download/</a></li>
+<li>Extract the zip file</li>
+<li>Add the location of extracted files to PATH  environment variables. A detailed guide for older versions of Windows is available <a href="http://mindengine.net/post/2014-01-08-configuring-galen-framework-for-windows">here</a>.</li>
+<li>Alternatively, on Windows , you can create a bat file to run Galen by changing Path on the fly. Details are in below steps.</li>
+</ol>
+
+
+<h3>Setting up Galen Framework</h3>
+
+<p>There are different framework available for testing responsive design based on Galen. <a href="https://github.com/galenframework/galen-bootstrap">Galen bootstrap</a> is one of such framework which can be reused.</p>
+
+<ul>
+<li>Download and extract the project from Github. Keep relevant files only. You can remove</li>
+<li>Create an <code>init.js</code> file to load
+<code>galen-bootstrap/galen-bootstrap.js</code>script and configure all devices and a website URL for testing. URL mentioned below is an example of responsive web design template.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">load</span><span class="p">(</span><span class="s2">&quot;galen-bootstrap/galen-bootstrap.js&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//$galen.settings.website = &quot;https://alistapart.com/d/responsive-web-design/ex/ex-site-FINAL.html&quot;;</span>
+</span><span class='line'><span class="c1">//$galen.registerDevice(&quot;mobile&quot;, inLocalBrowser(&quot;mobile emulation&quot;, &quot;450x800&quot;, [&quot;mobile&quot;]));</span>
+</span><span class='line'><span class="c1">//$galen.registerDevice(&quot;tablet&quot;, inLocalBrowser(&quot;tablet emulation&quot;, &quot;600x800&quot;, [&quot;tablet&quot;]));</span>
+</span><span class='line'><span class="c1">//$galen.registerDevice(&quot;desktop&quot;, inLocalBrowser(&quot;desktop emulation&quot;, &quot;1024x768&quot;, [&quot;desktop&quot;]));</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note: Uncomment the lines above. Octopress blog engine was throwing error when it tries generate post.</p>
+
+<ul>
+<li>Run <code>galen config</code> from the command line with the project directory. This will create Galen config file in the location where the command is run.</li>
+</ul>
+
+
+<p><img src="/images/2017/06/25/GalenframeworkGettingStarted01.png" alt="Create Galen Config" /></p>
+
+<ul>
+<li>Modify galen.config file to make chrome as default browser and add path to chrome driver. There are other useful configs like range approximation, screenshot, selenium grid etc in the config.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">galen</span><span class="p">.</span><span class="k">default</span><span class="p">.</span><span class="nx">browser</span><span class="o">=</span><span class="nx">chrome</span>
+</span><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">webdriver</span><span class="p">.</span><span class="nx">chrome</span><span class="p">.</span><span class="nx">driver</span><span class="o">=</span><span class="p">.</span><span class="err">\\</span><span class="p">..</span><span class="err">\\</span><span class="nx">WebProject</span><span class="err">\\</span><span class="nx">Driver</span><span class="err">\\</span><span class="nx">chromedriver</span><span class="p">.</span><span class="nx">exe</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Create a folder named <code>Test</code> for keeping test cases and create test files <code>example.test.js</code>. Copy below content to <code>example.test.js</code>. Make sure to update the relative location of the init.js file created in previous steps. Below content loads init.js file which lists out website URL, device sizes that need to be tested.It then calls a function to test on all devices. Check layout is one of the available javascript API function.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">load</span> <span class="p">(</span><span class="s2">&quot;.\\..\\init.js&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nx">testOnAllDevices</span><span class="p">(</span><span class="s2">&quot;Welcome page test&quot;</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">driver</span><span class="p">,</span> <span class="nx">device</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">checkLayout</span><span class="p">(</span><span class="nx">driver</span><span class="p">,</span> <span class="s2">&quot;specs/homepage.gspec&quot;</span><span class="p">,</span> <span class="nx">device</span><span class="p">.</span><span class="nx">tags</span><span class="p">,</span> <span class="nx">device</span><span class="p">.</span><span class="nx">excludedTags</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Create a folder named <code>specs</code> and create a spec file named <code>homepage.gspec</code>. We need to update the specs with layout checks . Below is the sample spec for checking image and section intro for the sample URL from init.js. First section defines the objects and its identifier. Second section says that on desktop, image will on left side of section intro and on mobile and tablet, it will be above section intro</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="err">@</span><span class="nx">objects</span>
+</span><span class='line'>  <span class="nx">image</span>        <span class="nx">id</span>         <span class="nx">logo</span>
+</span><span class='line'>  <span class="nx">menu</span>         <span class="nx">css</span>        <span class="err">#</span><span class="nx">page</span> <span class="o">&gt;</span> <span class="nx">div</span> <span class="o">&gt;</span> <span class="nx">div</span><span class="p">.</span><span class="nx">mast</span> <span class="o">&gt;</span> <span class="nx">ul</span>
+</span><span class='line'>  <span class="nx">sectionintro</span>    <span class="nx">css</span>     <span class="err">#</span><span class="nx">page</span> <span class="o">&gt;</span> <span class="nx">div</span> <span class="o">&gt;</span> <span class="nx">div</span><span class="p">.</span><span class="nx">section</span><span class="p">.</span><span class="nx">intro</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">=</span> <span class="nx">Main</span>  <span class="nx">Section</span> <span class="o">=</span>
+</span><span class='line'>  <span class="nx">image</span><span class="o">:</span>
+</span><span class='line'>      <span class="err">@</span><span class="nx">on</span> <span class="nx">desktop</span>
+</span><span class='line'>          <span class="nx">left</span><span class="o">-</span><span class="nx">of</span> <span class="nx">sectionintro</span>
+</span><span class='line'>      <span class="err">@</span><span class="nx">on</span> <span class="nx">mobile</span><span class="p">,</span> <span class="nx">tablet</span>
+</span><span class='line'>          <span class="nx">above</span> <span class="nx">sectionintro</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Now create a bat file in the main folder to run the galen test cases. Make sure to give relative paths to test file, configs, reports correctly. Modify Path variable to include path location to galen bin. This is not needed if we manually set pah while installing. However, I prefer to have galen bin files as well in source control and point the path to that location so that we don&rsquo;t have any specific dependency outside the project.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">SET</span> <span class="nx">PATH</span><span class="o">=%</span><span class="nx">PATH</span><span class="o">%</span><span class="p">;.</span><span class="err">\</span><span class="nx">galen</span><span class="o">-</span><span class="nx">bin</span>
+</span><span class='line'><span class="nx">galen</span> <span class="nx">test</span> <span class="p">.</span><span class="err">\\</span><span class="nx">test</span><span class="err">\\</span><span class="nx">example</span><span class="p">.</span><span class="nx">test</span><span class="p">.</span><span class="nx">js</span>  <span class="o">--</span><span class="nx">htmlreport</span> <span class="p">.</span><span class="err">\</span><span class="nx">reports</span>   <span class="o">--</span><span class="nx">jsonreport</span> <span class="p">.</span><span class="err">\</span><span class="nx">jsonreports</span> <span class="o">--</span><span class="nx">config</span> <span class="p">.</span><span class="err">\</span><span class="nx">galen</span><span class="p">.</span><span class="nx">config</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>once all files are created, folder structure will look like below
+<img src="/images/2017/06/25/GalenframeworkGettingStarted00.png" alt="" /></p>
+
+<ul>
+<li>run the bat file created above. This will ideally run example.test.js file which invokes chrome driver, navigate to the URl, resizes the browser and then check for the specs.It will list out the results in command prompt. Once it completes are all test execution, it creates both HTML report and JSON report in corresponding folder location mentioned in bat file. Below is a sample HTML report, which is self-explanatory.</li>
+</ul>
+
+
+<p>Main report
+<img src="/images/2017/06/25/GalenframeworkGettingStarted02.png" alt="" /></p>
+
+<p>If we expand the result for desktop emulation, it will look like below.It will list down each assertion made and indicate whether it is passed or failed.
+<img src="/images/2017/06/25/GalenframeworkGettingStarted03.png" alt="" /></p>
+
+<p>If we click on the assertion point, it will show the screenshot taken for that assertion by highlighting the objects which will help for easier verification. Below screenshot shows that image is on left side of section intro as defined in spec file.
+<img src="/images/2017/06/25/GalenframeworkGettingStarted04.png" alt="" /></p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-21T06:15:55+10:00"  data-updated="true" itemprop="datePublished dateCreated">21 Jun, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/21/automated-testing-of-responsive-web-design/" itemprop="url">Automated Testing of CSS for Responsive Web Design</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>In a world where mobile first seems to be the norm, testing of look and feel of websites on various mobile/tablet devices are essential. More businesses are now adopting Responsive Web designs for developing their web applications and sites.</p>
+
+<h3>What is Responsive Web Design</h3>
+
+<p>According to <a href="https://en.wikipedia.org/wiki/Responsive_web_design">Wikipedia</a>, Responsive web design (RWD) is an approach to web design aimed at allowing desktop webpages to be viewed in response to the size of the screen or web browser one is viewing with. In addition, it&rsquo;s important to understand that Responsive Web Design tasks include offering the same support to a variety of devices for a single website. A site designed with RWD adapts the layout to the viewing environment by using fluid, proportion-based grids, flexible images, and CSS3 media queries, an extension of the @media rule, in the following ways:</p>
+
+<ul>
+<li>The fluid grid concept calls for page element sizing to be in relative units like percentages, rather than absolute units like pixels or points.</li>
+<li>Flexible images are also sized in relative units, so as to prevent them from displaying outside their containing element.</li>
+<li>Media queries allow the page to use different CSS style rules based on characteristics of the device the site is being displayed on, most commonly the width of the browser</li>
+</ul>
+
+
+<h3>How do we test responsiveness</h3>
+
+<p>An ideal option for testing is to test on different physical devices of various screen size. However, it is impossible to get hold of all available mobile/tablet devices in the market. Even if we prioritize the devices using analytics, it is very expensive to buy enough number of devices. Along with this, we need to upgrade to newer version of devices frequently when apple/google/Samsung releases an upgraded version.</p>
+
+<p>Next possible option is to use device emulators like device mode in Chrome dev tools. As pointed out in their <a href="https://developers.google.com/web/tools/chrome-devtools/device-mode/">documentation</a>, it is only a close approximation of how the website will look on a mobile device.It have its own limitations which are listed <a href="https://developers.google.com/web/tools/chrome-devtools/device-mode/emulate-mobile-viewports">here</a></p>
+
+<p>Best approach will be to use emulators early in development cycle and once UX design is stabilized, then test it on physical device based on priority obtained by analytics.</p>
+
+<h3>Challenges in testing Responsive Websites</h3>
+
+<p>Testing of responsive websites has its own challenges.</p>
+
+<ul>
+<li>Number of Options to be tested or number of  breakpoints which needs to be validated are high</li>
+<li><p>Distinctive UI designs for different device screen sizes makes testing time consuming. This adds complexity to testing since it will require testing of below in various screen sizes</p>
+
+<ul>
+<li>All UI elements like image, text, controls are aligned properly with each other and doesn&rsquo;t overflow from screen display area</li>
+<li>Consistency in font size, color, shades , padding, display orientation etc</li>
+<li>Resizing of controls which take inputs (like text) to cater for long content typed in by users.</li>
+<li>Other CSS validation specific for mobile and tablet devices</li>
+</ul>
+</li>
+<li><p>It is hard to test all of the above on every iteration manually.</p></li>
+<li>Comparing UI &amp; UX &amp; Visual design will require more efforts.</li>
+<li>Hard to keep track of every feature that needs to be tested and will have testing fatigue which will result in Non-obvious changes to UI</li>
+</ul>
+
+
+<h3>Automated Responsive Design testing - Galen Framework</h3>
+
+<p>As mentioned above, one of the pain points in responsive design testing is the user fatigue happening over multiple iterations of testing. This can be easily avoided by having an automated test framework. I recently came across galen framework which is an open source framework to test layouts of webpages. You can read about Galen framework <a href="http://galenframework.com/">here.</a>
+Galen framework can be used for automation of CSS testing easier. It has evolved over time and has its own Domain specific language and commands which can be used for CSS testing. I will go through galen framework in more details in next post</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-06-15T05:46:39+10:00"  data-updated="true" itemprop="datePublished dateCreated">15 Jun, 2017</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/06/15/how-to-squash-commits-in-git/" itemprop="url">How to Squash Commits in Git</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Very often we will be committing smaller pieces of work in our local machine as we go. However before we push them to a centralized repository, we may have to combine these small commits to single large commit, which makes sense for rest of the team. I will explain how this can be achieved by using interactive rebasing.</p>
+
+<p>To start with, let us assume the initial commits history look like below. It have 4 minor commits done to the same file.
+<img src="/images/2017/06/15/HowToSquashCommits_image1.png" alt="Initial Commit Structure" /></p>
+
+<p>Now we need to squash last for commits into a single commit. The command required for that is as below. This tells git to rebase head with previous 4 commits in an interactive mode.</p>
+
+<pre><code>    $ git rebase -i HEAD~4
+</code></pre>
+
+<p>This will pop up another editor with details of last 4 commits and some description about possible actions on this. Initially, all of them will have a default value of PICK. Since we are trying to squash commits together, we can select one of the commits as PICK and rest all needs to be changed as SQUASH. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image2.png" alt="Interactive Rebasing" /></p>
+
+<p>After this, another popup will appear with comments given for each of the commits. We can comment out unnecessary comments by using <code>#</code> and also modify required comments as we need. In below screen, I have modified comments for the first commit and commented out rest all. Save and close the editor once all changes are made.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image3.png" alt="Selecting comments" /></p>
+
+<p>Now Git will continue rebasing and it will squash all commits as selected in the previous step.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image4.png" alt="Git rebase" /></p>
+
+<p>If we look at commit history, we can see that commits are now squashed to single commit.</p>
+
+<p><img src="/images/2017/06/15/HowToSquashCommits_image5.png" alt="Squashed Result" /></p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-05-20T05:57:24+10:00"  data-updated="true" itemprop="datePublished dateCreated">20 May, 2017</time>
         
       </p>
@@ -1302,466 +1803,6 @@ Below commands can be run on cmd.exe</li>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-05T20:58:13+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 5 Mar, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/05/creating-html-report-for-test-execution%20result/" itemprop="url">Creating HTML Report for Test Execution Result</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>How to create HTML report with details of test execution</h3>
-
-<p>Very often , we will be required to create a report with details of test execution , so that it can be presented to various stakeholders. Specflow provides a feature to create HTML reports. Let us look into more details about how is this done</p>
-
-<ul>
-<li>Read through and understand details of reporting from <a href="https://github.com/techtalk/SpecFlow/wiki/Reporting">specflow</a>.</li>
-<li>Ensure packages for Specflow, Nunit, Nunit console runner are already installed.</li>
-<li>If you are using Nunit 3, install NUnit.Extension.NUnitV2ResultWriter package via nuget package manager. If this is not installed, we will get an error &ldquo;Unknown result format: nunit2&rdquo;.</li>
-<li>Follow setups required for running specflow test cases from command line. Details can be found <a href="/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit">here</a>.</li>
-<li>Modify the bat file to create nunit2 reports.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PathToNunitConsolerunner\nunit3-console.exe --labels=All --out=TestResult.txt "--result=TestResult.xml;format=nunit2" PathTo\AcceptanceTests.dll</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Add below command into Bat file. This will create HTML Report called &ldquo;MyResult.html&rdquo;</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PathToSpecfloPackage\specflow.exe nunitexecutionreport PathTo\AcceptanceTests.csproj /out:MyResult.html</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Final bat file will look like below.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>REM bat file to run test cases from console and create xml result file
-</span><span class='line'>.\..\..\..\packages\NUnit.ConsoleRunner.3.8.0\tools\nunit3-console.exe  --labels=All --out=TestResult.txt "--result=TestResult.xml;format=nunit2" .\AcceptanceTest.dll
-</span><span class='line'>
-</span><span class='line'>REM Generate html report from test output
-</span><span class='line'>.\..\..\..\packages\SpecFlow.2.1.0\tools\specflow.exe nunitexecutionreport .\..\..\AcceptanceTest.csproj /out:MyResult.html
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>EDITED: If it throws below error in newer version of Visual Studio  then ensure MS Build tool 2013 is installed. It can be downloaded from <a href="https://www.microsoft.com/en-US/download/details.aspx?id=40760">https://www.microsoft.com/en-US/download/details.aspx?id=40760</a></p>
-
-<p>Error : &ldquo;The tools version "12.0&rdquo; is unrecognized. Available tools versions are &ldquo;2.0&rdquo;, &ldquo;3.5&rdquo;, &ldquo;4.0&rdquo;. &ldquo;,</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-04T20:39:59+11:00"  data-updated="true" itemprop="datePublished dateCreated"> 4 Mar, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit/" itemprop="url">Running Specflow Test From Command Line Using Nunit</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>How to run specflow test cases from command line</h3>
-
-<p>We can use nunit console runner for running specflow test cases from command line. Running specflow test cases through nunit console runner will help to create test results in xml file, which can then be used for creating html reports.</p>
-
-<p>Procedure for command line test execution are</p>
-
-<ol>
-<li>Define Nunit as the test runner.  This is done in config file</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'><span class="nt">&lt;specFlow&gt;</span>
-</span><span class='line'>      <span class="nt">&lt;unitTestProvider</span> <span class="na">name=</span><span class="s">&quot;NUnit&quot;</span><span class="nt">/&gt;</span>
-</span><span class='line'><span class="nt">&lt;/specFlow&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ol>
-<li>Include Nunit.Console.Runner package to solution via nuget package manager</li>
-<li>Run specflow test cases using below command. We can create a bat file with below command and execute them as required.</li>
-</ol>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='xml'><span class='line'>pathToNunitConsoleRunner\nunit3-console.exe  PathToProject.dll
-</span><span class='line'>
-</span><span class='line'> example will be
-</span><span class='line'> .\..\..\..\packages\NUnit.ConsoleRunner.3.8.0\tools\nunit3-console.exe   .\BDDFramework.dll
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-03-03T11:46:48+00:00"  data-updated="true" itemprop="datePublished dateCreated"> 3 Mar, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/03/03/mountebank-your-first-service-virtualisation/" itemprop="url">Mountebank - Your First Service Virtualisation</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in <a href="/blog/2017/02/13/service-virtualisation-using-mountebank/">here (Install Mountebank)</a>, we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response</p>
-
-<h2>How to Create a Stub</h2>
-
-<ol>
-<li><p>Navigate to mountebank installation path</p></li>
-<li><p>Create a folder and name it as &ldquo;StubResponse&rdquo;. ( You can name it whatever you want)</p></li>
-<li><p>Create two json file using notepad and save it as &ldquo;MockResponeForApiOne.json&rdquo; and &ldquo;MockResponeForApiTwo.json&rdquo;( Or what ever you want).</p></li>
-<li><p>Copy paste below code to &ldquo;MockResponeForApiOne.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</p></li>
-</ol>
-
-
-<figure class='code'><figcaption><span>MockResponseForApiOne.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>"responses": [
-</span><span class='line'> {
-</span><span class='line'> "is": {
-</span><span class='line'> "statusCode": 200,
-</span><span class='line'> "body": {
-</span><span class='line'> "Text":"Response ONE ","token":"username","expires_in":90
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ],
-</span><span class='line'> "predicates": [
-</span><span class='line'> {
-</span><span class='line'> "exists": {
-</span><span class='line'> "body" :
-</span><span class='line'> {
-</span><span class='line'> "username": true,"password" : true
-</span><span class='line'> },
-</span><span class='line'> "method" : "POST",
-</span><span class='line'> "path" : "/Apitesting/v1/test?type=ResponseOne"
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>-</p>
-
-<ol>
-<li>Copy paste below code to &ldquo;MockResponeForApiTwo.json&rdquo; . Sample example only. Update the response and predicates to suite your need ( if required)</li>
-</ol>
-
-
-<figure class='code'><figcaption><span>MockResponseForApiTwo.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> "responses": [
-</span><span class='line'> {
-</span><span class='line'> "is": {
-</span><span class='line'> "statusCode": 200,
-</span><span class='line'> "body": {
-</span><span class='line'> "Text":"Response TWO ","token":"emailAddress","expires_in":90
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ],
-</span><span class='line'> "predicates": [
-</span><span class='line'> {
-</span><span class='line'> "exists": {
-</span><span class='line'> "body" :
-</span><span class='line'> {
-</span><span class='line'> "email": true,"password" : true
-</span><span class='line'> },
-</span><span class='line'> "method" : "POST",
-</span><span class='line'> "path" : "/Apitesting/v1/test?type=ResponseTwo"
-</span><span class='line'> }
-</span><span class='line'> }
-</span><span class='line'> ]</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>How to create an Imposter</h2>
-
-<ol>
-<li><p>Create another file called test.json in same path as above</p></li>
-<li><p>copy and paste below contents to it</p></li>
-</ol>
-
-
-<figure class='code'><figcaption><span>test.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>{
-</span><span class='line'>"imposters": [
-</span><span class='line'>{
-</span><span class='line'>"port": 4547,
-</span><span class='line'>"protocol": "http",
-</span><span class='line'>"stubs": [
-</span><span class='line'>{
-</span><span class='line'>&lt;% include MockResponseForApiOne.json %&gt;
-</span><span class='line'>},
-</span><span class='line'>{
-</span><span class='line'>&lt;% include MockResponseForApiTwo.json %&gt;
-</span><span class='line'>}
-</span><span class='line'>]
-</span><span class='line'>}
-</span><span class='line'>]
-</span><span class='line'>}
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Let us have a close look into Imposter and stubs</h2>
-
-<p>Responses – Contains an array of responses expected to return for the defined stub. In the above scenario the response will include status code as 200 and response body. For more info, <a href="http://www.mbtest.org/docs/api/contracts">http://www.mbtest.org/docs/api/contracts</a>
-Predicates – is an array of predicates which will be used during matching process. Predicate object can be quite complex, it supports lots of different matching techniques.
-For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mbtest.org/docs/api/predicates</a></p>
-
-<h2>Let&rsquo;s Mock it</h2>
-
-<p>Once all required files are created and saved, mountebank can be started by following command in command prompt , after navigating to installation folder of mountebank</p>
-
-<figure class='code'><figcaption><span>test.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>mb --configfile StubResponse/test.json
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/cmd.jpg" alt="cmd.jpg" /></p>
-
-<p>Once mountebank is started, we can verify it by navigating to path <a href="http://localhost:2525/imposters">http://localhost:2525/imposters</a></p>
-
-<p>It will list out all active ports and a list of stubs available</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/imposter.jpg" alt="imposter" /></p>
-
-<h2>Test It</h2>
-
-<p>Once we complete above steps, mountebank is ready with stubs. Now comes the part to test it and use. You can use any api testing tool ( Postman, soapUi etc ) for testing this. Just send the request matching the predicates and look for the responses</p>
-
-<p>Below are the screenshot of Postman request</p>
-
-<p><strong>Requesting for First API.</strong></p>
-
-<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;username&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=ResponseOne"</p>
-
-<p>Now construct a postman request matching above and fire it</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgone.jpg" alt="bgone" /></p>
-
-<p><strong>Request for second API</strong></p>
-
-<p>Predicate of response One says that , request has to be of type POST, body of request should have &ldquo;<strong>email</strong>&rdquo; and &ldquo;password&rdquo; . Path of the request should have /Apitesting/v1/test?type=Response<strong>Two</strong>"</p>
-
-<p>Now construct a postman request matching above and fire it</p>
-
-<p><img src="https://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg" alt="bgtwo" /></p>
-
-<p>As you can see, both request has succesfully received expected response message</p>
-
-<p>For actual development usage, just point your application to this localhost URL and start consuming virtualised API</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2017-02-13T11:13:58+00:00"  data-updated="true" itemprop="datePublished dateCreated">13 Feb, 2017</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2017/02/13/service-virtualisation-using-mountebank/" itemprop="url">Service Virtualisation Using Mountebank</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h1>What is Mountebank?</h1>
-
-<blockquote>As per mbtest.org "_mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire. Simply point your application under test to mountebank instead of the real dependency, and test like you would with traditional stubs and mocks_"</blockquote>
-
-
-<p>In short mountebank is a open source service virtualisation tool . Mountebank uses imposters to act as on demand test doubles. Hence our test cases communicate to Mountebank and mountebank responds back with relevant stubs as defined.</p>
-
-<h1>How to Setup Mountebank ?</h1>
-
-<p>Installation can be done via two methods</p>
-
-<h3>npm</h3>
-
-<p>Mountebank can be installed as a npm package. Node.js should be installed for this option to work</p>
-
-<pre><code>&lt;code&gt;npm install -g mountebank&lt;/code&gt;
-</code></pre>
-
-<h3>Self contained Installation file</h3>
-
-<p>OS Specific installation file can be downloaded from <a href="http://www.mbtest.org/docs/install">Download</a></p>
-
-<p>Note: Please read through the windows path limitation mentioned in above link</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1786,7 +1827,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     
     <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
-        <span class="badge">5</span>
+        <span class="badge">10</span>
         codesnippets
       </a>
     
@@ -1834,7 +1875,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     
     <a class="list-group-item " href="/blog/categories/xml/index.html">
-        <span class="badge">1</span>
+        <span class="badge">2</span>
         xml
       </a>
     
@@ -1863,6 +1904,18 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
       </a>
     
     
+    <a class="list-group-item " href="/blog/categories/c#/index.html">
+        <span class="badge">1</span>
+        c#
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/command-line/index.html">
+        <span class="badge">2</span>
+        command line
+      </a>
+    
+    
     <a class="list-group-item " href="/blog/categories/git/index.html">
         <span class="badge">2</span>
         git
@@ -1870,7 +1923,7 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
     
     
     <a class="list-group-item " href="/blog/categories/powershell/index.html">
-        <span class="badge">2</span>
+        <span class="badge">3</span>
         powershell
       </a>
     
@@ -1994,6 +2047,18 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
         api testing
       </a>
     
+    
+    <a class="list-group-item " href="/blog/categories/windows-services/index.html">
+        <span class="badge">1</span>
+        windows services
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wmi/index.html">
+        <span class="badge">1</span>
+        wmi
+      </a>
+    
   </div>
 </section><section class="panel panel-default">
   <div class="panel-heading">
@@ -2002,15 +2067,15 @@ For more info, <a href="http://www.mbtest.org/docs/api/predicates">http://www.mb
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">Running Command Line in Remote Machine Using WMI</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/05/running-powershell-remotely/">Running Powershell Remotely</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/03/working-with-windows-services/">Working With Windows Services</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/">Comparing XML File Structure Without XSD</a>
+    
     <a class="list-group-item " href="/blog/2018/05/27/running-api-test-using-cypress/">Running API Test Using Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/11/ui-automation-with-cypress/">UI Automation With Cypress</a>
-    
-    <a class="list-group-item " href="/blog/2018/05/03/writing-tests-in-postman/">Writing Tests in Postman</a>
-    
-    <a class="list-group-item " href="/blog/2018/04/28/postman-bdd/">Postman BDD</a>
-    
-    <a class="list-group-item " href="/blog/2018/03/20/gulp-task-for-running-automated-test/">Gulp Task for Running Automated Test</a>
     
   </div>
 </section>

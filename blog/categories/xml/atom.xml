@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Xml | Aby George A]]></title>
   <link href="http://www.abygeorgea.com/blog/categories/xml/atom.xml" rel="self"/>
   <link href="http://www.abygeorgea.com/"/>
-  <updated>2018-05-27T09:26:50+10:00</updated>
+  <updated>2018-09-08T23:18:07+10:00</updated>
   <id>http://www.abygeorgea.com/</id>
   <author>
     <name><![CDATA[Aby George A]]></name>
@@ -12,6 +12,78 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Comparing XML File Structure Without XSD]]></title>
+    <link href="http://www.abygeorgea.com/blog/2018/09/01/comparing-xml-file-structure-without-xsd/"/>
+    <updated>2018-09-01T22:05:42+10:00</updated>
+    <id>http://www.abygeorgea.com/blog/2018/09/01/comparing-xml-file-structure-without-xsd</id>
+    <content type="html"><![CDATA[<p>Code snippet for comparing two xml files without using xsd for validating their structure is same ( nodes and arguments should be same. Values of each node/argument can be different).</p>
+
+<pre><code class="csharp">
+internal void VerifyMessageHaveSimilarStructureOfTemplate(string inputXml, string templateXml)
+        {
+            var docA = new XmlDocument();
+            var docB = new XmlDocument();
+
+            docA.LoadXml(inputXml);
+            docB.LoadXml(templateXml);
+
+            var isDifferent = DoTheyHaveDiferentStructure(docA.ChildNodes, docB.ChildNodes);
+            log.Info("Result of Checking for difference of Input xml with template is : " + isDifferent.ToString());
+
+
+        }
+
+
+  private bool DoTheyHaveDiferentStructure(XmlNodeList xmlNodeListA, XmlNodeList xmlNodeListB)
+        {
+            if (xmlNodeListA.Count != xmlNodeListB.Count) return true;
+
+            for (var i = 0; i &lt; xmlNodeListA.Count; i++)
+            {
+                var nodeA = xmlNodeListA[i];
+                var nodeB = xmlNodeListB[i];
+
+                if (nodeA.Attributes == null)
+                {
+                    if (nodeB.Attributes != null)
+                        return true;
+                    else
+                        continue;
+                }
+
+                if (nodeA.Attributes.Count != nodeB.Attributes.Count || nodeA.Name != nodeB.Name) return true;
+                List&lt;string&gt; AttributeNameA = new List&lt;string&gt;();
+                List&lt;string&gt; AttributeNameB = new List&lt;string&gt;();
+                for (var j = 0; j &lt; nodeA.Attributes.Count; j++)
+                {
+                    AttributeNameA.Add(nodeA.Attributes[j].Name);
+                    AttributeNameB.Add(nodeB.Attributes[j].Name);
+                    // -- If attribute position should be same, then include below as well
+                    //var attrA = nodeA.Attributes[j];
+                    //var attrB = nodeB.Attributes[j];
+
+                    //if (attrA.Name != attrB.Name) return true;
+                }
+                AttributeNameA.Sort();
+                AttributeNameB.Sort();
+                if(! AttributeNameA.SequenceEqual(AttributeNameB)) return true;
+
+                if (nodeA.HasChildNodes &amp;&amp; nodeB.HasChildNodes)
+                {
+                    return HaveDiferentStructure(nodeA.ChildNodes, nodeB.ChildNodes);
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Data Driven Framework - XML]]></title>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Running Command Line in Remote Machine Using WMI - Aby George A</title>
+  <meta name="author" content="Aby George A">
+
+  <meta name="description" content="How to run CMD remotely">
+  <meta name="keywords" content="Command Line, WMI">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="Aby George A" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">
+  <meta property="og:title" content="Running Command Line in Remote Machine Using WMI - Aby George A">
+  <meta property="og:description" content="How to run CMD remotely">
+
+  <script src="/javascripts/libs/jquery/jquery-2.1.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection, print" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-99127431-1', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" title="toggle navbar" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Aby George A</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+				<li >
+                    <a href="/resources">Resources</a>
+                </li>
+				<li >
+                    <a href="/about">About Me</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+            
+                <form class="navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                    <input type="hidden" name="sitesearch" value="www.abygeorgea.com">
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="q" placeholder="Search">
+                    </div>
+                </form>
+            
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="Aby George A" />
+    <meta itemprop="description" content="My thoughts on Test Automation . This blog is mainly for documenting my learning on Test automation . I intend to have this as a go to location for finding solutions for the problem faced by me in past . Hopefully this will help others as well." />
+    <meta itemprop="url" content="http://www.abygeorgea.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-08T21:47:52+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 8 Sep, 2018</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Running Command Line in Remote Machine Using WMI
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Recently I had to find a way for running a command line process in server. I had to spend fair bit of time googling for various approaches of doing it. Most of them are by using PSExec.  However there is another approach of using WMI (Windows Management Instrumentation) . Below is one of the approach , which I found at <a href="https://blogs.msdn.microsoft.com/padmanr/2010/05/08/execute-a-process-on-remote-machine-wait-for-it-to-exit-and-retrieve-its-exit-code-using-wmi/">msdn blog</a>.</p>
+
+<p>Below method can be accessed anywhere by</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ProcessWMI p = new ProcessWMI();
+</span><span class='line'>p.ExecuteRemoteProcessWMI(remoteMachine, sBatFile, timeout);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The solution has multiple parts as follows</p>
+
+<ol>
+<li>Connect to remote machine using remote machine Name, user name and password</li>
+<li>Start the remote process. Win32 process and pass the command to be run</li>
+<li>Find if the remote process is running and if it does, start an event monitor to wait for it to exit</li>
+<li>Once the process exits, retrieve its exit code</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+</pre></td><td class='code'><pre><code class='Csharp'><span class='line'><span class="k">public</span> <span class="k">class</span> <span class="nc">ProcessWMI</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">uint</span> <span class="n">ProcessId</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">int</span> <span class="n">ExitCode</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="kt">bool</span> <span class="n">EventArrived</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">public</span> <span class="n">ManualResetEvent</span> <span class="n">mre</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManualResetEvent</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">void</span> <span class="nf">ProcessStoptEventArrived</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArrivedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">].</span><span class="n">Value</span> <span class="p">==</span> <span class="n">ProcessId</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Process: {0}, Stopped with Code: {1}&quot;</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ProcessId&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">,</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ExitStatus&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">ExitCode</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="kt">uint</span><span class="p">)</span><span class="n">e</span><span class="p">.</span><span class="n">NewEvent</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s">&quot;ExitStatus&quot;</span><span class="p">].</span><span class="n">Value</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">EventArrived</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">mre</span><span class="p">.</span><span class="n">Set</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="nf">ProcessWMI</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="p">.</span><span class="n">ProcessId</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">ExitCode</span> <span class="p">=</span> <span class="p">-</span><span class="m">1</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">EventArrived</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">void</span> <span class="nf">ExecuteRemoteProcessWMI</span><span class="p">(</span><span class="kt">string</span> <span class="n">remoteComputerName</span><span class="p">,</span> <span class="kt">string</span> <span class="n">arguments</span><span class="p">,</span> <span class="kt">int</span> <span class="n">WaitTimePerCommand</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="kt">string</span> <span class="n">strUserName</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">try</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">ConnectionOptions</span> <span class="n">connOptions</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ConnectionOptions</span><span class="p">();</span>
+</span><span class='line'>            <span class="c1">//Note: This will connect  using below credentials. If not provided, it will be based on logged in user</span>
+</span><span class='line'>             <span class="n">connOptions</span><span class="p">.</span><span class="n">Username</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineLogonUser&quot;</span><span class="p">];</span>
+</span><span class='line'>             <span class="n">connOptions</span><span class="p">.</span><span class="n">Password</span> <span class="p">=</span> <span class="n">ConfigurationManager</span><span class="p">.</span><span class="n">AppSettings</span><span class="p">[</span><span class="s">&quot;RemoteMachineUserPassword&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">connOptions</span><span class="p">.</span><span class="n">Impersonation</span> <span class="p">=</span> <span class="n">ImpersonationLevel</span><span class="p">.</span><span class="n">Impersonate</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">connOptions</span><span class="p">.</span><span class="n">EnablePrivileges</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">ManagementScope</span> <span class="n">manScope</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementScope</span><span class="p">(</span><span class="n">String</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">@&quot;\\{0}\ROOT\CIMV2&quot;</span><span class="p">,</span> <span class="n">remoteComputerName</span><span class="p">),</span> <span class="n">connOptions</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">try</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">manScope</span><span class="p">.</span><span class="n">Connect</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Management Connect to remote machine &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span> <span class="p">+</span> <span class="s">&quot; as user &quot;</span> <span class="p">+</span> <span class="n">strUserName</span> <span class="p">+</span> <span class="s">&quot; failed with the following error &quot;</span> <span class="p">+</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">ObjectGetOptions</span> <span class="n">objectGetOptions</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ObjectGetOptions</span><span class="p">();</span>
+</span><span class='line'>            <span class="n">ManagementPath</span> <span class="n">managementPath</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementPath</span><span class="p">(</span><span class="s">&quot;Win32_Process&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementClass</span> <span class="n">processClass</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementClass</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">managementPath</span><span class="p">,</span> <span class="n">objectGetOptions</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementBaseObject</span> <span class="n">inParams</span> <span class="p">=</span> <span class="n">processClass</span><span class="p">.</span><span class="n">GetMethodParameters</span><span class="p">(</span><span class="s">&quot;Create&quot;</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">inParams</span><span class="p">[</span><span class="s">&quot;CommandLine&quot;</span><span class="p">]</span> <span class="p">=</span> <span class="n">arguments</span><span class="p">;</span>
+</span><span class='line'>                    <span class="k">using</span> <span class="p">(</span><span class="n">ManagementBaseObject</span> <span class="n">outParams</span> <span class="p">=</span> <span class="n">processClass</span><span class="p">.</span><span class="n">InvokeMethod</span><span class="p">(</span><span class="s">&quot;Create&quot;</span><span class="p">,</span> <span class="n">inParams</span><span class="p">,</span> <span class="k">null</span><span class="p">))</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>                        <span class="k">if</span> <span class="p">((</span><span class="kt">uint</span><span class="p">)</span><span class="n">outParams</span><span class="p">[</span><span class="s">&quot;returnValue&quot;</span><span class="p">]</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                        <span class="p">{</span>
+</span><span class='line'>                            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Error while starting process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; creation returned an exit code of &quot;</span> <span class="p">+</span> <span class="n">outParams</span><span class="p">[</span><span class="s">&quot;returnValue&quot;</span><span class="p">]</span> <span class="p">+</span> <span class="s">&quot;. It was launched as &quot;</span> <span class="p">+</span> <span class="n">strUserName</span> <span class="p">+</span> <span class="s">&quot; on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                        <span class="p">}</span>
+</span><span class='line'>                        <span class="k">this</span><span class="p">.</span><span class="n">ProcessId</span> <span class="p">=</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span><span class="n">outParams</span><span class="p">[</span><span class="s">&quot;processId&quot;</span><span class="p">];</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">SelectQuery</span> <span class="n">CheckProcess</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SelectQuery</span><span class="p">(</span><span class="s">&quot;Select * from Win32_Process Where ProcessId = &quot;</span> <span class="p">+</span> <span class="n">ProcessId</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectSearcher</span> <span class="n">ProcessSearcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementObjectSearcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">CheckProcess</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectCollection</span> <span class="n">MoC</span> <span class="p">=</span> <span class="n">ProcessSearcher</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="p">(</span><span class="n">MoC</span><span class="p">.</span><span class="n">Count</span> <span class="p">==</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;ERROR AS WARNING: Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; terminated before it could be tracked on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">WqlEventQuery</span> <span class="n">q</span> <span class="p">=</span> <span class="k">new</span> <span class="n">WqlEventQuery</span><span class="p">(</span><span class="s">&quot;Win32_ProcessStopTrace&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="k">using</span> <span class="p">(</span><span class="n">ManagementEventWatcher</span> <span class="n">w</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementEventWatcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">w</span><span class="p">.</span><span class="n">EventArrived</span> <span class="p">+=</span> <span class="k">new</span> <span class="n">EventArrivedEventHandler</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">ProcessStoptEventArrived</span><span class="p">);</span>
+</span><span class='line'>                <span class="n">w</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(!</span><span class="n">mre</span><span class="p">.</span><span class="n">WaitOne</span><span class="p">(</span><span class="n">WaitTimePerCommand</span><span class="p">,</span><span class="k">false</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="n">w</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span><span class='line'>                    <span class="k">this</span><span class="p">.</span><span class="n">EventArrived</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">else</span>
+</span><span class='line'>                    <span class="n">w</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(!</span><span class="k">this</span><span class="p">.</span><span class="n">EventArrived</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="n">SelectQuery</span> <span class="n">sq</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SelectQuery</span><span class="p">(</span><span class="s">&quot;Select * from Win32_Process Where ProcessId = &quot;</span> <span class="p">+</span> <span class="n">ProcessId</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">using</span> <span class="p">(</span><span class="n">ManagementObjectSearcher</span> <span class="n">searcher</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ManagementObjectSearcher</span><span class="p">(</span><span class="n">manScope</span><span class="p">,</span> <span class="n">sq</span><span class="p">))</span>
+</span><span class='line'>                <span class="p">{</span>
+</span><span class='line'>                    <span class="k">foreach</span> <span class="p">(</span><span class="n">ManagementObject</span> <span class="n">queryObj</span> <span class="k">in</span> <span class="n">searcher</span><span class="p">.</span><span class="n">Get</span><span class="p">())</span>
+</span><span class='line'>                    <span class="p">{</span>
+</span><span class='line'>                        <span class="n">queryObj</span><span class="p">.</span><span class="n">InvokeMethod</span><span class="p">(</span><span class="s">&quot;Terminate&quot;</span><span class="p">,</span> <span class="k">null</span><span class="p">);</span>
+</span><span class='line'>                        <span class="n">queryObj</span><span class="p">.</span><span class="n">Dispose</span><span class="p">();</span>
+</span><span class='line'>                        <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot; timed out and was killed on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span><span class="p">);</span>
+</span><span class='line'>                    <span class="p">}</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>            <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="n">ExitCode</span> <span class="p">!=</span> <span class="m">0</span><span class="p">)</span>
+</span><span class='line'>                    <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="s">&quot;Process &quot;</span> <span class="p">+</span> <span class="n">arguments</span> <span class="p">+</span> <span class="s">&quot;exited with exit code &quot;</span> <span class="p">+</span> <span class="k">this</span><span class="p">.</span><span class="n">ExitCode</span> <span class="p">+</span> <span class="s">&quot; on &quot;</span> <span class="p">+</span> <span class="n">remoteComputerName</span> <span class="p">+</span> <span class="s">&quot; run as &quot;</span> <span class="p">+</span> <span class="n">strUserName</span><span class="p">);</span>
+</span><span class='line'>                <span class="k">else</span>
+</span><span class='line'>                    <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;process exited with Exit code 0&quot;</span><span class="p">);</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">Exception</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">Format</span><span class="p">(</span><span class="s">&quot;Execute process failed Machinename {0}, ProcessName {1}, RunAs {2}, Error is {3}, Stack trace {4}&quot;</span><span class="p">,</span> <span class="n">remoteComputerName</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">strUserName</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span> <span class="n">e</span><span class="p">.</span><span class="n">StackTrace</span><span class="p">),</span> <span class="n">e</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Aby George A</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2018-09-08T21:47:52+10:00"  data-updated="true" itemprop="datePublished dateCreated"> 8 Sep, 2018</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/codesnippets/'>codesnippets</a>, <a class='category' href='/blog/categories/command-line/'>command line</a>, <a class='category' href='/blog/categories/wmi/'>wmi</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/" data-via="" data-counturl="http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/" >Tweet</a>
+  
+  
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2018/09/05/running-powershell-remotely/" title="Previous Post: Running Powershell Remotely">&laquo; Running Powershell Remotely</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Categories</h3>
+  </div>
+  <div class="list-group">
+    
+    
+    <a class="list-group-item " href="/blog/categories/codesnippets/index.html">
+        <span class="badge">10</span>
+        codesnippets
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/java/index.html">
+        <span class="badge">2</span>
+        java
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/excel/index.html">
+        <span class="badge">3</span>
+        excel
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium/index.html">
+        <span class="badge">4</span>
+        selenium
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/volunteering/index.html">
+        <span class="badge">1</span>
+        volunteering
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/nodejs/index.html">
+        <span class="badge">1</span>
+        nodejs
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/data-driven-testing-framework/index.html">
+        <span class="badge">3</span>
+        data driven testing framework
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/selenium-webdriver/index.html">
+        <span class="badge">3</span>
+        selenium webdriver
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/xml/index.html">
+        <span class="badge">2</span>
+        xml
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/specflow/index.html">
+        <span class="badge">6</span>
+        specflow
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/bdd/index.html">
+        <span class="badge">1</span>
+        bdd
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/element-identification/index.html">
+        <span class="badge">4</span>
+        element identification
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/nunit/index.html">
+        <span class="badge">3</span>
+        nunit
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/c#/index.html">
+        <span class="badge">1</span>
+        c#
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/command-line/index.html">
+        <span class="badge">2</span>
+        command line
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/git/index.html">
+        <span class="badge">2</span>
+        git
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/powershell/index.html">
+        <span class="badge">3</span>
+        powershell
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/mountebank/index.html">
+        <span class="badge">8</span>
+        mountebank
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/service-virtualisation/index.html">
+        <span class="badge">5</span>
+        service virtualisation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octopress/index.html">
+        <span class="badge">1</span>
+        octopress
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/octostrap3/index.html">
+        <span class="badge">1</span>
+        octostrap3
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/galen/index.html">
+        <span class="badge">2</span>
+        galen
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/javascript/index.html">
+        <span class="badge">1</span>
+        javascript
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/postman/index.html">
+        <span class="badge">6</span>
+        postman
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/newman/index.html">
+        <span class="badge">4</span>
+        newman
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/conference/index.html">
+        <span class="badge">1</span>
+        conference
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/test/index.html">
+        <span class="badge">1</span>
+        test
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/automation/index.html">
+        <span class="badge">1</span>
+        automation
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/agile/index.html">
+        <span class="badge">1</span>
+        agile
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/service-virtualization/index.html">
+        <span class="badge">1</span>
+        service virtualization
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/accessibility/index.html">
+        <span class="badge">1</span>
+        accessibility
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/testing/index.html">
+        <span class="badge">1</span>
+        testing
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/team-city/index.html">
+        <span class="badge">1</span>
+        team city
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/metrics/index.html">
+        <span class="badge">1</span>
+        metrics
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/gulp/index.html">
+        <span class="badge">1</span>
+        gulp
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/cypress/index.html">
+        <span class="badge">2</span>
+        cypress
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/api-testing/index.html">
+        <span class="badge">1</span>
+        api testing
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/windows-services/index.html">
+        <span class="badge">1</span>
+        windows services
+      </a>
+    
+    
+    <a class="list-group-item " href="/blog/categories/wmi/index.html">
+        <span class="badge">1</span>
+        wmi
+      </a>
+    
+  </div>
+</section><section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/">Running Command Line in Remote Machine Using WMI</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/05/running-powershell-remotely/">Running Powershell Remotely</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/03/working-with-windows-services/">Working With Windows Services</a>
+    
+    <a class="list-group-item " href="/blog/2018/09/01/comparing-xml-file-structure-without-xsd/">Comparing XML File Structure Without XSD</a>
+    
+    <a class="list-group-item " href="/blog/2018/05/27/running-api-test-using-cypress/">Running API Test Using Cypress</a>
+    
+  </div>
+</section>
+
+<section class="panel panel-default clearfix">
+  <div class="panel-heading">
+      <h3 class="panel-title">GitHub Repos</h3>
+  </div>
+  <div class="list-group" id="gh_repos">
+    <p class="loading">Status updating...</p>
+  </div>
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'abygeorgea',
+            count: 2,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2018 - Aby George A<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'abygeorgea';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/';
+        var disqus_url = 'http://www.abygeorgea.com/blog/2018/09/08/running-command-line-in-remote-machine-using-wmi/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr.js"></script>
+
+
+	
+  </body>
+</html>
