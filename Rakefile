@@ -11,6 +11,7 @@ rsync_delete   = false
 rsync_args     = ""  # Any extra arguments to pass to rsync
 #deploy_default = "push"
 deploy_default = "s3"
+s3_bucket = "www.abygeorgea.com"
 
 # This will be configured for you when you run config_deploy
 deploy_branch  = "master"
