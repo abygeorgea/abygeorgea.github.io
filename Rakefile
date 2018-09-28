@@ -13,6 +13,7 @@ rsync_args     = ""  # Any extra arguments to pass to rsync
 deploy_default = "s3"
 s3_bucket = "www.abygeorgea.com"
 
+
 # This will be configured for you when you run config_deploy
 deploy_branch  = "master"
 
@@ -412,5 +413,8 @@ end
 desc "Deploy website via s3cmd"
 task :s3 do
   puts "## Deploying website via s3cmd"
-  ok_failed system("s3cmd sync --acl-public --reduced-redundancy public/* s3://#{s3_bucket}/")
+  ok_failed system("s3cmd sync --acl-public --reduced-redundancy   --cf-invalidate public/* s3://#{s3_bucket}/")
 end
+
+
+
