@@ -3,7 +3,7 @@ layout: post
 title: "Sending Emails through SMTP in C#"
 date: 2019-04-09 22:03:26 +1000
 comments: true
-categories: 
+categories: codesnippets
 keywords: [Email, C#, codesnippets]
 description: How to send emails in C# using SMTP
 ---

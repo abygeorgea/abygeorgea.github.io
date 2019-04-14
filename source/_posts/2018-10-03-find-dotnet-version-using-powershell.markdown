@@ -3,7 +3,7 @@ layout: post
 title: "Find DotNet Version Using Powershell"
 date: 2018-10-03 21:39:55 +1000
 comments: true
-categories: [codesnippet, powershell]
+categories: [codesnippets, powershell]
 keywords: codesnipper, powershell
 description: How to find DotNet Version using powershell
 ---
