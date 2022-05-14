@@ -9,7 +9,7 @@ description: How to validate XHR  in Cypress
 ---
 
 
-In the previous [post]({{site.root}}blog/2020/11/09/how-to-read-browser-cookies-in-cypress/) we saw about working with Cookies in Cypress. Now let us look at how we can work with XHR request in Cypress.
+In the previous [post]({{site.root}}blog/2020/11/19/how-to-read-browser-cookies-in-cypress/) we saw about working with Cookies in Cypress. Now let us look at how we can work with XHR request in Cypress.
 
 XHR stands for XMLHttpRequest. It is an API in the form of an object whose methods transfer data between a web browser and a web server. Cypress provides inbuilt functionality to work with XHR request. It provides us with objects with information about request and response of these calls. It will help to do various assertions on header, url , body , status code etc as needed. It also help us to stub the response if needed.
 

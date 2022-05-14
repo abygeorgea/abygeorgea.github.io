@@ -6,6 +6,22 @@ comments: false
 sharing: false
 footer: true
 ---
+
+
+#Test Transformation
+- how to do you measure maturity of test process. what are the various metrics you can use
+   Talk about TMM maturity models. Where can it be
+   Talk about how it can improve to next level
+   
+   
+- What all test metrics can you use
+
+https://www.tricentis.com/blog/64-essential-testing-metrics-for-measuring-quality-assurance-success/
+explain what could be some relevant one. also explain why few one cannot be generailsed
+
+- How to do you bring change in human mind set to improve test automation
+- how do you handle conflicts
+
 #Interview Questions
 1. Typical day in office - Time divided between various responsibility in a day
 	* 	20% - Status Update /scrum meeting, client communication, meetings etc
@@ -273,3 +289,175 @@ Above this, ROI should consider factors like additional test run, increase cover
 - How many projects will I have to work parallely
 - how will be a normal day for me in office
 - do you have flexible work cultureo
+
+## Test Manager Interview Questions - Woolies X
+
+* How do you handle conflicts within the team members. what all actions can you take
+* How do you handle mental health issues like anxiety, depression etc in the team
+* When have you felt demotivated and how you handle that
+* How do you upskill yourself
+* Any experience in publisher - consumer models
+* Experience in cloud based systems
+* Experience with CI CD tools
+* What is your career plan
+* What will you do to avoid attirition
+* 
+
+## Test Transforamtion ##
+- 
+
+
+
+Describe your biggest accomplishment and failure (if you had one) in your most recent role
+- take about efforts taken to shift left testing and quality as a team responsibility
+ - not raising defects every now and then. working collaboreitvily with devs, reducing count of defects, increasing unit test code coverage
+ - convincing higher managerment that defect leakage is not bad and just monitoting the number of defects in prod vs lower environemnt alone,doesnt give quality
+- we also compare how many times a task moved between test/ dev to get an understanding pf rigoursly we tested and use that in metrics
+
+Biggest process imprevement
+- we did a survey every sprint and noticed that team mood is generally bad toward release readines smeeting
+- during sprint retro we discussed about it and found that it is mainly due to few tough stakeholders questioning development process, tech debt, open defects etc and raising risk around it. There are few GM level peopke as welll
+- we implemented a process to meet with tough stakeholders first and walk them through the outstanding task before
+this improved reales readines process
+
+
+. Tell me about a time you adapted to a big change at work. How did you adjust to your new environment?
+Make up something when scrum master left and I had to take up additional responsibility there
+Changes when banks deprioritized
+Scrambling to keep teams in place, making sure knowledge is not lost, ensuring documentation is in place
+
+Share an example of when you had a problem with employee behavior. How did you resolve the issue?
+- Can complain about offshore team not being on time due to trafiinc , dance and other activities. Not getting responses on time, setting up status call even after hours to support
+
+ Give me an example of a time you made a mistake at work and explain how you fixed the issue.
+---- talk about account origination error .. Thought Tm will be right, but it was wromnh. Need to get information from actual enduser,s takeholder.. Came up with remedial action, identified who is business takeholder, who to approve etc
+
+Tell me about a time when your team had to work on a tight deadline. How did you ensure everyone completed their work on time?
+
+ Netbank regression team is always timehcetice. Plan test cases and assign indivisually based on their area of expertise, get direct feedback , remove blocker
+Did risk based prioritization, handled external stakeholders
+
+
+Tell me about a time you successfully delegated tasks.
+I try to avoid micro managing . Normally give full responsibility to team members for their action
+It has backfired sometimes
+Talk about 3 banks happening at same time even meeting scheduled at same time.. Delegated most of the task to other teammembers
+
+When have you had to persuade others to see a situation from your perspective? Can you give an example and show how you explained your point of view?
+
+Talk about merchant statements. No test data and env.. Entire team was of opionion that we test locally with stusb and move past . They were confident in designde and roll out approach
+But created issues where ids were recycled. Raised risk , have acceptance
+
+• Tell me about a project where you’ve had to use your analytical skills. How did you demonstrate your skills and what was the outcome of the project?
+This is used more like BA role. I had played BA role during merchant statements where I tried to analyse the impacts of all systems
+
+How do you manage stress among your team members?
+Give me an example of how you mediated a conflict between your employees or colleagues.
+Talk about Harish and raji . Onshore and offshore counter part. We rotate them every now and then 
+Created issue when harish went offshore
+	• Talk about harish and raji
+	• No of test cases run per day onsfore/offshroe etc
+	• Tlak it out, work coperatively
+Started to notice resentmens in 1 - 1 and finally helped to find him another proejct
+
+• What have you done in the past to alleviate stress from your team members?
+•   identify what is causing stress. Talk to them. See whether we can manage it by resolving it
+• Redirect to origiantional policicies like conselling etc
+Help for leav
+
+
+Tell me about a situation where you took initiative without being asked.
+Talk about current projcet where TM was sick for few days and had attended some meeting on her behalf. I took over all coordiantion activities and it came to aplace when everything ws done by me
+
+ Provide an instance when you had to split your time between several projects. How did you prioritize?
+This is very common in CBA days.i had t manage multiple projects
+I assume, you were referring to how to prioritize tasks for multuple priority projects.. I normally define priority and impact and effort needed. Also look at timeline. Normally try to prioritze what ever has to be done first. If there are many  , I normally look at their priority / effort and try to do the least effort one to get it through. It is not a hard and fast rule. Also look at task which will unblock others first 
+
+
+• What’s the most stressful or difficult situation you’ve faced at your previous job? How did you handle it?
+		○ Credit card signage issue
+		○ High level meetings with CIO, why it missed. How can we fix, actions involved. Heightned scruitny into next release
+
+
+
+• Have you ever missed a deadline? What happened? What would you do differently next time?
+We had instance where tetsing didn’t finish on time. It depends on multiple external interaces. Our cba deployment was delayed too much. Their test env
+
+• Tell me about a time you had to deliver bad news to a manager or team member. How did you do it? What was the other person’s reaction?
+	• Show stopper defect on last sign off day
+	• Literally angry
+	We made a fix and deployed on the day
+
+Tell me about a time you had to deal with a difficult colleague. How did you communicate with the colleague effectively?
+- prepare well - what needs ot be highlighted, how are they going to response, what outcome wa sI looking at , what can motivte them
+- take step back - make sure feedback is received from everyone whom he has worked
+- make sure feedback is constrcutive which have way to imprpve , rather than just feedback
+- manage emotions and make sure i remain calm
+- put conversation on record
+
+What is your management style
+- doenst prefer to micro manage
+- i make sure team understand what need to be fone and give highlevel task . I normally leave the team to select teh lowlevel details by them.
+ I prefer to remain hands-off when it comes to individual tasks, but at the same time, I’m always available for help, guidance and assistance when needed.
+then do informal checkin to make sure everyone can deliver the task and overall that will match up tp whats needed
+
+Tell me about a time you led by example
+- take about MSO defect fix and found that application has changed too much . amount worst case scenarios were too many 
+- team complained that testing stresfull and their way of selecting test cases is not working and it has too many random  failure
+I took lead to look into the code in stash and idenfitied how the logic works and realised that there were too many combinatiosn. I stook initiative to  identiy scenarios , remove duplicates, walkthrough with dev & ba and even execute it and order piza for staying late
+
+ How do you motivate people?
+
+
+
+.  Give an example of a tough decision you had to make.
+
+
+
+ 
+2. Describe a situation where you had to collaborate with someone with a different working style.
+Effective managers need to be able to work well with all kinds of personalities and working styles. This question gives candidates the opportunity to share their strategies for promoting teamwork among employees who take opposing approaches to completing projects.
+ 
+3. Give an example of a strategy you have used to motivate others.
+Asking candidates to think about times when they motivated other people can help you understand how they would support positive company culture and teamwork.
+ -- find out what they need.. Find challenging roles .. Provide them , provide suport
+Upksill
+Career aspiration
+Presentation, certification 
+  
+7. How do you make new employees at your workplace feel like a part of the team? Give an example.
+Managers should know how to welcome new employees and incorporate them into the workplace culture. Their answer to this question can give you insight into how much they invest into their team’s happiness and productivity.
+	- Employee onboarding ysstem
+	- Buddy system or self study
+	- Conservastion - make sure twe ask opinion
+	- Incldde
+	
+	
+ 
+8. When was a time when you had to make a difficult choice in the workplace? How did you make your decision and what was the outcome?
+This question can help you understand the way each candidate makes decisions. Asking them to talk about a challenging choice gives them the opportunity to show that they have strong situational awareness and don’t need to rely on others to make hard choices for their team.
+ 
+ 
+ 
+3. Describe how you used your problem-solving skills to benefit a team or company.
+Answering Tip: Demonstrate how you look for solutions for the greater good of the company. Not just solutions for your own good and your team’s good.
+4. Tell me about a time when you used creativity to overcome a dilemma.
+Answering Tip: Think about a way that you surprised yourself with an unexpected idea. Did you follow a ‘creative process’? Or was your creativity more spontaneous in the situation?
+5. What’s the best idea you’ve come up with on a team-based project?
+Answering Tip: Brainstorm at least three different ideas and be prepared to discuss one during your interview. Focus on the ones that had the biggest impact.
+6. How do you approach problems? What’s your process?
+Answering Tip: Focus on the approach you use to solve problems. How do you break them down into steps in order to solve them? What tools and techniques do you use to work through a problem?
+7.  Name three improvements you made in your most recent position.
+Answering Tip: Make a list so that you’re not stumbling over your words during the interview. Focus more on the result you achieved for this question, and have the ‘3 things’ ready to discuss.
+Bonus Example: Think of a time when you’ve used an approach like Design Thinking Or Lean Startup methodology to come up with solutions to a problem. This demonstrates that you’re well versed in typical problem solving approaches used by advanced tech folks out there. Kevin Lee, Founder at PMHQ recommends asking clarifying questions and focusing on the end user, especially for Product Management Interviews at companies like Google. Who is it that you made the improvements for and why? What difference did your improvements make to your end users lives?
+Working in a Team
+28. Describe a time when you were able to motivate unmotivated team members.
+Answering Tip: Focus on your team-building skill set. What do you do to inspire those around you?
+32. Have you ever had to counsel a difficult team member? Tell me about that time.
+Answering Tip: Pick a time when you had to deliver uncomfortable counsel to a team member.
+Bonus Example: Here, you need relevant examples where you stood out for the right reasons as a leader. You need to demonstrate that you know when to lead, when to follow and how to pick the right reasons to strive for. Talk about a time when you’ve communicated a vision, led a team, fought for the right reasons, done something in service of others, or motivated and developed others.
+Personal Stress
+33. Tell me about a time when you worked well under pressure.
+Answering Tip: Make a list of three times and choose the best one. The more important thing is to talk about your mindset when you’re in a pressure situation. Are you mindful about the pressure you’re facing? Or do you just crumble under pressure?
+38. Tell about a conflict at your job.
+Answering Tip: Keep it focused on a work-related conflict, and what you learned from it.

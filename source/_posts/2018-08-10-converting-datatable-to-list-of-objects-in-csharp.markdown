@@ -4,7 +4,7 @@ title: "Converting Datatable to List of Objects in CSharp"
 date: 2018-08-10 19:29:30 +1000
 comments: true
 categories: 
-keywords: CShar0
+keywords: CSharp
 description: 
 ---
 
