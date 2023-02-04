@@ -97,8 +97,11 @@ delicious_count: 3
 disqus_short_name: abygeorgea
 disqus_show_comment_count: false
 
-# Google Analytics
+# Google Analytics UA
 google_analytics_tracking_id: UA-99127431-1
+
+# Google Analytics GA4
+google_analytics_ga4_tracking_id: G-W5VKP5RSSD
 
 # Facebook Like
 facebook_like: false
