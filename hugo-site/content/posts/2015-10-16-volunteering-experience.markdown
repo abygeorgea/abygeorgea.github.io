@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Volunteering Experience"
+slug: "volunteering-experience"
 date: 2015-10-16T10:40:35Z
 comments: true
 categories:

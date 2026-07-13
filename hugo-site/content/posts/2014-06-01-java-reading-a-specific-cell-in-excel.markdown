@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Java - Reading a specific cell in Excel"
+slug: "java-reading-a-specific-cell-in-excel"
 date: 2014-06-01T11:04:52Z
 comments: true
 categories:

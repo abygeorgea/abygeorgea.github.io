@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "UI Automation with cypress"
+slug: "ui-automation-with-cypress"
 date: 2018-05-10T21:31:39Z
 comments: true
 categories:

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Extracting Substring using Javascript"
+slug: "extracting-substring-using-javascript"
 date: 2017-07-20T20:09:53Z
 comments: true
 categories:

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Setting Right expectation about benefits of Test automation"
+slug: "test-automation"
 date: 2017-09-07T12:42:15Z
 comments: true
 categories:

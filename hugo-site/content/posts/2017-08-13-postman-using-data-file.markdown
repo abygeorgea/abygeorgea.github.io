@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Postman - Using Data File"
+slug: "postman-using-data-file"
 date: 2017-08-13T10:56:01Z
 comments: true
 categories:

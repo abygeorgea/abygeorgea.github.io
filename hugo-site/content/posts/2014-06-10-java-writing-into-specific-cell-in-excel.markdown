@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Java - Writing Into specific cell in Excel"
+slug: "java-writing-into-specific-cell-in-excel"
 date: 2014-06-10T12:24:30Z
 comments: true
 categories:

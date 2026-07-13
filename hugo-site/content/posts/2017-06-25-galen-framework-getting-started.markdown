@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Galen Framework - Getting started"
+slug: "galen-framework-getting-started"
 date: 2017-06-24T19:39:02Z
 comments: true
 categories:

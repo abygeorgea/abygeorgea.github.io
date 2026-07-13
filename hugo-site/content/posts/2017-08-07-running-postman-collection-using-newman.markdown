@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Running Postman collection using Newman"
+slug: "running-postman-collection-using-newman"
 date: 2017-08-07T05:46:28Z
 comments: true
 categories:

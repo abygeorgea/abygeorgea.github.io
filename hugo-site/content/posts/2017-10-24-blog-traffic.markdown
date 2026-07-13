@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Highlights of past one month"
+slug: "blog-traffic"
 date: 2017-10-24T10:32:10Z
 comments: true
 categories: []

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Comparing XML file Structure without XSD"
+slug: "comparing-xml-file-structure-without-xsd"
 date: 2018-09-01T12:05:42Z
 comments: true
 categories:

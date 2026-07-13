@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How to Squash Commits in Git"
+slug: "how-to-squash-commits-in-git"
 date: 2017-06-14T19:46:39Z
 comments: true
 categories:

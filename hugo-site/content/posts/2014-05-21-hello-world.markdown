@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Hello world"
+slug: "hello-world"
 date: 2014-05-20T21:41:32Z
 comments: true
 categories: []

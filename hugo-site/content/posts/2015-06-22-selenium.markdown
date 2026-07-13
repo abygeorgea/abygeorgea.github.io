@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Selenium"
+slug: "selenium"
 date: 2015-06-22T11:27:24Z
 comments: true
 categories:

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Powershell - Copying Folders and Files"
+slug: "powershell-copying-folders-and-files"
 date: 2016-10-09T20:47:54Z
 comments: true
 categories:

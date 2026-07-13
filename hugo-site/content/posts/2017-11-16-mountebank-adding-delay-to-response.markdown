@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Mountebank - Adding delay to response"
+slug: "mountebank-adding-delay-to-response"
 date: 2017-11-15T22:59:17Z
 comments: true
 categories:

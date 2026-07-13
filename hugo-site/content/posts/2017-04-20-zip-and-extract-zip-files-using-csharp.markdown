@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Zip and Extract zip files using Csharp"
+slug: "zip-and-extract-zip-files-using-csharp"
 date: 2017-04-20T11:59:02Z
 comments: true
 categories:

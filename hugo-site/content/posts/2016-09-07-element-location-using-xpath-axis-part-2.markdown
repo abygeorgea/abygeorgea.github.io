@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Element Location Using XPath Axis Part 2"
+slug: "element-location-using-xpath-axis-part-2"
 date: 2016-09-07T09:54:13Z
 comments: true
 categories:

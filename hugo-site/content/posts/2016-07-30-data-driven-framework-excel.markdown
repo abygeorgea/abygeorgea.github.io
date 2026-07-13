@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Data Driven Framework - Excel"
+slug: "data-driven-framework-excel"
 date: 2016-07-29T19:49:22Z
 comments: true
 categories:

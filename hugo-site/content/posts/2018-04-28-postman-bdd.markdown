@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Postman BDD"
+slug: "postman-bdd"
 date: 2018-04-27T21:46:43Z
 comments: true
 categories:

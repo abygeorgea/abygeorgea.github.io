@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Nodejs"
+slug: "nodejs"
 date: 2016-07-12T10:23:52Z
 comments: true
 categories:

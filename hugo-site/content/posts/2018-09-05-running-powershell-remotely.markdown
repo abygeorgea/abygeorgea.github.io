@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Running Powershell Remotely"
+slug: "running-powershell-remotely"
 date: 2018-09-05T12:46:14Z
 comments: true
 categories:

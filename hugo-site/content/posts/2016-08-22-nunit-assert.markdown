@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Nunit Assert"
+slug: "nunit-assert"
 date: 2016-08-22T10:55:39Z
 comments: true
 categories:

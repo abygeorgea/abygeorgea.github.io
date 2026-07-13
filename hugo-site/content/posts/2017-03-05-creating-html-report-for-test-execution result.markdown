@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Creating HTML report for test execution result"
+slug: "creating-html-report-for-test-execution result"
 date: 2017-03-05T09:58:13Z
 comments: true
 categories:

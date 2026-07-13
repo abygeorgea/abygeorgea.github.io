@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Stubbing XML responses using Mountebank"
+slug: "stubbing-xml-responses-using-mountebank"
 date: 2017-04-26T19:55:51Z
 comments: true
 keywords: Mountebank , Stub , Service Virtualisation , Soap Response, XML response

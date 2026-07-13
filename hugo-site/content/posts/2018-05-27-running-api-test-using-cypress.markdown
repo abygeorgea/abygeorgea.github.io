@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Running API Test using Cypress"
+slug: "running-api-test-using-cypress"
 date: 2018-05-26T22:03:28Z
 comments: true
 categories:

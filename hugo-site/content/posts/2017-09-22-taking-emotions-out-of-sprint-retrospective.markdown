@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Taking emotions out of sprint retrospective"
+slug: "taking-emotions-out-of-sprint-retrospective"
 date: 2017-09-22T11:14:25Z
 comments: true
 categories:

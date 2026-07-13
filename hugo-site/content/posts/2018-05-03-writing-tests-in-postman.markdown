@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Writing Tests in Postman"
+slug: "writing-tests-in-postman"
 date: 2018-05-03T11:05:00Z
 comments: true
 categories:

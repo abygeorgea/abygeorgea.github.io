@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Postman Tutorial"
+slug: "postman-tutorial"
 date: 2017-08-04T21:09:48Z
 comments: true
 categories:

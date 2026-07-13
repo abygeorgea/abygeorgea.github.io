@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Git - How to solve filename too long error"
+slug: "git-how-to-solve-filename-too-long-error"
 date: 2016-09-22T20:31:03Z
 comments: true
 categories:

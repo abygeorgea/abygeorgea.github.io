@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Running Specflow Test from command line using Nunit"
+slug: "running-specflow-test-from-command-line-using-nunit"
 date: 2017-03-04T09:39:59Z
 comments: true
 categories:

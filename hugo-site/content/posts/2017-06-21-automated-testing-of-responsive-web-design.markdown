@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Automated  testing of CSS for Responsive Web Design"
+slug: "automated-testing-of-responsive-web-design"
 date: 2017-06-20T20:15:55Z
 comments: true
 categories:

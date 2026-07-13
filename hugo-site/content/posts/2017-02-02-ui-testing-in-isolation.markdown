@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "UI Testing- decoupling back end dependency"
+slug: "ui-testing-in-isolation"
 date: 2017-02-11T21:41:43Z
 comments: true
 categories: []

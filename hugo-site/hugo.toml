@@ -1,3 +1,10 @@
 baseURL = 'https://abygeorgea.com/'
 locale = 'en-us'
 title = 'Aby George A'
+
+# Mirrors the old Octopress `permalink: /blog/:year/:month/:day/:title/` from
+# _config.yml. Jekyll's `:title` token is the filename slug (date prefix
+# stripped), not the front-matter title, so this uses Hugo's `:slug` token
+# with an explicit `slug:` set on every post to match it exactly.
+[permalinks]
+  posts = "/blog/:year/:month/:day/:slug/"
