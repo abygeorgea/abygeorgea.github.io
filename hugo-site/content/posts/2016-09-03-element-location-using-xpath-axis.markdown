@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2016-09-03T22:33:04Z
+date: 2016-09-03T22:33:04+00:00
 layout: post
 link: /blog/2016/09/03/element-location-using-xpath-axis/
 slug: element-location-using-xpath-axis

@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2016-09-06T12:00:23Z
+date: 2016-09-06T12:00:23+00:00
 layout: post
 link: /blog/2016/09/06/how-to-take-screenshots-with-selenium-in-c/
 slug: how-to-take-screenshots-with-selenium-in-c

@@ -2,7 +2,7 @@
 layout: post
 title: "Volunteering Experience"
 slug: "volunteering-experience"
-date: 2015-10-16T10:40:35Z
+date: 2015-10-16T20:40:35+10:00
 comments: true
 categories:
   - Volunteering
@@ -13,4 +13,4 @@ A couple of months back , I helped out to organize clinical examination for RACP
 
 
 
-![]({{site.images_dir}}/2015/10/16/volunteer certificate.png)
+![](/images/2015/10/16/volunteer%20certificate.png)

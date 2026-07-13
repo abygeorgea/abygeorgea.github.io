@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2017-04-06T19:43:44Z
+date: 2017-04-06T19:43:44+00:00
 layout: post
 link: /blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/
 slug: mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1
@@ -14,13 +14,13 @@ categories:
   - Service Virtualisation
 ---
 
-In the previous two blog post, I have explained about how to setup mountebank ([here]({{site.root}}blog/2017/02/13/service-virtualisation-using-mountebank/)) and how to create a virtualised respone([here]({{site.root}}blog/2017/03/03/mountebank-your-first-service-virtualisation/)) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.
+In the previous two blog post, I have explained about how to setup mountebank ([here](/blog/2017/02/13/service-virtualisation-using-mountebank/)) and how to create a virtualised respone([here](/blog/2017/03/03/mountebank-your-first-service-virtualisation/)) . Now coming to more detailed use cases which we might encounter in daily life. In this blog post, I will explain how we can use mountebank to create a virtualised response based on a template response stored in a file and modifying certain fields in response based on the request coming through.
 
 In below Step by Step example , I will have two mock responses for searching for a customer details. First response is when customer is not available in back end systems and second response is when customer details are found.
 
 Before we start, below is folder structure which I have and in this blog post we are discussing about only one stubbed response, which is the NOT FOUND scenario.
 
-![folderstructure]({{site.images_dir_oldwordpress}}/2017/04/folderstructure.png)
+![folderstructure](https://automationtestingtips.files.wordpress.com/2017/04/folderstructure.png)
 
 Let us first create the imposter.ejs file
 
@@ -145,7 +145,7 @@ Now let us run mountebank
 
 
 
-![mountebank]({{site.images_dir_oldwordpress}}/2017/04/mountebank.png)
+![mountebank](https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png)
 
 
 
@@ -158,7 +158,7 @@ Request through postman
 
 
 
-![notfound.png]({{site.images_dir_oldwordpress}}/2017/04/notfound.png)
+![notfound.png](https://automationtestingtips.files.wordpress.com/2017/04/notfound.png)
 
 
 

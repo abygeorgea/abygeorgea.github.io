@@ -2,7 +2,7 @@
 layout: post
 title: "Java - Reading a specific cell in Excel"
 slug: "java-reading-a-specific-cell-in-excel"
-date: 2014-06-01T11:04:52Z
+date: 2014-06-01T21:04:52+10:00
 comments: true
 categories:
   - CodeSnippets

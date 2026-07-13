@@ -2,7 +2,7 @@
 layout: post
 title: "Nunit Assert"
 slug: "nunit-assert"
-date: 2016-08-22T10:55:39Z
+date: 2016-08-22T20:55:39+10:00
 comments: true
 categories:
   - nunit

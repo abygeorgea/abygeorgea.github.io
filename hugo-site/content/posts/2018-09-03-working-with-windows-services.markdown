@@ -2,7 +2,7 @@
 layout: post
 title: "Working With Windows Services"
 slug: "working-with-windows-services"
-date: 2018-09-03T12:59:54Z
+date: 2018-09-03T22:59:54+10:00
 comments: true
 categories:
   - codesnippets

@@ -2,7 +2,7 @@
 layout: post
 title: "Java - Writing Into specific cell in Excel"
 slug: "java-writing-into-specific-cell-in-excel"
-date: 2014-06-10T12:24:30Z
+date: 2014-06-10T22:24:30+10:00
 comments: true
 categories:
   - CodeSnippets
@@ -12,7 +12,7 @@ keywords: Java , Reading Excel
 description: How to write into a specific cell value in Excel
 ---
 
-In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found [here]({{site.root}}blog/2014/06/01/java-reading-a-specific-cell-in-excel/)
+In my previous blog post , I have mentioned how to read from an excel file using jxl jar files in Java. It can be found [here](/blog/2014/06/01/java-reading-a-specific-cell-in-excel/)
 
 In this post, I will explain how to write into an excel using same library. Below example will update the excel cell content with the value passed and also update its formatting . The color of the cell will change depending on value we pass. We can use similar functions for updating any other cell format.
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Automate Accessibility Testing using aXe"
 slug: "automating-accessibility-testing"
-date: 2018-03-01T10:30:32Z
+date: 2018-03-01T21:30:32+11:00
 comments: true
 categories:
   - Accessibility testing

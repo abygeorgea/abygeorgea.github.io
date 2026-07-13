@@ -2,7 +2,7 @@
 layout: post
 title: "Running Command Line in Remote Machine Using WMI"
 slug: "running-command-line-in-remote-machine-using-wmi"
-date: 2018-09-08T11:47:52Z
+date: 2018-09-08T21:47:52+10:00
 comments: true
 categories:
   - Command Line

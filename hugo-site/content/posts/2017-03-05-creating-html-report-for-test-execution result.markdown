@@ -2,7 +2,7 @@
 layout: post
 title: "Creating HTML report for test execution result"
 slug: "creating-html-report-for-test-execution result"
-date: 2017-03-05T09:58:13Z
+date: 2017-03-05T20:58:13+11:00
 comments: true
 categories:
   - Specflow
@@ -18,7 +18,7 @@ Very often , we will be required to create a report with details of test executi
 * Read through and understand details of reporting from [specflow](https://github.com/techtalk/SpecFlow/wiki/Reporting).
 * Ensure packages for Specflow, Nunit, Nunit console runner are already installed. 
 * If you are using Nunit 3, install NUnit.Extension.NUnitV2ResultWriter package via nuget package manager. If this is not installed, we will get an error "Unknown result format: nunit2".
-* Follow setups required for running specflow test cases from command line. Details can be found [here]({{site.root}}blog/2017/03/04/running-specflow-test-from-command-line-using-nunit). 
+* Follow setups required for running specflow test cases from command line. Details can be found [here](/blog/2017/03/04/running-specflow-test-from-command-line-using-nunit). 
 * Modify the bat file to create nunit2 reports.
 ```
 PathToNunitConsolerunner\nunit3-console.exe --labels=All --out=TestResult.txt "--result=TestResult.xml;format=nunit2" PathTo\AcceptanceTests.dll

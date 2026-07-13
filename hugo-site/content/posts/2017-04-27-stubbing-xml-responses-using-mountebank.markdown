@@ -2,7 +2,7 @@
 layout: post
 title: "Stubbing XML responses using Mountebank"
 slug: "stubbing-xml-responses-using-mountebank"
-date: 2017-04-26T19:55:51Z
+date: 2017-04-27T05:55:51+10:00
 comments: true
 keywords: Mountebank , Stub , Service Virtualisation , Soap Response, XML response
 description: How to stub a soap response ( XML Response) using Mountebank
@@ -11,11 +11,11 @@ categories:
   - Service Virtualisation
 ---
 
-Previous two blog post talked about how we can use mountebank for stubbing where responses are in json format . They can be accessed ([here]({{site.root}}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)) and ([here]({{site.root}}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/)). We can use same approach for stubbing SOAP services using XML as well. In this post, I will explain how we can provide XML response using Mountebank .
+Previous two blog post talked about how we can use mountebank for stubbing where responses are in json format . They can be accessed ([here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)) and ([here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/)). We can use same approach for stubbing SOAP services using XML as well. In this post, I will explain how we can provide XML response using Mountebank .
 
 Let us have a quick look into the files created. Before we begin, folder structure of various file as below
 
-![folderstructure]({{site.images_dir}}/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg)
+![folderstructure](/images/2017/04/27/Mountebank_XML_Response_Folder-Tree.jpg)
 
 #### Imposter.ejs ####
 The main Imposter file is 
@@ -158,7 +158,7 @@ Mountebank_XML_Response_
 
 Now trigger a POST request with a body . If predicates are matched, then it will respond with expected response as below
 
-![PostManRequest]({{site.images_dir}}/2017/04/27/Mountebank_XML_Response_PostmanRequest1.png)
+![PostManRequest](/images/2017/04/27/Mountebank_XML_Response_PostmanRequest1.png)
 
 In Nut shell, creating a XML response is similar to creating json response. There are only minor differences in the js file which creates the response. The main difference is the omission of Json.Parse and also changing the response headers.
 

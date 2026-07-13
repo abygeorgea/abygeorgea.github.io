@@ -2,7 +2,7 @@
 layout: post
 title: "Running Postman collection using Newman"
 slug: "running-postman-collection-using-newman"
-date: 2017-08-07T05:46:28Z
+date: 2017-08-07T15:46:28+10:00
 comments: true
 categories:
   - postman
@@ -10,7 +10,7 @@ categories:
 keywords: postman tutorial, newman tutorial
 description: Running Postman Collection Using Newman
 ---
-In previous [blog]({{site.root}}blog/2017/08/05/postman-tutorial/), I explained about how to create a GET request, analyze its response, write test cases for API and to save details to a collection for future use. In this blog, let me explain about how to run collections using Newman.
+In previous [blog](/blog/2017/08/05/postman-tutorial/), I explained about how to create a GET request, analyze its response, write test cases for API and to save details to a collection for future use. In this blog, let me explain about how to run collections using Newman.
 
 ### What is Newman
 Newman is a command line collection runner for postman. Newman also has feature parity with Postman and it runs collection in the same way how it is run through Postman. Newman also makes it easier to integrate API test case execution with other systems like Jenkins.
@@ -36,7 +36,7 @@ Command will look like below
 ### Results
 The result of API test case execution will look like below. It has a detailed report of number of iterations, number of request, test scripts, pre-requisites, assertions etc. As per standard, passed ones are shown in green and failed in red. The results look similar to details provided if collections are executed using postman.
 
-![NewmanResult]({{site.images_dir}}/2017/08/07/Newman 1.png)
+![NewmanResult](/images/2017/08/07/Newman%201.png)
 
 ### Additional Options of run command
 Newman has various options to customize run. Different options can be found by running with `-h` flag

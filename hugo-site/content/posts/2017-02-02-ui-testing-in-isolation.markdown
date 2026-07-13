@@ -2,7 +2,7 @@
 layout: post
 title: "UI Testing- decoupling back end dependency"
 slug: "ui-testing-in-isolation"
-date: 2017-02-11T21:41:43Z
+date: 2017-02-12T07:41:43+10:00
 comments: true
 categories: []
 keywords: 
@@ -11,7 +11,7 @@ description:
 The traditional approach for automating UI test cases is to create selenium web driver based ( or any UI testing tools) scripts for exercising complete end to end flow. However, it comes with its own challenges. It will have multiple steps as pre-requiste for reaching required UI page and hence it behaves as an E2E integration test rather than UI test.
 
 A typical web application architecture will have one or more front-end application, which will talk to multiple back-end services, API's etc. They will, in turn, talk to other back-end services or to different databases. On High level , architecture looks like below 
-![]({{site.images_dir}}/2017/02/02/UIinIsolation_1.png)
+![](/images/2017/02/02/UIinIsolation_1.png)
 
 
  On an enterprise world, all these will be developed and maintained by different teams. All of them will be working in parallel and will push in their code changes ( including occasional broken code) frequently. This will result in breakages since test automation scripts heavily depending on UI and its integration. Even if there is no broken code, a test can still fail due to multiple environmental issues for any of the backend services and other components.  Hence it will become increasingly difficult for achieving a green build. 
@@ -32,6 +32,6 @@ Hence UI based test cases are less robust due different reasons like
 The solution for above is to adopt more unit test like structure for UI testing. We should be testing UI in isolation to other back-end services and their dependency. This allows testing as much as possible early in lifecycle without any dependency on other streams. We should replace all backend service calls with stubs
 
 
-![]({{site.images_dir}}/2017/02/02/UIinIsolation_2.png)
+![](/images/2017/02/02/UIinIsolation_2.png)
 
 Mountebank is a tool which we can use for mocking the service calls. As per [mbtest.org](http://www.mbtest.org/), mountebank is the first open source tool to provide cross-platform, multi-protocol test doubles over the wire.  We can use mountebank for stubbing the back-end service calls and there by use it for decoupling UI from unpredictable back end. 

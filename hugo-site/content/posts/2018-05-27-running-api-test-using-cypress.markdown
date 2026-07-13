@@ -2,7 +2,7 @@
 layout: post
 title: "Running API Test using Cypress"
 slug: "running-api-test-using-cypress"
-date: 2018-05-26T22:03:28Z
+date: 2018-05-27T08:03:28+10:00
 comments: true
 categories:
   - Postman
@@ -60,14 +60,14 @@ Open Cypress by running `node_modules/.bin/cypress open` inside cypress root fol
 
 Run newly created test.
 
-![APITestingWithCypress]({{site.images_dir}}/2018/05/27/01 Run Test Case.png)
+![APITestingWithCypress](/images/2018/05/27/01%20Run%20Test%20Case.png)
 
 Results of test execution will look like below.
 
-![[APITestingWithCypress]]({{site.images_dir}}/2018/05/27/02 Check Result.png)
+![[APITestingWithCypress]](/images/2018/05/27/02%20Check%20Result.png)
 
 Expand each of them and right click on the asserts and inspect the element. This will open up chrome developer tool. Select the console tab , which will list down details of calls made, request received and assertions performed.  It will help to write additional assertions, investigate any failure etc. 
 
-![[APITestingWithCypress]]({{site.images_dir}}/2018/05/27/03 Expand and Analyse result.png)
+![[APITestingWithCypress]](/images/2018/05/27/03%20Expand%20and%20Analyse%20result.png)
 
 

@@ -2,7 +2,7 @@
 layout: post
 title: "Migrating To Octopress"
 slug: "migrating-to-octopress"
-date: 2017-05-19T19:57:24Z
+date: 2017-05-20T05:57:24+10:00
 comments: true
 keywords: Octopress , Octostrap 3 , Jekyll , Static Site, Google Analytics, Migrate , Wordpress , Github Pages
 description: How to migrate from wordpress to Octopress

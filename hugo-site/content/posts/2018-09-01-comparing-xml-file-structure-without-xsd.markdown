@@ -2,7 +2,7 @@
 layout: post
 title: "Comparing XML file Structure without XSD"
 slug: "comparing-xml-file-structure-without-xsd"
-date: 2018-09-01T12:05:42Z
+date: 2018-09-01T22:05:42+10:00
 comments: true
 categories:
   - XML

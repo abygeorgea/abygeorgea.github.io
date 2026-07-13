@@ -2,7 +2,7 @@
 layout: post
 title: "Postman BDD"
 slug: "postman-bdd"
-date: 2018-04-27T21:46:43Z
+date: 2018-04-28T07:46:43+10:00
 comments: true
 categories:
   - Postman
@@ -10,7 +10,7 @@ keywords: How to write test cases using BDD style in postman
 description: How to write test cases using BDD style in postman
 ---
 
-In Previous blog post,we discussed about [how to use postman]({{site.root}}blog/2017/08/05/postman-tutorial/) and how to use [collections using newman ]({{site.root}}blog/2017/08/07/running-postman-collection-using-newman/)and [data file]({{site.root}}blog/2017/08/13/postman-using-data-file). If you haven't read that , please have a read through first .
+In Previous blog post,we discussed about [how to use postman](/blog/2017/08/05/postman-tutorial/) and how to use [collections using newman ](/blog/2017/08/07/running-postman-collection-using-newman/)and [data file](/blog/2017/08/13/postman-using-data-file). If you haven't read that , please have a read through first .
 
 In previous examples, we discussed about writing tests/assertions in postman. We followed normal Javascript syntax for writing test cases including asserting various factors of response ( like content , status code etc). Eventhough this is a straightforward way of writing, many people would like to use existing javascript test library like Mocha. They can use [postman - bdd](https://github.com/BigstickCarpet/postman-bdd/#installation) libraries.  
 
@@ -26,7 +26,7 @@ Installation is done triggering a Get request and setting the response as Global
 *  Set Global environment variable by using below command in test tab. `postman.setGlobalVariable('postmanBDD', responseBody);`
 
 
-![PostManRequest]({{site.images_dir}}/2018/04/28/Installing Postman BDD.png)
+![PostManRequest](/images/2018/04/28/Installing%20Postman%20BDD.png)
 
 Once we trigger above get request, postman bdd will be available for use.  We can make use of postman BDD features by below command 
 `eval(globals.postmanBDD);`
@@ -60,6 +60,6 @@ Note: You can find more details of various type of asserts in http://www.chaijs.
 
 Once it is done, trigger the request 
 
-![PostManRequest]({{site.images_dir}}/2018/04/28/Postman BDD example.png).
+![PostManRequest](/images/2018/04/28/Postman%20BDD%20example.png).
 
 

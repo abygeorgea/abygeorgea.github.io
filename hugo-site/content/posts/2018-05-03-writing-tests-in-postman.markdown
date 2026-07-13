@@ -2,7 +2,7 @@
 layout: post
 title: "Writing Tests in Postman"
 slug: "writing-tests-in-postman"
-date: 2018-05-03T11:05:00Z
+date: 2018-05-03T21:05:00+10:00
 comments: true
 categories:
   - postman
@@ -11,7 +11,7 @@ keywords: How to use Chai for writing postman tests
 description: How to use Chai for writing postman tests
 ---
 
-In previous blog [post]({{site.root}}blog/2018/04/28/postman-bdd/), we saw how to use BDD format for writing test cases in postman. Most important part of writing tests in postman is understanding various features available. Let us explore various options available . The examples specified in postman [documentation](https://documenter.getpostman.com/view/220187/postman-bdd-examples/6Z3uY71#30dfc9d2-5de4-b932-db3e-641c29fb0459), have lot of information about how to setup postman bdd, use chai http assertions, create custom assertions and use before and after hooks. Please import them into postman and try that by yourself to familiarise with postman BDD. Below is only few examples from them.
+In previous blog [post](/blog/2018/04/28/postman-bdd/), we saw how to use BDD format for writing test cases in postman. Most important part of writing tests in postman is understanding various features available. Let us explore various options available . The examples specified in postman [documentation](https://documenter.getpostman.com/view/220187/postman-bdd-examples/6Z3uY71#30dfc9d2-5de4-b932-db3e-641c29fb0459), have lot of information about how to setup postman bdd, use chai http assertions, create custom assertions and use before and after hooks. Please import them into postman and try that by yourself to familiarise with postman BDD. Below is only few examples from them.
 
 Postman BDD makes use of Chai Assertion Library and Chai-Http. We have access to both libray and postman scripting environment for writing test cases. Chai has two types of assertion styles.
 
@@ -135,4 +135,4 @@ it('should contain the un-parsed JSON text', () => {
 
 ```
 
-![Postman]({{site.images_dir}}/2018/05/03/postman bdd.png)
+![Postman](/images/2018/05/03/postman%20bdd.png)

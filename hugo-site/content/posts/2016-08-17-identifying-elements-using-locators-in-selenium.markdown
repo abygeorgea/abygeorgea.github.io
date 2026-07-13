@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2016-08-17T20:30:54Z
+date: 2016-08-17T20:30:54+00:00
 layout: post
 link: /blog/2016/08/17/identifying-elements-using-locators-in-selenium/
 slug: identifying-elements-using-locators-in-selenium

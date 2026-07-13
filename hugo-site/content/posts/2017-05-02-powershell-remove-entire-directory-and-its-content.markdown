@@ -2,7 +2,7 @@
 layout: post
 title: "Powershell - Remove entire directory and it's content"
 slug: "powershell-remove-entire-directory-and-its-content"
-date: 2017-05-01T20:27:27Z
+date: 2017-05-02T06:27:27+10:00
 comments: true
 categories:
   - Powershell

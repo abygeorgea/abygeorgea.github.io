@@ -2,7 +2,7 @@
 layout: post
 title: "Data Driven Framework - Excel"
 slug: "data-driven-framework-excel"
-date: 2016-07-29T19:49:22Z
+date: 2016-07-30T05:49:22+10:00
 comments: true
 categories:
   - Data Driven Testing Framework
@@ -12,7 +12,7 @@ categories:
 keywords: Selenium , Specflow , Data Driven Testing , C# , XML
 description: How to read from Excel for making a data driven framework 
 ---
-In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found [here]({{site.root}}blog/2016/07/29/data-driven-framework-xml/). I have also written about how to use jxl library for [reading from excel]({{site.root}}blog/2014/06/01/java-reading-a-specific-cell-in-excel/) and [writing into Excel]({{site.root}}blog/2014/06/01/java-writing-into-specific-cell-in-excel/).
+In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found [here](/blog/2016/07/29/data-driven-framework-xml/). I have also written about how to use jxl library for [reading from excel](/blog/2014/06/01/java-reading-a-specific-cell-in-excel/) and [writing into Excel](/blog/2014/06/01/java-writing-into-specific-cell-in-excel/).
 
 Below is another code snippet to read all values of a row and save it into a hash map for accessing later during automation test. 
 

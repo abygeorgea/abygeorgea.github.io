@@ -2,7 +2,7 @@
 layout: post
 title: "Gulp Task For Running Automated Test"
 slug: "gulp-task-for-running-automated-test"
-date: 2018-03-20T00:46:30Z
+date: 2018-03-20T11:46:30+11:00
 comments: true
 categories:
   - Gulp

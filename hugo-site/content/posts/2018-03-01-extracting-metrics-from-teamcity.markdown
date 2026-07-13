@@ -2,7 +2,7 @@
 layout: post
 title: "Extracting Metrics from TeamCity"
 slug: "extracting-metrics-from-teamcity"
-date: 2018-03-01T11:18:25Z
+date: 2018-03-01T22:18:25+11:00
 comments: true
 categories:
   - Team City

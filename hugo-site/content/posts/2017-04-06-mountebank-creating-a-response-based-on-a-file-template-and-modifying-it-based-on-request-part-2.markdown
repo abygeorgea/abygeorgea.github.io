@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2017-04-06T20:24:20Z
+date: 2017-04-06T20:24:20+00:00
 layout: post
 link: /blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/
 slug: mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2
@@ -14,7 +14,7 @@ categories:
   - Service Virtualisation
 ---
 
-This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it [here]({{site.root}}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/).  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with [Part1 ]({{site.root}}blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)of the excercise. If you need to know more about mountebank and how to use mountebank , please read through [how to install mountebank ]({{site.root}}blog/2017/02/13/service-virtualisation-using-mountebank/) and [service virtualisation using mountebank]({{site.root}}blog/2017/03/03/mountebank-your-first-service-virtualisation/).
+This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it [here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/).  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with [Part1 ](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)of the excercise. If you need to know more about mountebank and how to use mountebank , please read through [how to install mountebank ](/blog/2017/02/13/service-virtualisation-using-mountebank/) and [service virtualisation using mountebank](/blog/2017/03/03/mountebank-your-first-service-virtualisation/).
 
 As in previous example, let us create Imposter.ejs and 4547.json . Contents of the Imposter.ejs is as below
 ``` plain Imposter.ejs
@@ -154,15 +154,15 @@ Finally , the template response
 
 Now let us fire up mountebank
 
-![mountebank]({{site.images_dir_oldwordpress}}/2017/04/mountebank.png)
+![mountebank](https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png)
 
 Make few request using postman, which have different request parameter
 
-![customerFound1]({{site.images_dir_oldwordpress}}/2017/04/customerfound1.png)
+![customerFound1](https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png)
 
 Another request
 
-![CustomerFound2]({{site.images_dir_oldwordpress}}/2017/04/customerfound2.png)
+![CustomerFound2](https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png)
 
 In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.
 
@@ -170,7 +170,7 @@ In above two examples,we  can see the CustomerID field is response is updated w
 
 Now let us try another example , where request is http://localhost:4547/Blog.Api/1234542323/CustomerView
 
-![CustomerNotFound2]({{site.images_dir_oldwordpress}}/2017/04/customernotfound2.png)
+![CustomerNotFound2](https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png)
 
 As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.
 

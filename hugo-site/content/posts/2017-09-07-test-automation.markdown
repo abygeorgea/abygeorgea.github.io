@@ -2,7 +2,7 @@
 layout: post
 title: "Setting Right expectation about benefits of Test automation"
 slug: "test-automation"
-date: 2017-09-07T12:42:15Z
+date: 2017-09-07T22:42:15+10:00
 comments: true
 categories:
   - Test automation
@@ -27,7 +27,7 @@ Solution to improve quality of a product is to follow the [testing pyramid](http
 
 Below is a modified version of testing pyramid.
 
-![]({{site.images_dir}}/2017/09/07/TestingPyramid.jpg)
+![](/images/2017/09/07/TestingPyramid.jpg)
 
 As you can see above, more emphasis is given to have automated test at Unit test level, followed by component level, integration test level, and finally E2E level through UI.  It is relatively cheaper to implement automated test at the base of the pyramid and will get more expensive as we go up. Similarly, unit tests are faster to run, it can isolate issues immediately and are more stable. These characteristics will change adversely as we go up in test pyramid. 
 

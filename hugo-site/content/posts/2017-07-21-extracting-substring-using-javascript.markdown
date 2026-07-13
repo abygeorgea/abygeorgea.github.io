@@ -2,7 +2,7 @@
 layout: post
 title: "Extracting Substring using Javascript"
 slug: "extracting-substring-using-javascript"
-date: 2017-07-20T20:09:53Z
+date: 2017-07-21T06:09:53+10:00
 comments: true
 categories:
   - codesnippets
@@ -11,7 +11,7 @@ categories:
 keywords: Extracting substring using javascript, Extracting XML node using javascript
 description: 
 ---
-In previous blogs [here]({{site.root}}blog/2017/04/27/stubbing-xml-responses-using-mountebank/) , I have explained how we return a XML response using mountebank. However , most of the time, we will have to make some modification to the template response before returning a response. Say for example, we may have to replace details like timestamp, or use an input from request parameter and update that in response etc. 
+In previous blogs [here](/blog/2017/04/27/stubbing-xml-responses-using-mountebank/) , I have explained how we return a XML response using mountebank. However , most of the time, we will have to make some modification to the template response before returning a response. Say for example, we may have to replace details like timestamp, or use an input from request parameter and update that in response etc. 
 
 One of the easiest way to do this without using other frameworks like xml2js etc is to extract the substring between the node values and replace it . Below is a code snippet which will help to achieve this
 

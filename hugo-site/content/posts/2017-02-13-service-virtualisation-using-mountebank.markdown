@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2017-02-13T11:13:58Z
+date: 2017-02-13T11:13:58+00:00
 excerpt: Service virtualisation using mountebank
 layout: post
 link: /blog/2017/02/13/service-virtualisation-using-mountebank/

@@ -2,7 +2,7 @@
 layout: post
 title: "ANZTB SIGiST Conference"
 slug: "anztb-sigist-conference"
-date: 2017-08-29T11:32:28Z
+date: 2017-08-29T21:32:28+10:00
 comments: true
 categories:
   - conference

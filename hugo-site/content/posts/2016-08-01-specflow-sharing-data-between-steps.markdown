@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2016-08-01T02:12:23Z
+date: 2016-08-01T02:12:23+00:00
 layout: post
 link: /blog/2016/08/01/specflow-sharing-data-between-steps/
 slug: specflow-sharing-data-between-steps

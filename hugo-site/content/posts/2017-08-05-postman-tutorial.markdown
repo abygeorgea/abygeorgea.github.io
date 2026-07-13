@@ -2,7 +2,7 @@
 layout: post
 title: "Postman Tutorial"
 slug: "postman-tutorial"
-date: 2017-08-04T21:09:48Z
+date: 2017-08-05T07:09:48+10:00
 comments: true
 categories:
   - postman
@@ -30,15 +30,15 @@ For this example, let us look at a google finance API.  API URL(including parame
 There is no authentication details and header details that need to be passed with this. The `params` button will list down various parameters passed in a tabular format , which makes it easy to edit.
 
 In postman, Select drop down as `GET` and enter the API Url. Screen will look like below
-![Request]({{site.images_dir}}/2017/08/05/Postman Tutorial 1.png)
+![Request](/images/2017/08/05/Postman%20Tutorial%201.png)
 
 Now hit `Send` button. This will trigger a call to API and get the response which will then displayed in UI. Screen will look like below
 
-![Body]({{site.images_dir}}/2017/08/05/Postman Tutorial 2.png)
+![Body](/images/2017/08/05/Postman%20Tutorial%202.png)
 
 Headers returned are
 
-![Headers]({{site.images_dir}}/2017/08/05/Postman Tutorial 3.png)
+![Headers](/images/2017/08/05/Postman%20Tutorial%203.png)
 
 
 ### Writing Tests
@@ -48,7 +48,7 @@ The Below example is written for calling one of free API mentioned [here](https:
 In this example, we have test scripts for checking status code, values in the header, values in response, response time. We can even expand the test cases to complex verifications by writing javascript tests.
 
 
-![Tests]({{site.images_dir}}/2017/08/05/Postman Tutorial 4.png)
+![Tests](/images/2017/08/05/Postman%20Tutorial%204.png)
 
 We notice following from above screenshot, 
 
@@ -58,42 +58,42 @@ We notice following from above screenshot,
  
  Now let us dive into details of the test results. Below screenshot shows details of test cases and their status.
  
- ![Test Result]({{site.images_dir}}/2017/08/05/Postman Tutorial 5.png)
+ ![Test Result](/images/2017/08/05/Postman%20Tutorial%205.png)
  
  
 ### Collections
  
 We can save the current request and it associated tests ( if any) for future use in postman. It can also be exported and shared with others. Select option as `Save As` from drop down next to `Save`. We can specify request name, provide a description and select a folder and sub folder to save the response. 
 
- ![Collections]({{site.images_dir}}/2017/08/05/Postman Tutorial 6.png)
+ ![Collections](/images/2017/08/05/Postman%20Tutorial%206.png)
  
  
  Once saved, it will be available for use in collections.
  
-  ![Collections]({{site.images_dir}}/2017/08/05/Postman Tutorial 7.png)
+  ![Collections](/images/2017/08/05/Postman%20Tutorial%207.png)
 
 ### Environments
 Very frequently, we will have to run API test in different environments. Most of the time, there will be few differences in the requests, like different URL. In such cases, we can use environments in Postman. 
 
 Click on the Settings button on top right corner and select `Manage environments`. This is open up a new pop up where we can add Environment or import an existing environment file. For this tutorial, we will use Add option.
 
-  ![Environment]({{site.images_dir}}/2017/08/05/Postman Tutorial 8.png)
+  ![Environment](/images/2017/08/05/Postman%20Tutorial%208.png)
 
  
  Now we can specify all unique parameter for each environment. In this case, I have given a key called "URL" and entered corresponding values and saved it as an environment named `Test`.
  
  
- ![Environment]({{site.images_dir}}/2017/08/05/Postman Tutorial 9.png)
+ ![Environment](/images/2017/08/05/Postman%20Tutorial%209.png)
  
- ![Environment]({{site.images_dir}}/2017/08/05/Postman Tutorial 10.png)
+ ![Environment](/images/2017/08/05/Postman%20Tutorial%2010.png)
  
  Now let us run the request using environments. First step is to replace `https://jsonplaceholder.typicode.com` with `url` in double curly braces. Then select `Test` in the Environment drop down at the top. Now click send. This will execute the request and run all associated test cases. Postman will dynamically replace {{url}} with corresponding URL value specified in selected environment file. So assuming we have different environment files, each time the request will be sent to different URL based on environment selected. We can have any number of keys and values in one environment file.
  
-  ![Environment]({{site.images_dir}}/2017/08/05/Postman Tutorial 11.png)
+  ![Environment](/images/2017/08/05/Postman%20Tutorial%2011.png)
   
   From above, we can see that one test case is failed. Let us have a look into failed test case.
   
-   ![Environment]({{site.images_dir}}/2017/08/05/Postman Tutorial 12.png)
+   ![Environment](/images/2017/08/05/Postman%20Tutorial%2012.png)
     
   Failed test case is for the time taken for the response. Current request took 1491 ms which is higher than expected 200ms.
   
@@ -108,9 +108,9 @@ Postman provides facility to export collections and environment files as JSON. T
 * Select V2 option and save the file.
 
 	
-  ![Collection]({{site.images_dir}}/2017/08/05/Postman Tutorial 13.png)
+  ![Collection](/images/2017/08/05/Postman%20Tutorial%2013.png)
   
-  ![Collection]({{site.images_dir}}/2017/08/05/Postman Tutorial 14.png)
+  ![Collection](/images/2017/08/05/Postman%20Tutorial%2014.png)
  
 **Exporting Environment File**
 
@@ -118,7 +118,7 @@ Postman provides facility to export collections and environment files as JSON. T
 * Click on Manage environment.
 * Download the file.
 
-  ![Export]({{site.images_dir}}/2017/08/05/Postman Tutorial 15.png)
+  ![Export](/images/2017/08/05/Postman%20Tutorial%2015.png)
   
 ### Running Collections Using Postman Collection Runner
 
@@ -128,12 +128,12 @@ Postman provides a feature to run collections using collection Runner.
 * Select Collection name in drop down and select environment and then hit `Start Run`.
 
 
-  ![Collection Runner]({{site.images_dir}}/2017/08/05/Postman Tutorial 16.png)
+  ![Collection Runner](/images/2017/08/05/Postman%20Tutorial%2016.png)
 
 This will trigger execution of request and test cases mentioned in collection and results will be shown. Also note that collection runner has additional options like number of iteration, delay before sending request , input from data file etc .
 
 Once execution is complete, result will be shown like below. It will have details of all assertions done and options to export results for future verification.
-  ![Collection Runner]({{site.images_dir}}/2017/08/05/Postman Tutorial 17.png)
+  ![Collection Runner](/images/2017/08/05/Postman%20Tutorial%2017.png)
   
 
   

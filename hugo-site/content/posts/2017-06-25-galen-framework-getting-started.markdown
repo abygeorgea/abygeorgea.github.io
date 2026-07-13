@@ -2,7 +2,7 @@
 layout: post
 title: "Galen Framework - Getting started"
 slug: "galen-framework-getting-started"
-date: 2017-06-24T19:39:02Z
+date: 2017-06-25T05:39:02+10:00
 comments: true
 categories:
   - Galen
@@ -55,7 +55,7 @@ Note: Uncomment the lines above. Octopress blog engine was throwing error when i
 
 - Run `galen config` from the command line with the project directory. This will create Galen config file in the location where the command is run.
 
-![Create Galen Config]({{site.images_dir}}/2017/06/25/GalenframeworkGettingStarted01.png)
+![Create Galen Config](/images/2017/06/25/GalenframeworkGettingStarted01.png)
 
 
 
@@ -109,17 +109,17 @@ galen test .\\test\\example.test.js  --htmlreport .\reports   --jsonreport .\jso
 
 
 once all files are created, folder structure will look like below
-![]({{site.images_dir}}/2017/06/25/GalenframeworkGettingStarted00.png)
+![](/images/2017/06/25/GalenframeworkGettingStarted00.png)
 
 
 - run the bat file created above. This will ideally run example.test.js file which invokes chrome driver, navigate to the URl, resizes the browser and then check for the specs.It will list out the results in command prompt. Once it completes are all test execution, it creates both HTML report and JSON report in corresponding folder location mentioned in bat file. Below is a sample HTML report, which is self-explanatory.
 
 
 Main report
-![]({{site.images_dir}}/2017/06/25/GalenframeworkGettingStarted02.png)
+![](/images/2017/06/25/GalenframeworkGettingStarted02.png)
 
 If we expand the result for desktop emulation, it will look like below.It will list down each assertion made and indicate whether it is passed or failed. 
-![]({{site.images_dir}}/2017/06/25/GalenframeworkGettingStarted03.png)
+![](/images/2017/06/25/GalenframeworkGettingStarted03.png)
 
 If we click on the assertion point, it will show the screenshot taken for that assertion by highlighting the objects which will help for easier verification. Below screenshot shows that image is on left side of section intro as defined in spec file.
-![]({{site.images_dir}}/2017/06/25/GalenframeworkGettingStarted04.png)
+![](/images/2017/06/25/GalenframeworkGettingStarted04.png)

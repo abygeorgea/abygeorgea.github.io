@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2016-07-29T22:10:02Z
+date: 2016-07-29T22:10:02+00:00
 layout: post
 link: /blog/2016/07/29/data-driven-framework-xml/
 slug: data-driven-framework-xml

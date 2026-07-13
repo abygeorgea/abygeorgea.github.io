@@ -2,7 +2,7 @@
 layout: post
 title: "UI Automation with cypress"
 slug: "ui-automation-with-cypress"
-date: 2018-05-10T21:31:39Z
+date: 2018-05-11T07:31:39+10:00
 comments: true
 categories:
   - Cypress

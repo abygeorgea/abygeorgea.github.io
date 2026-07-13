@@ -2,7 +2,7 @@
 layout: post
 title: "Selenium"
 slug: "selenium"
-date: 2015-06-22T11:27:24Z
+date: 2015-06-22T21:27:24+10:00
 comments: true
 categories:
   - selenium

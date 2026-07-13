@@ -2,7 +2,7 @@
 layout: post
 title: "Running Command Line from C#"
 slug: "running-command-line-from-csharp"
-date: 2016-09-08T13:07:03Z
+date: 2016-09-08T23:07:03+10:00
 comments: true
 categories:
   - codesnippets

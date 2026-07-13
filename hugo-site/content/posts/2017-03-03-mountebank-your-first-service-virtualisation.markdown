@@ -1,7 +1,7 @@
 ---
 author: Aby George A
 comments: true
-date: 2017-03-03T11:46:48Z
+date: 2017-03-03T11:46:48+00:00
 layout: post
 link: /blog/2017/03/03/mountebank-your-first-service-virtualisation/
 slug: mountebank-your-first-service-virtualisation
@@ -14,7 +14,7 @@ categories:
   - Service Virtualisation
 ---
 
-In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in [here (Install Mountebank)]({{site.root}}blog/2017/02/13/service-virtualisation-using-mountebank/), we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response
+In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in [here (Install Mountebank)](/blog/2017/02/13/service-virtualisation-using-mountebank/), we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response
 
 
 ## How to Create a Stub
@@ -145,7 +145,7 @@ mb --configfile StubResponse/test.json
 
 ```
 
-![cmd.jpg]({{site.images_dir_oldwordpress}}/2017/03/cmd.jpg)
+![cmd.jpg](https://automationtestingtips.files.wordpress.com/2017/03/cmd.jpg)
 
 
 
@@ -153,7 +153,7 @@ Once mountebank is started, we can verify it by navigating to path http://local
 
 It will list out all active ports and a list of stubs available
 
-![imposter]({{site.images_dir_oldwordpress}}/2017/03/imposter.jpg)
+![imposter](https://automationtestingtips.files.wordpress.com/2017/03/imposter.jpg)
 
 
 
@@ -171,7 +171,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgone]({{site.images_dir_oldwordpress}}/2017/03/bgone.jpg)
+![bgone](https://automationtestingtips.files.wordpress.com/2017/03/bgone.jpg)
 
 
 
@@ -183,7 +183,7 @@ Predicate of response One says that , request has to be of type POST, body of re
 
 Now construct a postman request matching above and fire it
 
-![bgtwo]({{site.images_dir_oldwordpress}}/2017/03/bgtwo.jpg)
+![bgtwo](https://automationtestingtips.files.wordpress.com/2017/03/bgtwo.jpg)
 
 
 
