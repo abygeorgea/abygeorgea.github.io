@@ -1,6 +1,7 @@
 baseURL = 'https://abygeorgea.com/'
 locale = 'en-us'
 title = 'Aby George A'
+theme = 'PaperMod'
 
 # Mirrors the old Octopress `permalink: /blog/:year/:month/:day/:title/` from
 # _config.yml. Jekyll's `:title` token is the filename slug (date prefix
@@ -8,3 +9,10 @@ title = 'Aby George A'
 # with an explicit `slug:` set on every post to match it exactly.
 [permalinks]
   posts = "/blog/:year/:month/:day/:slug/"
+
+# Old custom/navigation.html had Blog / Archives / Resources / About Me.
+# Only About is migrated so far, so only it is linked here.
+[[menu.main]]
+  name = "About"
+  url = "/about/"
+  weight = 10
