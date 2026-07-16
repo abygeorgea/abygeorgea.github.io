@@ -24,6 +24,12 @@ theme = 'PaperMod'
   url = "/categories/"
   weight = 5
 
+# Enables PaperMod's built-in Previous/Next post links at the bottom of
+# each post (layouts/_partials/post_nav_links.html, overridden below to
+# also add a Home link and use plain Previous/Next labels).
+[params]
+  ShowPostNavLinks = true
+
 # GA4 property that replaced the old Universal Analytics id in _config.yml
 # (google_analytics_tracking_id). PaperMod ships no default implementation
 # of layouts/partials/google_analytics.html - it's a hook the project must

@@ -1,0 +1,16 @@
+.home-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.home-nav a {
+    border-radius: var(--radius);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    padding: 0.6rem 1.5rem;
+}
+
+.home-nav a:hover {
+    background: var(--border);
+}
