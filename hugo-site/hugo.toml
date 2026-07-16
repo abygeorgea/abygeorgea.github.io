@@ -18,10 +18,9 @@ theme = 'PaperMod'
   weight = 10
 
 # Links to Hugo's built-in "categories" taxonomy list page (all distinct
-# categories, each linking to its own filtered post list) - labeled "Tags"
-# per request, even though it's backed by the categories taxonomy, not tags.
+# categories, each linking to its own filtered post list).
 [[menu.main]]
-  name = "Tags"
+  name = "Categories"
   url = "/categories/"
   weight = 5
 
