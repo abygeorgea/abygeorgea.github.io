@@ -28,6 +28,7 @@ The solution has multiple parts as follows
 3. Find if the remote process is running and if it does, start an event monitor to wait for it to exit
 4. Once the process exits, retrieve its exit code
 
+Code below is taken from above MSDN link ( Just to make sure it is available for me even if original MSDN link is unavailable in future. 
 
 ``` Csharp
 public class ProcessWMI

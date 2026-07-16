@@ -13,6 +13,8 @@ description: How to run powershell script on remote machine using C#
 
 Code snippet for running power shell on a remote machine. Loosely based on blog post [here](https://com2kid.wordpress.com/2011/09/22/remotely-executing-commands-in-powershell-using-c/) and [here](https://www.codeproject.com/Articles/773685/Enable-Remote-PowerShell-Execution-in-Csharp) 
 
+Code below is based on the sample code given in above two links
+
 Add reference to System.Management.Automation
 
 ``` csharp

@@ -16,3 +16,12 @@ theme = 'PaperMod'
   name = "About"
   url = "/about/"
   weight = 10
+
+# GA4 property that replaced the old Universal Analytics id in _config.yml
+# (google_analytics_tracking_id). PaperMod ships no default implementation
+# of layouts/partials/google_analytics.html - it's a hook the project must
+# supply - so the actual gtag.js snippet lives in
+# layouts/_partials/google_analytics.html. The old include also added
+# Google AdSense (adsbygoogle.js); that was intentionally not migrated.
+[services.googleAnalytics]
+  ID = 'G-W5VKP5RSSD'
