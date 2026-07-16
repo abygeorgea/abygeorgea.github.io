@@ -17,6 +17,14 @@ theme = 'PaperMod'
   url = "/about/"
   weight = 10
 
+# Links to Hugo's built-in "categories" taxonomy list page (all distinct
+# categories, each linking to its own filtered post list) - labeled "Tags"
+# per request, even though it's backed by the categories taxonomy, not tags.
+[[menu.main]]
+  name = "Tags"
+  url = "/categories/"
+  weight = 5
+
 # GA4 property that replaced the old Universal Analytics id in _config.yml
 # (google_analytics_tracking_id). PaperMod ships no default implementation
 # of layouts/partials/google_analytics.html - it's a hook the project must
