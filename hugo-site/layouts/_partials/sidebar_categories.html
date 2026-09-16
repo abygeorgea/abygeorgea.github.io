@@ -1,0 +1,15 @@
+{{- with site.Taxonomies.categories }}
+<aside class="site-sidebar">
+  <p class="site-sidebar-title">Categories</p>
+  <ul class="site-sidebar-list">
+    {{- range $name, $pages := . }}
+    {{- with site.GetPage (printf "/categories/%s" $name) }}
+    <li>
+      <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>
+      <span class="site-sidebar-count">{{ len $pages }}</span>
+    </li>
+    {{- end }}
+    {{- end }}
+  </ul>
+</aside>
+{{- end }}

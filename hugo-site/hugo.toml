@@ -10,13 +10,6 @@ theme = 'PaperMod'
 [permalinks]
   posts = "/blog/:year/:month/:day/:slug/"
 
-# Old custom/navigation.html had Blog / Archives / Resources / About Me.
-# Only About is migrated so far, so only it is linked here.
-[[menu.main]]
-  name = "About"
-  url = "/about/"
-  weight = 10
-
 # Links to Hugo's built-in "categories" taxonomy list page (all distinct
 # categories, each linking to its own filtered post list).
 [[menu.main]]
@@ -36,9 +29,7 @@ theme = 'PaperMod'
   ShowPostNavLinks = true
 
 # Content for the custom homepage hero (layouts/index.html + home_hero.html),
-# modeled on https://arjunjhawar.dev/ but without a photo section. The bio
-# line below is reused verbatim from content/about.md rather than inventing
-# new copy.
+# modeled on https://arjunjhawar.dev/ but without a photo section.
 [params.hero]
   eyebrow = "Blog"
   tagline = "Test Automation Architect | Building Agentic Development lifecycle / AI assisted QE Pipelines | Test Management"
