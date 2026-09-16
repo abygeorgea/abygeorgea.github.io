@@ -5,56 +5,42 @@ We will look at how to transfer the details from one API to another later.</p><h
 Select the property transfer step and click on the + button and give a name for the value we need to pass between API requests. Let us start with PetId. ReadyAPI will automatically select the source and target steps. In this example, we need to transfer the pet id from the response of get details By PetID to the request to Place order
 Since the request and response is JSON, we can select JSONPath as the path language. We can then either manual key in JsonPath or use the icon to select the values</p><p><img alt=Result loading=lazy src=/images/2022/02/01/5_transfer.png></p><p>If we run the test now, it will both test and do the property transfer</p><h4 id=step-5>Step 5:<a hidden class=anchor aria-hidden=true href=#step-5>#</a></h4><p>To iterate the test across various data sources, DataSource & DataSourceLoop test steps should be used. Right-click on the test case name and select Add Steps and select DataSource and DataSourceLoop. Rearrange the test steps in such a way that Datasource is the first step and Datasource loop is the last step</p><p>Select Datasource and select source type as Grid. It also supports multiple other options like JSON, Excel, XML, JDBC connection, and even a data generator. For simplicity let us use Grid</p><p><img alt=Result loading=lazy src=/images/2022/02/01/6_datasource.png></p><p>Select Datasource loop . It will ask to select the data source and target step. Make sure to unselect the check box so that details of passed test cases are also saved</p><p><img alt=Result loading=lazy src=/images/2022/02/01/7_datasourceloop.png></p><h4 id=step-6>Step 6:<a hidden class=anchor aria-hidden=true href=#step-6>#</a></h4><p>Run the test case by selecting the test case and clicking on the green Run button. This will trigger the test using all specified data sources. Details of the test can be found in Transaction log</p><p><img alt=Result loading=lazy src=/images/2022/02/01/8_transactionlog.png></p><h4 id=step-7>Step 7:<a hidden class=anchor aria-hidden=true href=#step-7>#</a></h4><p>If we need to make an order only if pets are available, it can be done by using the Conditional Go to Test step. Add a conditional Go To Test step and select details like below.
 Make sure to manually add the conditions as highlighted below</p><p><img alt=Result loading=lazy src=/images/2022/02/01/9_conditionalGoTo.png></p><h4 id=step-8>Step 8:<a hidden class=anchor aria-hidden=true href=#step-8>#</a></h4><p>From the results, we can see that the property transfer is not executed.</p><p><img alt=Result loading=lazy src=/images/2022/02/01/10_Results.png></p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://abygeorgea.com/blog/2022/02/24/readyapi-how-to-work-with-json-in-groovy-scripts/><span class=title>« Previous</span>
-</a><a class=next href=https://abygeorgea.com/blog/2022/01/19/readyapi-getting-started-with-readyapi/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+</a><a class=next href=https://abygeorgea.com/blog/2022/01/19/readyapi-getting-started-with-readyapi/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &

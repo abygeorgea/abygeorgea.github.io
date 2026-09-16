@@ -27,56 +27,42 @@ Graphify turns a codebase — code, docs, SQL schemas, configs, even PDFs — in
 </span></span></code></pre></div><p>Useful extraction flags for larger or evolving repos:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>graphify extract ./src --code-only     <span style=color:#75715e># local AST only, no API key needed</span>
 </span></span><span style=display:flex><span>graphify extract ./docs --update       <span style=color:#75715e># re-extract only changed files</span>
 </span></span><span style=display:flex><span>graphify extract ./docs --mode deep    <span style=color:#75715e># richer semantic pass</span>
-</span></span></code></pre></div><p><strong>7. Wire it into the team workflow.</strong> One person runs <code>/graphify .</code> and commits <code>graphify-out/</code>; everyone else pulls it and their assistant has the map immediately. <code>graphify hook install</code> auto-rebuilds the graph on every commit, and there&rsquo;s a git merge driver so <code>graph.json</code> unions cleanly instead of conflicting.</p><p>What sold me isn&rsquo;t the visualisation.it&rsquo;s <code>graphify path</code> and <code>graphify query</code> as blunt instruments for regression impact analysis. &ldquo;What connects checkout page to database&rdquo; is, word for word, the question I ask before scoping a test suite on an unfamiliar service. Having an agent answer it by walking a real, locally-built graph instead of guessing from vibes is exactly the kind of grounding brownfield work has been missing.</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=next href=https://abygeorgea.com/blog/2026/06/11/scaling-gatling-distributed-load-and-maintenance/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+</span></span></code></pre></div><p><strong>7. Wire it into the team workflow.</strong> One person runs <code>/graphify .</code> and commits <code>graphify-out/</code>; everyone else pulls it and their assistant has the map immediately. <code>graphify hook install</code> auto-rebuilds the graph on every commit, and there&rsquo;s a git merge driver so <code>graph.json</code> unions cleanly instead of conflicting.</p><p>What sold me isn&rsquo;t the visualisation.it&rsquo;s <code>graphify path</code> and <code>graphify query</code> as blunt instruments for regression impact analysis. &ldquo;What connects checkout page to database&rdquo; is, word for word, the question I ask before scoping a test suite on an unfamiliar service. Having an agent answer it by walking a real, locally-built graph instead of guessing from vibes is exactly the kind of grounding brownfield work has been missing.</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=next href=https://abygeorgea.com/blog/2026/06/11/scaling-gatling-distributed-load-and-maintenance/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &

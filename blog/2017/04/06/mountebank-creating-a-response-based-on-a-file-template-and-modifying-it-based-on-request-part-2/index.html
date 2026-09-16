@@ -84,56 +84,42 @@
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p>Now let us fire up mountebank</p><p><img alt=mountebank loading=lazy src=https://automationtestingtips.files.wordpress.com/2017/04/mountebank.png></p><p>Make few request using postman, which have different request parameter</p><p><img alt=customerFound1 loading=lazy src=https://automationtestingtips.files.wordpress.com/2017/04/customerfound1.png></p><p>Another request</p><p><img alt=CustomerFound2 loading=lazy src=https://automationtestingtips.files.wordpress.com/2017/04/customerfound2.png></p><p>In above two examples,we  can see the CustomerID field is response is updated with number extracted from request.</p><p>Now let us try another example , where request is http://localhost:4547/Blog.Api/1234542323/CustomerView</p><p><img alt=CustomerNotFound2 loading=lazy src=https://automationtestingtips.files.wordpress.com/2017/04/customernotfound2.png></p><p>As you can see, we are getting a customer Not found response. This is due to the order of predicates we use. In our 4547.json, the order of response are as below.</p><ol><li><p> Customer Not found which has a predicate of &ldquo;/Blog.Api/1[0-9]+/CustomerView&rdquo;</p></li><li><p>Customer found which has a predicate of &ldquo;/Blog.Api/[0-9]+/CustomerView&rdquo;</p></li></ol><p>As you can see from above order, when a request comes through , mountebank will first match with predicate of first response and if it matches, it returns the response. If not, mountebank will keep trying with next one followed by all others. In this particular example, since our request have a customer ID of 1234542323, it matches with regular expression of first one ( 1[0-9]+)  and hence it return customer not found response.</p><p>In next blog post, I will provide more insights about how to extract request from different type of requests.</p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/><span class=title>« Previous</span>
-</a><a class=next href=https://abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+</a><a class=next href=https://abygeorgea.com/blog/2017/04/06/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &

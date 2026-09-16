@@ -12,56 +12,42 @@
 </span></span></code></pre></div><p>This setting records a trace only when a test fails on its first attempt and then gets retried, which keeps the overhead low while still capturing exactly the runs you need. Once you have a trace file from a failed run, either from CI artifacts or a local run, open it like this.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>npx playwright show-trace trace.zip
 </span></span></code></pre></div><p>This opens an interactive viewer where you can step through the test action by action. For every single step, you get a DOM snapshot exactly as it existed at that moment, a screenshot, the network requests that were in flight, and the browser console output. You can click on any action in the timeline and see precisely what the page looked like right before and right after it happened.</p><p>This turns debugging a remote CI failure from a guessing game into something closer to actually watching the test run happen. You are not reconstructing the failure from a single error message anymore. You are looking at the exact state of the page at the exact moment things went wrong.</p><h2 id=generating-traces-on-demand>Generating Traces On Demand<a hidden class=anchor aria-hidden=true href=#generating-traces-on-demand>#</a></h2><p>Sometimes you want a trace for a specific local run, outside of the retry mechanism, especially while you are actively debugging something. You can do that directly from the command line.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>npx playwright test checkout.spec.ts --trace on
 </span></span></code></pre></div><p>This forces every test in that run to record a trace, regardless of whether it passes or fails, which is useful when you want to inspect a passing test&rsquo;s behavior in detail too, not just chase down a failure.</p><h2 id=archiving-reports-and-traces-from-ci>Archiving Reports and Traces From CI<a hidden class=anchor aria-hidden=true href=#archiving-reports-and-traces-from-ci>#</a></h2><p>None of this helps much if the report and trace files disappear the moment the CI job finishes. Make sure your pipeline uploads them as artifacts so anyone on the team can pull them down later. We will look at the exact GitHub Actions configuration for this in the next post, but the important habit to build now is treating the HTML report and any trace files as first class outputs of every CI run, not an afterthought.</p><h2 id=wrapping-up>Wrapping Up<a hidden class=anchor aria-hidden=true href=#wrapping-up>#</a></h2><p>Between the HTML reporter, automatic screenshots and video on failure, and the trace viewer, you rarely need to guess what went wrong in a failed test. The evidence is already sitting there waiting for you.</p><p>Next time, we take everything we have built so far and wire it into a GitHub Actions pipeline, so every pull request gets a full test run automatically, with reports and traces archived for anyone who needs to look at them later.</p></div><footer class=post-footer><ul class=post-tags><li><a href=https://abygeorgea.com/tags/playwright/>Playwright</a></li></ul><nav class=paginav><a class=prev href=https://abygeorgea.com/blog/2024/04/09/automating-quality-playwright-in-github-actions/><span class=title>« Previous</span>
-</a><a class=next href=https://abygeorgea.com/blog/2024/03/26/structured-output-function-calling-and-autonomous-test-authoring/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+</a><a class=next href=https://abygeorgea.com/blog/2024/03/26/structured-output-function-calling-and-autonomous-test-authoring/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &

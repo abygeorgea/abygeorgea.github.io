@@ -3,56 +3,42 @@
 <svg class="sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu class=menu><li><a href=https://abygeorgea.com/categories/ title=Categories><span>Categories</span></a></li><li><a href=https://abygeorgea.com/resume/ title=Resume><span>Resume</span></a></li></ul></nav></header><div class=page-with-sidebar><main class=main><article class=post-single><header class=post-header><h1 class="post-title entry-hint-parent">How to Squash Commits in Git</h1><div class=post-description>How to squash commits in Git using rebase</div><div class=post-meta><span title='2017-06-15 05:46:39 +1000 +1000'>June 15, 2017</span></div></header><div class="post-content md-content"><p>Very often we will be committing smaller pieces of work in our local machine as we go. However before we push them to a centralized repository, we may have to combine these small commits to single large commit, which makes sense for rest of the team. I will explain how this can be achieved by using interactive rebasing.</p><p>To start with, let us assume the initial commits history look like below. It have 4 minor commits done to the same file.
 <img alt="Initial Commit Structure" loading=lazy src=/images/2017/06/15/HowToSquashCommits_image1.png></p><p>Now we need to squash last for commits into a single commit. The command required for that is as below. This tells git to rebase head with previous 4 commits in an interactive mode.</p><pre><code>	$ git rebase -i HEAD~4
 </code></pre><p>This will pop up another editor with details of last 4 commits and some description about possible actions on this. Initially, all of them will have a default value of PICK. Since we are trying to squash commits together, we can select one of the commits as PICK and rest all needs to be changed as SQUASH. Save and close the editor once all changes are made.</p><p><img alt="Interactive Rebasing" loading=lazy src=/images/2017/06/15/HowToSquashCommits_image2.png></p><p>After this, another popup will appear with comments given for each of the commits. We can comment out unnecessary comments by using <code>#</code> and also modify required comments as we need. In below screen, I have modified comments for the first commit and commented out rest all. Save and close the editor once all changes are made.</p><p><img alt="Selecting comments" loading=lazy src=/images/2017/06/15/HowToSquashCommits_image3.png></p><p>Now Git will continue rebasing and it will squash all commits as selected in the previous step.</p><p><img alt="Git rebase" loading=lazy src=/images/2017/06/15/HowToSquashCommits_image4.png></p><p>If we look at commit history, we can see that commits are now squashed to single commit.</p><p><img alt="Squashed Result" loading=lazy src=/images/2017/06/15/HowToSquashCommits_image5.png></p></div><footer class=post-footer><ul class=post-tags></ul><nav class=paginav><a class=prev href=https://abygeorgea.com/blog/2017/06/21/automated-testing-of-responsive-web-design/><span class=title>« Previous</span>
-</a><a class=next href=https://abygeorgea.com/blog/2017/05/20/migrating-to-octopress/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+</a><a class=next href=https://abygeorgea.com/blog/2017/05/20/migrating-to-octopress/><span class=title>Next »</span></a></nav><div class=home-nav><a href=https://abygeorgea.com/>Home</a></div></footer></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &

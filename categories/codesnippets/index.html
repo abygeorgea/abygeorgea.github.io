@@ -20,56 +20,42 @@ Below code snippet can be used for extracting the zip files on the fly , so that
 ...</p></div><footer class=entry-footer><span title='2017-04-20 21:59:02 +1000 +1000'>April 20, 2017</span></footer><a class=entry-link aria-label="post link to Zip and Extract zip files using Csharp" href=https://abygeorgea.com/blog/2017/04/20/zip-and-extract-zip-files-using-csharp/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>Running Command Line from C#</h2></header><div class=entry-content><p>Code Snippet
 private void RunCLIjobsOnLocal(string arguments, int WaitTimePerCommand) { var psi = new ProcessStartInfo(); psi.CreateNoWindow = true; //This hides the dos-style black window that the command prompt usually shows psi.FileName = @"cmd.exe"; psi.Arguments = "/C " + arguments; psi.RedirectStandardOutput = true; psi.RedirectStandardInput = true; psi.RedirectStandardError = true; psi.UseShellExecute = false; var sspw = new SecureString(); foreach (var c in password) { sspw.AppendChar(c); } psi.Domain = domain; psi.UserName = userName; psi.Password = sspw; psi.WorkingDirectory = @"C:\"; using (Process process = new Process()) { try { process.StartInfo = psi; process.Start(); var procId = process.Id; string owner = GetProcessOwner(procId); // Synchronously read the standard output of the spawned process. StreamReader reader = process.StandardOutput; string output = reader.ReadToEnd(); reader = process.StandardError; string error = reader.ReadToEnd(); if(error.Length >0) process.WaitForExit(); } catch (Exception e) { log.Error(e.Message + "\n" + e.StackTrace); } } } private string GetProcessOwner(int processId) { string query = "Select * From Win32_Process Where ProcessID = " + processId; ManagementObjectSearcher searcher = new ManagementObjectSearcher(query); ManagementObjectCollection processList = searcher.Get(); foreach (ManagementObject obj in processList) { string[] argList = new string[] { string.Empty, string.Empty }; int returnVal = Convert.ToInt32(obj.InvokeMethod("GetOwner", argList)); if (returnVal == 0) { return argList[1] + "\\" + argList[0]; } } return "NO OWNER"; }</p></div><footer class=entry-footer><span title='2016-09-08 23:07:03 +1000 +1000'>September 8, 2016</span></footer><a class=entry-link aria-label="post link to Running Command Line from C#" href=https://abygeorgea.com/blog/2016/09/08/running-command-line-from-csharp/></a></article><article class="post-entry tag-entry"><header class=entry-header><h2 class=entry-hint-parent>Data Driven Framework - Excel</h2></header><div class=entry-content><p>In previous blog post, I have explained about how use XML for making a data driven framework for automation testing . It can be found here. I have also written about how to use jxl library for reading from excel and writing into Excel.
 Below is another code snippet to read all values of a row and save it into a hash map for accessing later during automation test.
-public HashMap GetAllDataForARow (String sheet, int Row){ HashMap DataMap = new HashMap(); try { Workbook wrk1 = Workbook.getWorkbook(new File(dataPath)); //Obtain the reference to the first sheet in the workbook Sheet sheet1 = wrk1.getSheet(sheet); int x =0; Cell colArow1 , colArow2; do { colArow1 = sheet1.getCell(x,0); colArow2 = sheet1.getCell(x,Row); DataMap.put(colArow1.getContents(), colArow2.getContents()); x=x+1; }while (colArow1.getContents() != ""); } catch (BiffException e) { e.printStackTrace(); } catch (IOException e) { e.printStackTrace(); }catch (IndexOutOfBoundsException e){ } return DataMap; }</p></div><footer class=entry-footer><span title='2016-07-30 05:49:22 +1000 +1000'>July 30, 2016</span></footer><a class=entry-link aria-label="post link to Data Driven Framework - Excel" href=https://abygeorgea.com/blog/2016/07/30/data-driven-framework-excel/></a></article><footer class=page-footer><nav class=pagination><a class=next href=https://abygeorgea.com/categories/codesnippets/page/2/>Next&nbsp;&nbsp;»</a></nav></footer></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+public HashMap GetAllDataForARow (String sheet, int Row){ HashMap DataMap = new HashMap(); try { Workbook wrk1 = Workbook.getWorkbook(new File(dataPath)); //Obtain the reference to the first sheet in the workbook Sheet sheet1 = wrk1.getSheet(sheet); int x =0; Cell colArow1 , colArow2; do { colArow1 = sheet1.getCell(x,0); colArow2 = sheet1.getCell(x,Row); DataMap.put(colArow1.getContents(), colArow2.getContents()); x=x+1; }while (colArow1.getContents() != ""); } catch (BiffException e) { e.printStackTrace(); } catch (IOException e) { e.printStackTrace(); }catch (IndexOutOfBoundsException e){ } return DataMap; }</p></div><footer class=entry-footer><span title='2016-07-30 05:49:22 +1000 +1000'>July 30, 2016</span></footer><a class=entry-link aria-label="post link to Data Driven Framework - Excel" href=https://abygeorgea.com/blog/2016/07/30/data-driven-framework-excel/></a></article><footer class=page-footer><nav class=pagination><a class=next href=https://abygeorgea.com/categories/codesnippets/page/2/>Next&nbsp;&nbsp;»</a></nav></footer></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/c%23/>C#</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/codesnippets/>CodeSnippets</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/command-line/>Command Line</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/conference/>Conference</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/csharp/>CSharp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/cucumber/>Cucumber</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/cypress/>Cypress</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing-framework/>Data Driven Testing Framework</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/dotnet-core/>Dotnet Core</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/element-identification/>Element Identification</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/data-driven-testing/>Data Driven Testing</a>
+<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/excel/>Excel</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/exe/>EXE</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/galen/>Galen</a>
 <span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gatling/>Gatling</a>
 <span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/git/>Git</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/groovy-scripting/>Groovy Scripting</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/gulp/>Gulp</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/java/>Java</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>Javascript</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/json/>JSON</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/metrics/>Metrics</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/javascript/>JavaScript</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/mountebank/>Mountebank</a>
-<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/newman/>Newman</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/nodejs/>Nodejs</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>Nunit</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/octostrap3/>Octostrap3</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
-<span class=site-sidebar-count>10</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
-<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>Powershell</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
+<span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
 <span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/selenium/>Selenium</a>
-<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/selenium-webdriver/>Selenium WebDriver</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/service-virtualisation/>Service Virtualisation</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/service-virtualization/>Service Virtualization</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/soapui/>SoapUI</a>
-<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
+<span class=site-sidebar-count>12</span></li><li><a href=https://abygeorgea.com/categories/specflow/>Specflow</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/windows-services/>Windows Services</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wmi/>WMI</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xhr/>XHR</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/xml/>XML</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
