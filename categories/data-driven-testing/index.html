@@ -14,7 +14,7 @@ Below is another code snippet to read all values of a row and save it into a has
 public HashMap GetAllDataForARow (String sheet, int Row){ HashMap DataMap = new HashMap(); try { Workbook wrk1 = Workbook.getWorkbook(new File(dataPath)); //Obtain the reference to the first sheet in the workbook Sheet sheet1 = wrk1.getSheet(sheet); int x =0; Cell colArow1 , colArow2; do { colArow1 = sheet1.getCell(x,0); colArow2 = sheet1.getCell(x,Row); DataMap.put(colArow1.getContents(), colArow2.getContents()); x=x+1; }while (colArow1.getContents() != ""); } catch (BiffException e) { e.printStackTrace(); } catch (IOException e) { e.printStackTrace(); }catch (IndexOutOfBoundsException e){ } return DataMap; }</p></div><footer class=entry-footer><span title='2016-07-30 05:49:22 +1000 +1000'>July 30, 2016</span></footer><a class=entry-link aria-label="post link to Data Driven Framework - Excel" href=https://abygeorgea.com/blog/2016/07/30/data-driven-framework-excel/></a></article></main><aside class=site-sidebar><p class=site-sidebar-title>Categories</p><ul class=site-sidebar-list><li><a href=https://abygeorgea.com/categories/.net-core/>.NET Core</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/accessibility-testing/>Accessibility Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/agentic-development/>Agentic Development</a>
-<span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
+<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/agile/>Agile</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/api-testing/>API Testing</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/aws/>AWS</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/bdd/>BDD</a>
@@ -37,7 +37,9 @@ public HashMap GetAllDataForARow (String sheet, int Row){ HashMap DataMap = new 
 <span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/node.js/>Node.js</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/nunit/>NUnit</a>
 <span class=site-sidebar-count>3</span></li><li><a href=https://abygeorgea.com/categories/octopress/>Octopress</a>
-<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
+<span class=site-sidebar-count>2</span></li><li><a href=https://abygeorgea.com/categories/owasp/>OWASP</a>
+<span class=site-sidebar-count>5</span></li><li><a href=https://abygeorgea.com/categories/pact/>Pact</a>
+<span class=site-sidebar-count>8</span></li><li><a href=https://abygeorgea.com/categories/playwright/>Playwright</a>
 <span class=site-sidebar-count>13</span></li><li><a href=https://abygeorgea.com/categories/postman/>Postman</a>
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/powershell/>PowerShell</a>
 <span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/readyapi/>ReadyAPI</a>
@@ -46,7 +48,8 @@ public HashMap GetAllDataForARow (String sheet, int Row){ HashMap DataMap = new 
 <span class=site-sidebar-count>6</span></li><li><a href=https://abygeorgea.com/categories/team-city/>Team City</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/test-automation/>Test Automation</a>
 <span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/volunteering/>Volunteering</a>
-<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
+<span class=site-sidebar-count>1</span></li><li><a href=https://abygeorgea.com/categories/wiremock/>WireMock</a>
+<span class=site-sidebar-count>4</span></li><li><a href=https://abygeorgea.com/categories/zephyr/>Zephyr</a>
 <span class=site-sidebar-count>1</span></li></ul></aside></div><footer class=footer><span>&copy; 2026 <a href=https://abygeorgea.com/>Aby George A</a></span> ·
 <span>Powered by
 <a href="https://gohugo.io/?utm_source=papermod" rel=noopener target=_blank>Hugo</a> &
