@@ -1,5 +1,5 @@
 ---
-author: Aby George A
+author: Aby George
 comments: true
 date: 2017-02-13T11:13:58+00:00
 excerpt: Service virtualisation using mountebank

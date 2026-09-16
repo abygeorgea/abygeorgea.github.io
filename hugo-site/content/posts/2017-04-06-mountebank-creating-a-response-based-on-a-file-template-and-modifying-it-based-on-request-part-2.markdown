@@ -1,5 +1,5 @@
 ---
-author: Aby George A
+author: Aby George
 comments: true
 date: 2017-04-06T20:24:20+00:00
 layout: post

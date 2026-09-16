@@ -1,7 +1,12 @@
 baseURL = 'https://abygeorgea.com/'
 locale = 'en-us'
-title = 'Aby George A'
+title = 'Aby George'
 theme = 'PaperMod'
+
+# Generates /index.json, the search index PaperMod's built-in Fuse.js
+# search page (layouts/search.html + assets/js/fastsearch.js) fetches.
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
 
 # Mirrors the old Octopress `permalink: /blog/:year/:month/:day/:title/` from
 # _config.yml. Jekyll's `:title` token is the filename slug (date prefix
@@ -21,6 +26,11 @@ theme = 'PaperMod'
   name = "Resume"
   url = "/resume/"
   weight = 7
+
+[[menu.main]]
+  name = "Search"
+  url = "/search/"
+  weight = 9
 
 # Enables PaperMod's built-in Previous/Next post links at the bottom of
 # each post (layouts/_partials/post_nav_links.html, overridden below to
