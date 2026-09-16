@@ -1,11 +1,11 @@
 ---
-title: "About Me"
-date: 2016-05-16T20:58:00+10:00
+title: "Resume"
+layout: "resume"
 ---
 
 An engineer with cross-industry experience in banking, financial services, medtech, and retail (ResMed, ASX, Commonwealth Bank, Suncorp, AMEX, Woolworths), still hands-on with code every day. Recently focused on integrating AI-assisted software development and agentic development workflows.
 
-I've spent equal time in engineering leadership, building and forming teams, and in the code itself, which means I can design a strategy and also implement it.
+I’ve spent equal time in engineering leadership, building and forming teams, and in the code itself, which means I can design a strategy and also implement it.
 
 **What I bring:**
 

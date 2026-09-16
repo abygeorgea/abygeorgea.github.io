@@ -1,0 +1,129 @@
+:root {
+    --hero-accent: rgb(15, 118, 110);
+    --hero-accent-text: rgb(247, 245, 242);
+}
+
+[data-theme="dark"] {
+    --hero-accent: rgb(45, 158, 148);
+    --hero-accent-text: rgb(20, 24, 24);
+}
+
+.home-hero {
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin-bottom: var(--content-gap);
+}
+
+.home-hero-eyebrow {
+    margin: 0 0 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hero-accent);
+}
+
+.home-hero-name {
+    margin: 0 0 0.5rem;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.home-hero-tagline {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    color: var(--primary);
+}
+
+.home-hero-bio {
+    margin: 0 0 1.5rem;
+    color: var(--secondary);
+    line-height: 1.6;
+    max-width: 60ch;
+}
+
+.home-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.home-hero-btn {
+    display: inline-block;
+    padding: 0.6rem 1.25rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 1px solid var(--border);
+}
+
+.home-hero-btn-primary {
+    background: var(--hero-accent);
+    color: var(--hero-accent-text);
+    border-color: var(--hero-accent);
+}
+
+.home-hero-btn-secondary {
+    background: var(--entry);
+    color: var(--primary);
+}
+
+.home-hero-btn:hover {
+    opacity: 0.85;
+}
+
+.home-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--content-gap);
+    margin-bottom: calc(var(--content-gap) * 1.5);
+}
+
+@media (max-width: 600px) {
+    .home-card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-hero-name {
+        font-size: 2rem;
+    }
+}
+
+.home-card {
+    display: block;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-decoration: none;
+    transition: border-color 0.2s ease;
+}
+
+.home-card:hover {
+    border-color: var(--hero-accent);
+}
+
+.home-card-eyebrow {
+    margin: 0 0 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--hero-accent);
+}
+
+.home-card-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.25rem;
+    color: var(--primary);
+}
+
+.home-card-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--secondary);
+    line-height: 1.5;
+}

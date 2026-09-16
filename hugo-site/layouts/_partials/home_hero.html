@@ -1,0 +1,25 @@
+{{- with site.Params.hero }}
+<section class="home-hero">
+  {{- with .eyebrow }}<p class="home-hero-eyebrow">{{ . }}</p>{{- end }}
+  <h1 class="home-hero-name">{{ site.Title }}</h1>
+  {{- with .tagline }}<p class="home-hero-tagline">{{ . }}</p>{{- end }}
+  {{- with .bio }}<p class="home-hero-bio">{{ . }}</p>{{- end }}
+  <div class="home-hero-actions">
+    <a class="home-hero-btn home-hero-btn-primary" href="{{ "categories/" | relURL }}">Categories</a>
+    <a class="home-hero-btn home-hero-btn-secondary" href="{{ "resume/" | relURL }}">Resume</a>
+  </div>
+</section>
+
+<div class="home-card-grid">
+  <a class="home-card" href="{{ "categories/" | relURL }}">
+    <p class="home-card-eyebrow">Browse</p>
+    <h2 class="home-card-title">Categories</h2>
+    <p class="home-card-desc">Every post grouped by topic, from Playwright and Gatling to AI assisted testing.</p>
+  </a>
+  <a class="home-card" href="{{ "resume/" | relURL }}">
+    <p class="home-card-eyebrow">Background</p>
+    <h2 class="home-card-title">Resume</h2>
+    <p class="home-card-desc">Experience, skills, and career timeline.</p>
+  </a>
+</div>
+{{- end }}

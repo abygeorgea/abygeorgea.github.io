@@ -24,11 +24,84 @@ theme = 'PaperMod'
   url = "/categories/"
   weight = 5
 
+[[menu.main]]
+  name = "Resume"
+  url = "/resume/"
+  weight = 7
+
 # Enables PaperMod's built-in Previous/Next post links at the bottom of
 # each post (layouts/_partials/post_nav_links.html, overridden below to
 # also add a Home link and use plain Previous/Next labels).
 [params]
   ShowPostNavLinks = true
+
+# Content for the custom homepage hero (layouts/index.html + home_hero.html),
+# modeled on https://arjunjhawar.dev/ but without a photo section. The bio
+# line below is reused verbatim from content/about.md rather than inventing
+# new copy.
+[params.hero]
+  eyebrow = "Blog"
+  tagline = "Test Automation Architect | Building Agentic Development lifecycle / AI assisted QE Pipelines | Test Management"
+  bio = "An engineer with cross-industry experience in banking, financial services, medtech, and retail (ResMed, ASX, Commonwealth Bank, Suncorp, AMEX, Woolworths), still hands-on with code every day."
+
+# Content for the resume page (layouts/_default/resume.html), modeled on
+# https://arjunjhawar.dev/resume. Timeline only has company + dates for now
+# since that's all that was supplied - add role titles and achievement
+# bullets here per entry once written, rather than in the template.
+#
+# "Programming & Test Framework" has subGroups instead of a flat skills
+# list, and the template renders any group with subGroups as a full-width
+# card with its own sub-columns.
+[[params.resume.skillGroups]]
+  name = "Programming & Test Framework"
+  skills = ["C#", ".NET", "Java", "Python", "JavaScript", "TypeScript", "SQL", "MongoDB", "Oracle", "Maven", "Gradle","Playwright", "Selenium", "Appium", "Cucumber", "ReqnRoll", "TOSCA", "TestNG", "Pytest", "Serenity", "WebdriverIO"]
+   
+ 
+[[params.resume.skillGroups]]
+  name = "API, Contract & Non-UI Testing"
+  skills = ["Postman", "Newman", "ReadyAPI", "JMeter", "Gatling", "Bruno", "Contract Testing", "Pact", "Microservices"]
+
+[[params.resume.skillGroups]]
+  name = "CI/CD & DevOps Integration"
+  skills = ["GitHub Actions", "Jenkins", "TeamCity", "Azure DevOps", "Octopus Deploy", "Docker", "AWS", "Terraform", "SonarQube", "Wiz", "Datadog", "PagerDuty"]
+
+[[params.resume.skillGroups]]
+  name = "AI-Assisted / Agentic Testing"
+  skills = ["Claude Code", "GitHub Copilot", "Codex", "MCP Servers (Playwright, Zephyr, ROVO, etc.)", "Deepeval", "promptfoo"]
+
+[[params.resume.skillGroups]]
+  name = "QE Leadership"
+  skills = ["Test Strategy", "Test Planning", "Release Coordination", "Defect Management", "UAT Coordination", "Stakeholder Communication", "Distributed Team Coordination", "Risk & Mitigation", "CI/CD Governance", "Quality Engineering Leadership", "Test Data Management", "Zephyr", "Jama", "ALM", "Qmetry"]
+
+[[params.resume.timeline]]
+  company = "ResMed"
+  start = "02/2022"
+  end = "Till Now"
+
+[[params.resume.timeline]]
+  company = "ASX"
+  start = "07/2018"
+  end = "01/2022"
+
+[[params.resume.timeline]]
+  company = "Commonwealth Bank"
+  start = "01/2014"
+  end = "07/2018"
+
+[[params.resume.timeline]]
+  company = "Suncorp"
+  start = "01/2013"
+  end = "12/2013"
+
+[[params.resume.timeline]]
+  company = "AMEX"
+  start = "04/2012"
+  end = "12/2012"
+
+[[params.resume.timeline]]
+  company = "Woolworths"
+  start = "01/2007"
+  end = "04/2012"
 
 # GA4 property that replaced the old Universal Analytics id in _config.yml
 # (google_analytics_tracking_id). PaperMod ships no default implementation

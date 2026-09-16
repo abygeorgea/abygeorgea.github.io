@@ -1,0 +1,65 @@
+{{- define "main" }}
+
+<section class="home-hero">
+  <p class="home-hero-eyebrow">Resume</p>
+  <h1 class="home-hero-name">{{ site.Title }}</h1>
+  {{- with site.Params.hero.tagline }}<p class="home-hero-tagline">{{ . }}</p>{{- end }}
+</section>
+
+{{- if .Content }}
+<section class="resume-section resume-summary md-content">
+  {{ .Content }}
+</section>
+{{- end }}
+
+{{- with site.Params.resume.skillGroups }}
+<section class="resume-section">
+  <h2>Skills</h2>
+  <div class="resume-skills-grid">
+    {{- range . }}
+    {{- if .subGroups }}
+    <div class="resume-skill-card resume-skill-card-wide">
+      <h3>{{ .name }}</h3>
+      <div class="resume-subgroup-grid">
+        {{- range .subGroups }}
+        <div class="resume-subgroup">
+          <h4>{{ .name }}</h4>
+          <div class="resume-pill-list">
+            {{- range .skills }}
+            <span class="resume-pill">{{ . }}</span>
+            {{- end }}
+          </div>
+        </div>
+        {{- end }}
+      </div>
+    </div>
+    {{- else }}
+    <div class="resume-skill-card">
+      <h3>{{ .name }}</h3>
+      <div class="resume-pill-list">
+        {{- range .skills }}
+        <span class="resume-pill">{{ . }}</span>
+        {{- end }}
+      </div>
+    </div>
+    {{- end }}
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- with site.Params.resume.timeline }}
+<section class="resume-section">
+  <h2>Experience</h2>
+  <ol class="resume-timeline">
+    {{- range . }}
+    <li class="resume-timeline-item">
+      <h3>{{ .company }}</h3>
+      <p class="resume-timeline-dates">{{ .start }} - {{ .end }}</p>
+    </li>
+    {{- end }}
+  </ol>
+</section>
+{{- end }}
+
+{{- end }}{{/* end main */}}
