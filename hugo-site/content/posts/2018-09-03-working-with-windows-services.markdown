@@ -5,8 +5,7 @@ slug: "working-with-windows-services"
 date: 2018-09-03T22:59:54+10:00
 comments: true
 categories:
-  - codesnippets
-  - Windows Services
+  - CodeSnippets
 keywords: Working with windows services remotely
 description: How to start stop windows services
 ---

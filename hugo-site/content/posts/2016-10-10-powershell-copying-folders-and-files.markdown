@@ -5,7 +5,7 @@ slug: "powershell-copying-folders-and-files"
 date: 2016-10-10T06:47:54+10:00
 comments: true
 categories:
-  - Powershell
+  - PowerShell
 keywords: Powershell
 description: How to copy files using powershell
 ---

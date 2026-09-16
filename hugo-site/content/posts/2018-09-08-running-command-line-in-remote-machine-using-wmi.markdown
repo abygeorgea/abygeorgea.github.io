@@ -5,9 +5,8 @@ slug: "running-command-line-in-remote-machine-using-wmi"
 date: 2018-09-08T21:47:52+10:00
 comments: true
 categories:
+  - CodeSnippets
   - Command Line
-  - WMI
-  - codesnippets
 keywords: Command Line, WMI
 description: How to run CMD remotely
 ---

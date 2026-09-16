@@ -5,7 +5,7 @@ slug: "sending-emails-through-smtp-in-c-number"
 date: 2019-04-09T22:03:26+10:00
 comments: true
 categories:
-  - codesnippets
+  - CodeSnippets
 keywords:
   - Email
   - C#

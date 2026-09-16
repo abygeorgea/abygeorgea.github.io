@@ -6,7 +6,6 @@ date: 2020-11-25T14:19:34+11:00
 comments: true
 categories:
   - Cypress
-  - XHR
 keywords:
   - Cypress
   - XHR

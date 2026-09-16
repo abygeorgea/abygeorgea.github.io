@@ -5,7 +5,7 @@ slug: "automating-accessibility-testing"
 date: 2018-03-01T21:30:32+11:00
 comments: true
 categories:
-  - Accessibility testing
+  - Accessibility Testing
 keywords: Accessibility testing
 description: How to automate accessibility testing using aXe
 ---

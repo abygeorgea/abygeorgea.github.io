@@ -8,7 +8,6 @@ slug: element-location-using-xpath-axis
 title: "Element location using XPath Axis"
 wordpress_id: 281
 categories:
-  - Element Identification
   - Selenium
   - Specflow
 tags:

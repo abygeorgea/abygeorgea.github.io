@@ -5,7 +5,7 @@ slug: "anztb-sigist-conference"
 date: 2017-08-29T21:32:28+10:00
 comments: true
 categories:
-  - conference
+  - Conference
 keywords: ANZTB , SIGiST
 description: ANZTB SIGiST Conference
 ---

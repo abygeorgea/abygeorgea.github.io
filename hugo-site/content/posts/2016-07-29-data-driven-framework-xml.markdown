@@ -12,9 +12,8 @@ tags:
   - Selenium WebDriver
   - XML
 categories:
-  - Data Driven Testing Framework
-  - Selenium WebDriver
-  - XML
+  - Data Driven Testing
+  - Selenium
 keywords: Selenium , Specflow , Data Driven Testing , C# , XML
 description: How to read from XML data sheet in a data driven framework using selenium webdriver and C#
 ---

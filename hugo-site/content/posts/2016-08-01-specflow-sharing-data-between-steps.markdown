@@ -8,10 +8,10 @@ slug: specflow-sharing-data-between-steps
 title: "Specflow - Sharing data between steps"
 wordpress_id: 133
 categories:
-  - Specflow
   - BDD
-  - Data Driven Testing Framework
-  - Selenium WebDriver
+  - Data Driven Testing
+  - Selenium
+  - Specflow
 tags:
   - BDD
   - Data Driven Testing Framework

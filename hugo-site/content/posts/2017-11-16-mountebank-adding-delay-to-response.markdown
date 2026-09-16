@@ -6,7 +6,6 @@ date: 2017-11-16T09:59:17+11:00
 comments: true
 categories:
   - Mountebank
-  - Service virtualization
 keywords: Mountebank, response
 description: How to add delay to api response in mountebank
 ---

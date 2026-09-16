@@ -5,7 +5,7 @@ slug: "zip-and-extract-zip-files-using-csharp"
 date: 2017-04-20T21:59:02+10:00
 comments: true
 categories:
-  - codesnippets
+  - CodeSnippets
 keywords: 
 description: Zip and Extract zip files using Csharp
 ---

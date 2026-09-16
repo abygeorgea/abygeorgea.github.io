@@ -5,8 +5,7 @@ slug: "running-postman-collection-using-newman"
 date: 2017-08-07T15:46:28+10:00
 comments: true
 categories:
-  - postman
-  - newman
+  - Postman
 keywords: postman tutorial, newman tutorial
 description: Running Postman Collection Using Newman
 ---

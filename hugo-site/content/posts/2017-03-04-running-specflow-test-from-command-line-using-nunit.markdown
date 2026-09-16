@@ -5,8 +5,8 @@ slug: "running-specflow-test-from-command-line-using-nunit"
 date: 2017-03-04T20:39:59+11:00
 comments: true
 categories:
+  - NUnit
   - Specflow
-  - Nunit
 keywords: Specflow, Nunit
 description: How to run specflow test cases from command line
 ---

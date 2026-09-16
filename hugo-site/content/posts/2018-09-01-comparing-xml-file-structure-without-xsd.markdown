@@ -5,8 +5,7 @@ slug: "comparing-xml-file-structure-without-xsd"
 date: 2018-09-01T22:05:42+10:00
 comments: true
 categories:
-  - XML
-  - codesnippets
+  - CodeSnippets
 keywords: XML, compare xml
 description: How to compare XML files without XSD
 ---

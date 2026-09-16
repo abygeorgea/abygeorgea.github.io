@@ -8,7 +8,6 @@ slug: element-location-using-xpath
 title: "Element Location using XPath"
 wordpress_id: 229
 categories:
-  - Element Identification
   - Selenium
   - Specflow
 tags:

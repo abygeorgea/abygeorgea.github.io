@@ -8,7 +8,6 @@ keywords: Mountebank , Stub , Service Virtualisation , Soap Response, XML respon
 description: How to stub a soap response ( XML Response) using Mountebank
 categories:
   - Mountebank
-  - Service Virtualisation
 ---
 
 Previous two blog post talked about how we can use mountebank for stubbing where responses are in json format . They can be accessed ([here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)) and ([here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-2/)). We can use same approach for stubbing SOAP services using XML as well. In this post, I will explain how we can provide XML response using Mountebank .

@@ -5,9 +5,9 @@ slug: "extracting-substring-using-javascript"
 date: 2017-07-21T06:09:53+10:00
 comments: true
 categories:
-  - codesnippets
-  - javascript
-  - mountebank
+  - CodeSnippets
+  - JavaScript
+  - Mountebank
 keywords: Extracting substring using javascript, Extracting XML node using javascript
 description: 
 ---

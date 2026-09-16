@@ -5,8 +5,8 @@ slug: "creating-html-report-for-test-execution result"
 date: 2017-03-05T20:58:13+11:00
 comments: true
 categories:
+  - NUnit
   - Specflow
-  - Nunit
 keywords: Specflow, HTML report
 description: How to create HTML report for test execution result
 ---

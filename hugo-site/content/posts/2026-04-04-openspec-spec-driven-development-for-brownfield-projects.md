@@ -2,7 +2,8 @@
 title: "OpenSpec - Spec driven development for brownfield projects"
 date: 2026-04-04T08:25:31+10:00
 draft: false
-categories: []
+categories:
+  - Agentic development
 description: ""
 ---
 # Spec-Driven Development for the Rest of Us: OpenSpec

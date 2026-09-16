@@ -5,7 +5,7 @@ slug: "reading-configuration-values-in-dotnet-core-using-ioptions-pattern"
 date: 2020-12-17T13:26:34+11:00
 comments: true
 categories:
-  - Dotnet Core
+  - .NET Core
 keywords:
   - Dotnet Core
   - Configuration

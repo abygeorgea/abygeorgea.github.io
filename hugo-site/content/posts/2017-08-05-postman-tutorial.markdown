@@ -5,8 +5,7 @@ slug: "postman-tutorial"
 date: 2017-08-05T07:09:48+10:00
 comments: true
 categories:
-  - postman
-  - newman
+  - Postman
 keywords: postman tutorial, newman tutorial
 description: how to get started with postman and newman
 ---

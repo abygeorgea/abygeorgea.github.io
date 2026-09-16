@@ -6,10 +6,6 @@ date: 2022-02-24T06:42:20+10:00
 comments: true
 categories:
   - ReadyAPI
-  - SoapUI
-  - JSON
-  - XML
-  - Groovy Scripting
 keywords:
   - ReadyAPI
   - SoapUI

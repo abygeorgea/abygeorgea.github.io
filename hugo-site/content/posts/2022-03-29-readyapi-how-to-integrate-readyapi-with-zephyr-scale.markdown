@@ -6,7 +6,6 @@ date: 2022-03-29T06:41:00+10:00
 comments: true
 categories:
   - ReadyAPI
-  - SoapUI
   - Zephyr
 keywords:
   - ReadyAPI

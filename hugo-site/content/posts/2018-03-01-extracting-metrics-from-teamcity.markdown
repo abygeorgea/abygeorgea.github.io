@@ -6,7 +6,6 @@ date: 2018-03-01T22:18:25+11:00
 comments: true
 categories:
   - Team City
-  - Metrics
 keywords: Team City, Metrics
 description: Ways of extracting metrics from Teamcity
 ---

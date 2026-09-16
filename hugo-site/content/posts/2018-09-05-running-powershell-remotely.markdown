@@ -5,8 +5,8 @@ slug: "running-powershell-remotely"
 date: 2018-09-05T22:46:14+10:00
 comments: true
 categories:
-  - codesnippets
-  - Powershell
+  - CodeSnippets
+  - PowerShell
 keywords: Running powershell remotely using C#
 description: How to run powershell script on remote machine using C#
 ---

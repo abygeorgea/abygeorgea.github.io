@@ -5,8 +5,7 @@ slug: "writing-tests-in-postman"
 date: 2018-05-03T21:05:00+10:00
 comments: true
 categories:
-  - postman
-  - newman
+  - Postman
 keywords: How to use Chai for writing postman tests
 description: How to use Chai for writing postman tests
 ---

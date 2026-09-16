@@ -5,7 +5,7 @@ slug: "test-automation"
 date: 2017-09-07T22:42:15+10:00
 comments: true
 categories:
-  - Test automation
+  - Test Automation
 keywords: 
 description: Managing stakeholder expectation on value delivered from test automation
 ---

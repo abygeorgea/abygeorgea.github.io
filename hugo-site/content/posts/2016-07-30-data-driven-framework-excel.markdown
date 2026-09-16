@@ -5,10 +5,10 @@ slug: "data-driven-framework-excel"
 date: 2016-07-30T05:49:22+10:00
 comments: true
 categories:
-  - Data Driven Testing Framework
-  - Selenium WebDriver
-  - Excel
   - CodeSnippets
+  - Data Driven Testing
+  - Excel
+  - Selenium
 keywords: Selenium , Specflow , Data Driven Testing , C# , XML
 description: How to read from Excel for making a data driven framework 
 ---

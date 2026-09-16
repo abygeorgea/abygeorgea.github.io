@@ -5,8 +5,7 @@ slug: "postman-using-data-file"
 date: 2017-08-13T20:56:01+10:00
 comments: true
 categories:
-  - postman
-  - newman
+  - Postman
 keywords: postman tutorial, newman tutorial
 description: Using data files in postman collection runner and Newman
 ---

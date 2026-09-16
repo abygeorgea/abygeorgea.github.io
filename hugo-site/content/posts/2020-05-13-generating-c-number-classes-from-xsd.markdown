@@ -5,7 +5,7 @@ slug: "generating-c-number-classes-from-xsd"
 date: 2020-05-13T05:39:00+10:00
 comments: true
 categories:
-  - CSharp
+  - C#
 keywords: 
 description: How to generate C# classes from xsd
 ---

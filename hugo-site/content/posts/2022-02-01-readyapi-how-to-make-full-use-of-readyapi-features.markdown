@@ -6,7 +6,6 @@ date: 2022-02-01T06:46:12+10:00
 comments: true
 categories:
   - ReadyAPI
-  - SoapUI
 keywords:
   - ReadyAPI
   - SoapUI

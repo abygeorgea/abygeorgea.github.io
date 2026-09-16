@@ -5,7 +5,7 @@ slug: "powershell-remove-entire-directory-and-its-content"
 date: 2017-05-02T06:27:27+10:00
 comments: true
 categories:
-  - Powershell
+  - PowerShell
 keywords: Powershell , Remove folders having more than 260 character Path , git
 description: How to remove folders and contents having more than 260 character
 ---

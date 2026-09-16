@@ -12,7 +12,6 @@ keywords: Mountebank , Stub , Service Virtualisation
 description: How to get started using Mountebank
 categories:
   - Mountebank
-  - Service Virtualisation
 tags:
   - Stubs
 ---

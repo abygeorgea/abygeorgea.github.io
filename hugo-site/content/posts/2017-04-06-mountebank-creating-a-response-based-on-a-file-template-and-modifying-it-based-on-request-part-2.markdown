@@ -11,7 +11,6 @@ keywords: Mountebank , Stub , Service Virtualisation , Soap Response, XML respon
 description: How to stub a  response based on a sample template using Mountebank
 categories:
   - Mountebank
-  - Service Virtualisation
 ---
 
 This is an extension to my previous blog about how we can use mountebank to create a stubbed response based on a template file . You can read about it [here](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/).  In this step by step example, I will explain how we will use mountebank to modify the response based on the request . Before we start, please ensure you are familiar with [Part1 ](/blog/2017/04/07/mountebank-creating-a-response-based-on-a-file-template-and-modifying-it-based-on-request-part-1/)of the excercise. If you need to know more about mountebank and how to use mountebank , please read through [how to install mountebank ](/blog/2017/02/13/service-virtualisation-using-mountebank/) and [service virtualisation using mountebank](/blog/2017/03/03/mountebank-your-first-service-virtualisation/).

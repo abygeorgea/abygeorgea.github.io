@@ -5,9 +5,9 @@ slug: "writing-cypress-tests-in-bdd-format"
 date: 2020-12-09T13:46:17+11:00
 comments: true
 categories:
-  - cypress
-  - bdd
-  - cucumber
+  - BDD
+  - Cucumber
+  - Cypress
 keywords:
   - cypress
   - bdd

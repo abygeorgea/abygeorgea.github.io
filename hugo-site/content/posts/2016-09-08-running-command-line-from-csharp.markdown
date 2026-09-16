@@ -5,9 +5,9 @@ slug: "running-command-line-from-csharp"
 date: 2016-09-08T23:07:03+10:00
 comments: true
 categories:
-  - codesnippets
-  - c#
-  - command line
+  - C#
+  - CodeSnippets
+  - Command Line
 keywords: How to run command line from C#
 description: How to run command line from C#
 ---

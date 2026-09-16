@@ -2,7 +2,8 @@
 title: "Spec Kit- Spec Driven development"
 date: 2026-03-02T08:25:31+10:00
 draft: false
-categories: []
+categories:
+  - Agentic development
 description: ""
 ---
 # Flipping the Script: A Look at GitHub's Spec Kit

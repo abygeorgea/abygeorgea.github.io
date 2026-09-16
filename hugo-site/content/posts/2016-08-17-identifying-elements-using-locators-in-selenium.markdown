@@ -8,7 +8,7 @@ slug: identifying-elements-using-locators-in-selenium
 title: "Identifying elements using Locators in Selenium"
 wordpress_id: 184
 categories:
-  - Element Identification
+  - Selenium
 tags:
   - Selenium Locator Strategy
   - Selenium WebDriver

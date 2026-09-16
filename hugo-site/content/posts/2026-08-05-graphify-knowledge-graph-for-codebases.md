@@ -2,7 +2,8 @@
 title: "Graphify - Mapping the Codebase AI Agents Actually Need"
 date: 2026-08-05T08:25:31+10:00
 draft: false
-categories: []
+categories:
+  - Agentic development
 description: ""
 ---
 # Graphify: The Missing Map for Brownfield Codebases

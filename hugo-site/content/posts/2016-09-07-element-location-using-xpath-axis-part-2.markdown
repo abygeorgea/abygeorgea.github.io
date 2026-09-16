@@ -5,7 +5,7 @@ slug: "element-location-using-xpath-axis-part-2"
 date: 2016-09-07T20:54:13+11:00
 comments: true
 categories:
-  - element identification
+  - Selenium
 keywords: element identification
 description: How to identify child element in selenium using XPath
 ---

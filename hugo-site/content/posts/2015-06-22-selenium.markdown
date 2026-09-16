@@ -5,7 +5,7 @@ slug: "selenium"
 date: 2015-06-22T21:27:24+10:00
 comments: true
 categories:
-  - selenium
+  - Selenium
 keywords: 
 description: Selenium WebDriver Notes
 ---

@@ -11,7 +11,6 @@ keywords: Mountebank , Stub , Service Virtualisation
 description: How to use Mountebank for stubbing responses
 categories:
   - Mountebank
-  - Service Virtualisation
 ---
 
 In current development world, there will be scenarios were both API and its consumers are developed in parallel. Inorder to decouple their dependencies, we can mock an api response using mountebank. In this example, I will explain how to get started with your first service virtualisation using mountebank. After installing mountebank as mentioned in [here (Install Mountebank)](/blog/2017/02/13/service-virtualisation-using-mountebank/), we will proceed with configuring mountebank. It can be done in few ways. The method which I explain below is by using file based configuration. This involve setting up an imposter file and a stub response
