@@ -6,6 +6,15 @@
   {{- with site.Params.hero.tagline }}<p class="home-hero-tagline">{{ . }}</p>{{- end }}
 </section>
 
+{{- with site.Params.resume.agentUrl }}
+<section class="resume-section resume-agent">
+  <h2>Ask about my resume</h2>
+  <p class="resume-agent-intro">An AI agent trained on my resume. Ask about my experience, skills, or projects.</p>
+  <iframe class="resume-agent-frame" src="{{ . }}" title="Resume AI agent" loading="lazy" allow="clipboard-write"></iframe>
+  <p class="resume-agent-fallback"><a href="{{ . }}" target="_blank" rel="noopener">Open in a new tab</a> if it does not load.</p>
+</section>
+{{- end }}
+
 {{- if .Content }}
 <section class="resume-section resume-summary md-content">
   {{ .Content }}
